@@ -1,0 +1,3 @@
+﻿# marcopolo-pages
+
+Static pages.
