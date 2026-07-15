@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Как работать со мной — памятка Галины · AI Штаб «Марко Поло»</title>
+<style>
+  :root{
+    --cream:#FBF6EF;
+    --cream-2:#F4EADD;
+    --paper:#FFFDFA;
+    --ink:#31251E;
+    --ink-soft:#544235;
+    --muted:#6E5A49;
+    --line:#E7DBC9;
+    --terra:#B5522F;
+    --terra-deep:#8E3E21;
+    --terra-soft:#FBEADF;
+    --ochre:#B87A2E;
+    --wood:#79502F;
+    --green:#3F6B44;
+    --green-text:#356038;
+    --green-bg:#EBF3E6;
+    --green-line:#CDE0C4;
+    --amber:#8F631C;
+    --amber-bg:#FAF0D9;
+    --amber-line:#EBD8AE;
+    --teal:#2F6E6B;
+    --teal-bg:#E3F0EE;
+    --teal-line:#C3E0DC;
+    --shadow:0 10px 30px rgba(120,80,50,.09);
+    --shadow-soft:0 4px 14px rgba(120,80,50,.07);
+    --radius:22px;
+    --radius-sm:14px;
+    --maxw:940px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 500px at 82% -10%, #FBEEDF 0%, rgba(251,238,223,0) 60%),
+      radial-gradient(900px 420px at -10% 4%, #F5E7D4 0%, rgba(245,231,212,0) 55%),
+      var(--cream);
+    line-height:1.62;
+    font-size:17.5px;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+  /* ── Sticky mini-nav ── */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:saturate(140%) blur(8px);
+    background:rgba(251,246,239,.9);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:8px 14px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .nav .brand{
+    font-weight:800;letter-spacing:.2px;color:var(--terra-deep);
+    white-space:nowrap;font-size:15.5px;flex:none;
+  }
+  .nav .brand span{color:var(--muted);font-weight:600}
+  .nav ul{
+    list-style:none;display:flex;gap:6px;margin:0;padding:2px;
+    flex:1 1 auto;overflow-x:auto;flex-wrap:nowrap;
+    scrollbar-width:thin;-webkit-overflow-scrolling:touch;
+  }
+  .nav ul::-webkit-scrollbar{height:5px}
+  .nav ul::-webkit-scrollbar-thumb{background:var(--line);border-radius:5px}
+  .nav a{
+    text-decoration:none;color:var(--ink-soft);font-size:14.5px;font-weight:600;
+    padding:6px 12px;border-radius:999px;white-space:nowrap;transition:.15s;display:block;
+  }
+  .nav a:hover{background:var(--cream-2);color:var(--terra-deep)}
+  .nav a.active{background:var(--terra);color:#fff}
+  .print-btn{
+    flex:none;display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+    font-family:inherit;font-size:14.5px;font-weight:700;color:#fff;
+    background:linear-gradient(160deg,#C2603E,#9E4526);border:none;
+    padding:8px 15px;border-radius:999px;box-shadow:var(--shadow-soft);white-space:nowrap;
+    transition:transform .12s ease;
+  }
+  .print-btn:hover{transform:translateY(-1px)}
+  .print-btn .pi{font-size:16px}
+
+  /* ── Hero ── */
+  .hero{padding:52px 0 32px;text-align:center}
+  .kicker{
+    display:inline-block;font-size:14px;font-weight:700;letter-spacing:.4px;
+    color:var(--terra-deep);
+    background:var(--terra-soft);border:1px solid #F1D3BF;border-radius:999px;
+    padding:7px 18px;margin-bottom:22px;
+  }
+  h1{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(31px,5.4vw,50px);
+    line-height:1.12;margin:0 0 14px;color:var(--ink);
+    font-weight:700;letter-spacing:-.4px;
+  }
+  .hero .sub{font-size:clamp(16px,2.4vw,19px);color:var(--ink-soft);margin:0 auto;max-width:640px}
+  .hero .sub b{color:var(--terra-deep)}
+
+  .promise{
+    margin:34px auto 0;max-width:740px;text-align:left;
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:28px 30px;position:relative;
+  }
+  .promise .tag{
+    position:absolute;top:-15px;left:28px;background:var(--terra);color:#fff;
+    font-size:13.5px;font-weight:700;padding:5px 15px;border-radius:999px;
+    box-shadow:var(--shadow-soft);letter-spacing:.3px;
+  }
+  .promise p{margin:12px 0 0;font-size:18px;color:var(--ink-soft);line-height:1.66}
+  .promise p:first-of-type{margin-top:6px}
+  .promise .lead{font-size:20.5px;font-weight:600;color:var(--ink)}
+  .promise .lead b{color:var(--terra-deep)}
+
+  /* ── Sections ── */
+  section{padding:30px 0}
+  .sec-head{display:flex;align-items:center;gap:15px;margin:0 0 22px}
+  .sec-num{
+    flex:none;width:46px;height:46px;border-radius:14px;
+    display:grid;place-items:center;font-weight:800;font-size:20px;
+    background:linear-gradient(160deg,#FBEADF,#F2D5C0);color:var(--terra-deep);
+    border:1px solid #EFCFB8;
+  }
+  .sec-head h2{
+    margin:0;font-size:clamp(23px,3.6vw,29px);line-height:1.2;
+    font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:-.2px;
+  }
+  .sec-head .hint{font-size:15px;color:var(--muted);margin-top:3px}
+
+  .grid{display:grid;gap:16px}
+
+  /* ── БЛОК 1: было / стало ── */
+  .ba{grid-template-columns:1fr 1fr}
+  .ba .col{padding:24px 26px;border-radius:var(--radius);border:1px solid var(--line);position:relative}
+  .ba .was{background:#F5EDE3}
+  .ba .now{
+    background:linear-gradient(165deg,#FBEEE1,#FDF7ED);border-color:#EDCBAF;
+    box-shadow:0 12px 34px -14px rgba(181,82,47,.42);
+  }
+  .ba .lbl{
+    display:inline-flex;align-items:center;gap:9px;
+    font-weight:800;font-size:14.5px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;
+  }
+  .ba .mk{
+    width:22px;height:22px;border-radius:50%;display:grid;place-items:center;
+    color:#fff;font-size:13px;font-weight:900;flex:none;
+  }
+  .ba .was .lbl{color:var(--muted)}
+  .ba .was .mk{background:#A98E76}
+  .ba .now .lbl{color:var(--terra-deep)}
+  .ba .now .mk{background:var(--terra)}
+  .ba p{margin:0;font-size:16.5px;color:var(--ink-soft);line-height:1.6}
+  .ba .now p{color:var(--ink)}
+  .ba .now p b{color:var(--terra-deep)}
+
+  /* ── БЛОК 2: 3 правила ── */
+  .steps{grid-template-columns:repeat(3,1fr)}
+  .step{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px;position:relative;box-shadow:var(--shadow-soft)}
+  .step .n{
+    width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+    background:var(--terra);color:#fff;font-weight:800;font-size:18px;margin-bottom:14px;
+  }
+  .step h3{margin:0 0 7px;font-size:17.5px}
+  .step p{margin:0;font-size:16px;color:var(--ink-soft)}
+  .step .q{
+    display:inline-block;margin-top:12px;font-size:14.5px;font-weight:700;color:var(--terra-deep);
+    background:var(--terra-soft);border-radius:10px;padding:5px 11px;
+  }
+
+  /* ── Общая карточка-зона ── */
+  .zone{border-radius:var(--radius);padding:24px 26px;border:1px solid}
+  .zone.green{background:var(--green-bg);border-color:var(--green-line)}
+  .zone.amber{background:var(--amber-bg);border-color:var(--amber-line)}
+  .zone .zhead{display:flex;align-items:center;gap:11px;margin-bottom:5px}
+  .zone .zicon{font-size:24px}
+  .zone h3{margin:0;font-size:19.5px}
+  .zone.green h3{color:var(--green)}
+  .zone.amber h3{color:var(--amber)}
+  .zone .ztag{font-size:14px;font-weight:700;margin:0 0 15px;padding-left:35px}
+  .zone.green .ztag{color:var(--green-text)}
+  .zone.amber .ztag{color:var(--amber)}
+  .zlist{list-style:none;margin:0;padding:0}
+  .zlist li{position:relative;padding:9px 0 9px 32px;font-size:16px;color:var(--ink);border-top:1px dashed rgba(120,80,50,.16)}
+  .zlist li:first-child{border-top:none}
+  .zlist li::before{position:absolute;left:2px;top:9px;font-size:16px}
+  .zone.green .zlist li::before{content:"✓";color:var(--green);font-weight:800}
+  .zone.amber .zlist li::before{content:"🔑";font-size:14px;top:10px}
+  .zlist li b{color:var(--ink)}
+  .zlist small{display:block;color:var(--muted);font-size:14.5px;margin-top:3px}
+
+  /* ── Примеры-пузыри ── */
+  .examples-head{font-size:15.5px;font-weight:700;color:var(--terra-deep);margin:26px 0 14px}
+  .bubbles{display:grid;gap:14px}
+  .bubble{
+    background:linear-gradient(180deg,#FDF3E9,#FBEADF);
+    border:1px solid #EFCFB8;
+    border-radius:18px 18px 18px 6px;
+    padding:15px 20px;font-size:16.5px;color:var(--ink);line-height:1.55;
+    position:relative;box-shadow:var(--shadow-soft);
+  }
+  .bubble::after{
+    content:"";position:absolute;left:-8px;bottom:0;width:16px;height:16px;
+    background:#FBEADF;border-left:1px solid #EFCFB8;border-bottom:1px solid #EFCFB8;
+    border-bottom-left-radius:14px;
+  }
+  .bubble .who{
+    display:inline-block;font-size:12px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;
+    color:#fff;background:var(--terra);border-radius:7px;padding:3px 9px;margin-bottom:9px;
+  }
+
+  /* ── БЛОК 4: польза ── */
+  .use{display:grid;gap:16px}
+  .use .row{
+    display:flex;gap:17px;align-items:flex-start;
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow-soft);
+  }
+  .use .row.hat{
+    background:linear-gradient(165deg,#FBEEE1,#FDF7ED);border-color:#EDCBAF;
+    box-shadow:0 12px 34px -16px rgba(181,82,47,.4);
+  }
+  .use .ic{
+    flex:none;width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:24px;
+    background:linear-gradient(160deg,#FBEADF,#F2D5C0);border:1px solid #EFCFB8;
+  }
+  .use .body{flex:1}
+  .use .badge4{
+    display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:.4px;color:#fff;
+    background:var(--terra);border-radius:7px;padding:3px 10px;margin-bottom:8px;
+  }
+  .use h3{margin:0 0 5px;font-size:17.5px}
+  .use p{margin:0;font-size:16px;color:var(--ink-soft)}
+  .use .cmd-inline{font-family:"Consolas","SF Mono",Menlo,monospace;font-weight:700;color:var(--terra-deep)}
+  .use .safe{
+    display:flex;gap:9px;align-items:flex-start;margin-top:12px;font-size:15px;font-weight:600;color:var(--green-text);
+    background:var(--green-bg);border:1px solid var(--green-line);border-radius:12px;padding:11px 14px;
+  }
+  .use .safe .si{font-size:18px;flex:none}
+
+  /* ── БЛОК 5: скиллы ── */
+  .skills{grid-template-columns:repeat(2,1fr)}
+  .skill{
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;display:flex;gap:15px;align-items:flex-start;box-shadow:var(--shadow-soft);
+  }
+  .skill .av{
+    flex:none;width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:24px;color:#fff;
+  }
+  .skill .cmd{font-family:"Consolas","SF Mono",Menlo,monospace;font-weight:700;font-size:16.5px;color:var(--terra-deep)}
+  .skill p{margin:4px 0 0;font-size:15.5px;color:var(--ink-soft)}
+  .sk1 .av{background:linear-gradient(160deg,#C2603E,#9E4526)}
+  .sk2 .av{background:linear-gradient(160deg,#CD9345,#B07A22)}
+  .sk3 .av{background:linear-gradient(160deg,#6E9E72,#4C7A50)}
+  .sk4 .av{background:linear-gradient(160deg,#9C7BB0,#6E4F86)}
+  .sk5 .av{background:linear-gradient(160deg,#5C8AA6,#3C6580)}
+  .skills-note{
+    grid-column:1/-1;text-align:center;font-size:16px;color:var(--ink-soft);
+    background:var(--terra-soft);border:1px dashed #EDCBAF;border-radius:var(--radius-sm);padding:15px 18px;
+  }
+  .skills-note b{color:var(--terra-deep)}
+
+  /* ── БЛОК 6: две колонки можно / владелец ── */
+  .owner-grid{grid-template-columns:1fr 1fr}
+  .zone-note{
+    grid-column:1/-1;margin-top:4px;
+    background:var(--paper);border:1px solid var(--amber-line);border-left:5px solid var(--amber);
+    border-radius:var(--radius-sm);padding:17px 21px;font-size:16px;color:var(--ink);
+    display:flex;gap:12px;align-items:flex-start;
+  }
+  .zone-note .zi{font-size:22px;flex:none}
+  .zone-note b{color:var(--amber)}
+
+  /* ── БЛОК 7: приватность ── */
+  .privacy{display:grid;gap:15px}
+  .privacy .row{
+    display:flex;gap:15px;align-items:flex-start;
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:19px 23px;box-shadow:var(--shadow-soft);
+  }
+  .privacy .ic{flex:none;font-size:23px;width:32px;text-align:center}
+  .privacy p{margin:0;font-size:16px;color:var(--ink-soft)}
+  .privacy p b{color:var(--terra-deep)}
+
+  /* ── БЛОК 8: карта-таблица ── */
+  .table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow-soft)}
+  table{border-collapse:collapse;width:100%;min-width:520px;background:var(--paper);font-size:16px}
+  th,td{text-align:left;padding:15px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{
+    background:var(--cream-2);font-weight:800;font-size:13.5px;letter-spacing:.5px;
+    text-transform:uppercase;color:var(--ink-soft);
+  }
+  tbody tr:last-child td{border-bottom:none}
+  td .fname{
+    font-family:"Consolas","SF Mono",Menlo,monospace;font-weight:700;font-size:15.5px;
+    color:var(--wood);white-space:nowrap;
+  }
+  td .fdesc{color:var(--ink-soft);font-size:15.5px}
+  .pill{
+    display:inline-block;font-size:13.5px;font-weight:800;padding:4px 12px;border-radius:999px;white-space:nowrap;
+  }
+  .pill.write{background:var(--green-bg);color:var(--green-text);border:1px solid var(--green-line)}
+  .pill.read{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-line)}
+  .pill.ro{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-line)}
+  .map-legend{
+    display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;font-size:14.5px;color:var(--muted);
+  }
+  .map-legend span{display:inline-flex;align-items:center;gap:7px}
+
+  /* ── БЛОК 9: следующий шаг ── */
+  .next{
+    text-align:center;
+    background:linear-gradient(165deg,#FBEEE1,#FDF7ED);
+    border:1px solid #EDCBAF;border-radius:var(--radius);
+    padding:40px 28px;box-shadow:var(--shadow);
+  }
+  .next h2{font-family:Georgia,serif;font-size:clamp(23px,4vw,31px);margin:0 0 12px}
+  .next p{max-width:640px;margin:0 auto 8px;font-size:17.5px;color:var(--ink-soft)}
+  .next p b{color:var(--terra-deep)}
+  .next .start{
+    display:inline-block;margin-top:22px;font-size:19px;font-weight:700;color:#fff;
+    background:linear-gradient(160deg,#C2603E,#9E4526);border-radius:14px;padding:15px 32px;
+    box-shadow:var(--shadow);
+  }
+  .next .start .q{font-family:Georgia,serif;font-style:italic}
+  .next .small{font-size:15.5px;color:var(--muted);margin-top:18px}
+
+  footer{text-align:center;color:var(--muted);font-size:15px;padding:28px 20px 48px;line-height:1.7}
+  footer b{color:var(--ink-soft)}
+  footer .hr{width:60px;height:3px;border-radius:3px;background:var(--line);margin:0 auto 18px}
+
+  /* ── Кнопка «наверх» ── */
+  .totop{
+    position:fixed;right:20px;bottom:20px;z-index:45;
+    width:50px;height:50px;border-radius:50%;border:1px solid var(--line);
+    background:var(--paper);color:var(--terra-deep);font-size:22px;line-height:1;cursor:pointer;
+    box-shadow:var(--shadow);display:grid;place-items:center;
+    opacity:0;visibility:hidden;transform:translateY(10px);transition:.22s ease;
+  }
+  .totop.show{opacity:1;visibility:visible;transform:none}
+  .totop:hover{background:var(--terra);color:#fff}
+
+  /* ── адаптив ── */
+  @media (max-width:780px){
+    body{font-size:16.5px}
+    .ba,.steps,.skills,.owner-grid{grid-template-columns:1fr}
+    .promise{padding:24px 20px}
+    .nav .brand span{display:none}
+    .use .row{padding:19px 18px}
+  }
+  @media (max-width:420px){
+    .nav .brand{font-size:14px}
+    .print-btn span.plabel{display:none}
+    .print-btn{padding:9px 12px}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none !important}
+  }
+
+  /* ── печать / PDF ── */
+  @media print{
+    :root{--shadow:none;--shadow-soft:none}
+    html,body{
+      background:var(--cream) !important;
+      print-color-adjust:exact;-webkit-print-color-adjust:exact;
+      font-size:12.5px;
+    }
+    .nav,.totop,.no-print{display:none !important}
+    section{padding:13px 0}
+    .hero{padding:18px 0 12px}
+    .step .q,.next .start,.print-btn{box-shadow:none !important}
+    .promise,.step,.zone,.zone-note,.use .row,.skill,.privacy .row,.bubble,.next,.ba .col,.table-wrap,.skills-note{
+      break-inside:avoid;page-break-inside:avoid;box-shadow:none !important;
+    }
+    .sec-head,h1,h2,h3{break-after:avoid;page-break-after:avoid}
+    .ba,.steps,.skills,.owner-grid{grid-template-columns:1fr 1fr}
+    table{min-width:0}
+    .table-wrap{overflow:visible}
+    a{color:var(--ink) !important;text-decoration:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Липкая мини-навигация ── -->
+<nav class="nav" aria-label="Разделы памятки">
+  <div class="nav-inner">
+    <div class="brand">Марко&nbsp;Поло <span>· AI&nbsp;Штаб</span></div>
+    <ul>
+      <li><a href="#start">Как начать</a></li>
+      <li><a href="#can">Что можно</a></li>
+      <li><a href="#use">Чем полезен</a></li>
+      <li><a href="#skills">Скиллы</a></li>
+      <li><a href="#owner">Решает Алексей</a></li>
+      <li><a href="#privacy">Лимит</a></li>
+      <li><a href="#map">Где что лежит</a></li>
+    </ul>
+    <button class="print-btn" type="button" onclick="window.print()" aria-label="Распечатать памятку">
+      <span class="pi">🖨</span><span class="plabel">Распечатать</span>
+    </button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- ── HERO / обещание ── -->
+  <header class="hero">
+    <span class="kicker">Привет, Галина! Это короткая памятка обо мне</span>
+    <h1>Как работать со мной —<br>памятка Галины</h1>
+    <p class="sub">AI Штаб компании <b>«Марко Поло»</b> · твой помощник Claude Code</p>
+
+    <div class="promise">
+      <span class="tag">Кто я</span>
+      <p class="lead">Я — AI-помощник компании «Марко Поло». <b>Не просто чат-бот.</b></p>
+      <p>У меня есть память в виде файлов на рабочем компьютере. Всё, что мы делаем, сохраняется и доступно даже в новом чате.</p>
+      <p>Помогаю с текстами, ответами клиентам, документами, расчётами и просто отвечаю «что где лежит» и «что сейчас в работе».</p>
+    </div>
+  </header>
+
+  <!-- ── БЛОК 1: было / стало ── -->
+  <section id="bystalo">
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div>
+        <h2>Как было и как стало</h2>
+        <div class="hint">Держать всё в голове больше не нужно</div>
+      </div>
+    </div>
+    <div class="grid ba">
+      <div class="col was">
+        <div class="lbl"><span class="mk">✕</span>Было</div>
+        <p>Держишь всё в голове, переспрашиваешь, ищешь по папкам, боишься ответить клиенту неправильно.</p>
+      </div>
+      <div class="col now">
+        <div class="lbl"><span class="mk">✓</span>Стало</div>
+        <p>Под рукой готовые черновики ответов, задачи и тексты; <b>ничего не теряется</b> между чатами. В рискованной теме — цена, сроки, гарантия — есть черновик и шаблон, а не «из головы».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── БЛОК 2: как начать ── -->
+  <section id="start">
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div>
+        <h2>Как начать — 3 простых правила</h2>
+        <div class="hint">Освоишь за минуту, дальше — как разговор с коллегой</div>
+      </div>
+    </div>
+    <div class="grid steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>Представься</h3>
+        <p>Каждый новый чат начинай словами «Это Галина». Без подписи я думаю, что говорит Алексей.</p>
+        <span class="q">«Это Галина…»</span>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>Один чат — одна тема</h3>
+        <p>Один чат = один человек и желательно одна тема. Новая тема — новый чат: длинные чаты съедают общий лимит.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>Пиши по-человечески</h3>
+        <p>Обычными словами, как коллеге: «нужно…», «помоги…», «объясни…». Никаких спец-команд — я сам разберусь, куда положить результат.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── БЛОК 3: что можно + примеры ── -->
+  <section id="can">
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div>
+        <h2>Что можно просить — а можно почти всё</h2>
+        <div class="hint">С 15.07.2026 у тебя максимальные полномочия — делаю почти всё сразу, как для Алексея</div>
+      </div>
+    </div>
+    <div class="zone green">
+      <div class="zhead"><span class="zicon">🌿</span><h3>Твоя зона — почти всё, делаю сразу</h3></div>
+      <div class="ztag">максимальные полномочия наравне с владельцем · правки помечу «от Галины» (это прослеживаемость, не ограничение)</div>
+      <ul class="zlist">
+        <li><b>Тексты и черновики:</b> письма, сообщения клиентам, посты, описания.</li>
+        <li><b>Операционка:</b> структурировать информацию, список или таблица, подготовить документ, разобрать входящие.</li>
+        <li><b>Вопросы:</b> «что за проект X?», «где лежит Y?», «что сейчас в работе?».</li>
+        <li><b>Правки во всех рабочих папках</b> (plans/, business/, directions/, presentation/, скиллы): дополнить план, внести задачу, обновить карточку, готовить материалы.
+          <small>Всё помечаю «от Галины» — Алексей видит источник.</small></li>
+        <li><b>Публикация и отправка наружу</b> (сайт, соцсети, рассылка, git push) — на твоё «го», без похода к Алексею. Перед необратимым шагом только переспрошу «точно?».</li>
+      </ul>
+    </div>
+
+    <div class="examples-head">Примеры хороших формулировок — можно скопировать и подставить своё:</div>
+    <div class="bubbles">
+      <div class="bubble"><span class="who">Пример запроса</span><b>Это Галина.</b> Напиши черновик ответа клиенту: спрашивает про сроки доставки кухни, срок — 3 недели.</div>
+      <div class="bubble"><span class="who">Пример запроса</span><b>Это Галина.</b> Внеси в план оргструктуры: я ещё веду приём входящих звонков по будням.</div>
+      <div class="bubble"><span class="who">Пример запроса</span><b>Это Галина.</b> Объясни простыми словами, что за проект «Кухни ПМ» и что там сейчас.</div>
+    </div>
+  </section>
+
+  <!-- ── БЛОК 4: где особенно полезен ── -->
+  <section id="use">
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div>
+        <h2>Где я особенно полезен тебе</h2>
+        <div class="hint">Под твои задачи и твою шляпу</div>
+      </div>
+    </div>
+    <div class="use">
+      <div class="row hat">
+        <div class="ic">💬</div>
+        <div class="body">
+          <span class="badge4">Шляпа 4</span>
+          <h3>Черновики ответов клиентам — Авито и ВК</h3>
+          <p>Сложный вопрос приносишь мне → получаешь черновик → проверяешь → отправляешь.</p>
+          <div class="safe"><span class="si">🛡️</span><span>За ответ по утверждённому шаблону ответственность с тебя снята — это защита от «боюсь ответить неправильно».</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="ic">✍️</div>
+        <div class="body">
+          <h3>Тексты и посты</h3>
+          <p>Через <span class="cmd-inline">/copywriter</span> — посты, рассылки, тексты для сайта.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="ic">🗂️</div>
+        <div class="body">
+          <h3>Структурирование и документы</h3>
+          <p>Списки, таблицы, регламенты — приведу разрозненное в порядок.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── БЛОК 5: скиллы ── -->
+  <section id="skills">
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div>
+        <h2>Команда скиллов</h2>
+        <div class="hint">Вызываются словом со слэшем — как позвать нужного сотрудника</div>
+      </div>
+    </div>
+    <div class="grid skills">
+      <div class="skill sk1">
+        <div class="av">✒️</div>
+        <div><div class="cmd">/copywriter</div><p>тексты: посты, рассылки, сайт</p></div>
+      </div>
+      <div class="skill sk2">
+        <div class="av">🤝</div>
+        <div><div class="cmd">/sales</div><p>продажи: скрипты, возражения, переписка</p></div>
+      </div>
+      <div class="skill sk3">
+        <div class="av">🎯</div>
+        <div><div class="cmd">/coach</div><p>коуч: разобрать цель или затык</p></div>
+      </div>
+      <div class="skill sk4">
+        <div class="av">📋</div>
+        <div><div class="cmd">/hubbard</div><p>регламенты: шляпы, ценный конечный продукт (ЦКП)</p></div>
+      </div>
+      <div class="skill sk5">
+        <div class="av">📊</div>
+        <div><div class="cmd">/finance</div><p>финансы: планирование денег (ФРС), точка безубыточности, бюджеты</p></div>
+      </div>
+      <div class="skills-note">
+        Можно <b>не вызывать самой</b> — просто опиши задачу, и я подключу нужного.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── БЛОК 6: что решает владелец ── -->
+  <section id="owner">
+    <div class="sec-head">
+      <div class="sec-num">6</div>
+      <div>
+        <h2>Что решает только владелец</h2>
+        <div class="hint">Спрашивать можно всё. Разница только в том, кто нажимает кнопку</div>
+      </div>
+    </div>
+    <div class="grid owner-grid">
+      <div class="zone green">
+        <div class="zhead"><span class="zicon">🌿</span><h3>Можно просить — сделаю сам</h3></div>
+        <div class="ztag">почти весь штаб — максимальные полномочия наравне с владельцем</div>
+        <ul class="zlist">
+          <li><b>Тексты и черновики:</b> письма, сообщения, посты, описания.</li>
+          <li><b>Операционка:</b> структура, списки, таблицы, документы.</li>
+          <li><b>Вопросы:</b> что за проект, где лежит, что сейчас в работе.</li>
+          <li><b>Правки во всех рабочих папках</b> (plans/, business/, directions/, presentation/) — помечу «от Галины».</li>
+        </ul>
+      </div>
+      <div class="zone amber">
+        <div class="zhead"><span class="zicon">🔑</span><h3>Единственное только-чтение + техника безопасности</h3></div>
+        <div class="ztag">личная зона Алексея; остальное — общая безопасность, не поход к владельцу</div>
+        <ul class="zlist">
+          <li><b>Личность и ценности Алексея</b> (папки core/clone/, core/compass/) — тебе только чтение. Правку туда зафиксирую вопросом Алексею.</li>
+          <li><b>Пароли, токены, ключи, Credential Manager</b> — никогда не покажу в тексте.</li>
+          <li><b>Перед удалением или выкладкой наружу</b> — коротко переспрошу «точно?» (защита от случайности). Скажешь «да» — сделаю, к Алексею не иду.</li>
+        </ul>
+      </div>
+      <div class="zone-note">
+        <span class="zi">💡</span>
+        <div><b>Важно:</b> вопрос владельцу зафиксирую только по его личной зоне (core/clone/, core/compass/). Всё остальное — включая наружу — делаю на твоё «го», без похода к Алексею. Значимые действия записываю в журнал (см. раздел ниже). Финальное слово во всём — за Алексеем, но операционно согласовывать у него ничего не нужно.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── БЛОК 7: лимит и приватность ── -->
+  <section id="privacy">
+    <div class="sec-head">
+      <div class="sec-num">7</div>
+      <div>
+        <h2>Честно про лимит и приватность</h2>
+        <div class="hint">Пара бытовых правил, чтобы всё работало ровно</div>
+      </div>
+    </div>
+    <div class="privacy">
+      <div class="row">
+        <div class="ic">⏳</div>
+        <p><b>Лимит AI общий с Алексеем — бережём.</b> Поэтому короткие чаты по одной теме.</p>
+      </div>
+      <div class="row">
+        <div class="ic">🔒</div>
+        <p><b>Не пересылай мне пароли и ключи</b> — я сам откажусь принимать их в текст.</p>
+      </div>
+      <div class="row">
+        <div class="ic">💾</div>
+        <p><b>Если я предупредил «диалог длинный, пора в новый чат» — послушайся:</b> контекст сохраню в файл, ничего не потеряется.</p>
+      </div>
+      <div class="row">
+        <div class="ic">🧾</div>
+        <p><b>Значимые действия я записываю в журнал</b> (публикации, отправки наружу, удаления, крупные правки) — для прослеживаемости у Алексея. Это не слежка за тобой, а обычная «бухгалтерия действий».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── БЛОК 8: карта папок (таблица) ── -->
+  <section id="map">
+    <div class="sec-head">
+      <div class="sec-num">8</div>
+      <div>
+        <h2>Где что лежит — карта простыми словами</h2>
+        <div class="hint">Чтобы понимать, о чём я говорю, когда называю папку — и где тебе можно писать</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Папка</th><th>Что там</th><th>Доступ</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="fname">plans/</span></td>
+            <td><span class="fdesc">Все текущие проекты. Любое дело начинается с файла здесь.</span></td>
+            <td><span class="pill write">пишем вместе</span></td>
+          </tr>
+          <tr>
+            <td><span class="fname">business/</span></td>
+            <td><span class="fdesc">Операционка: команда, оргсхема, продукты, клиенты — и твои шляпы.</span></td>
+            <td><span class="pill write">пишем вместе</span></td>
+          </tr>
+          <tr>
+            <td><span class="fname">core/knowledge/</span></td>
+            <td><span class="fdesc">База знаний компании: выжимки, методики.</span></td>
+            <td><span class="pill read">читать всё</span></td>
+          </tr>
+          <tr>
+            <td><span class="fname">core/clone/,<br>core/compass/</span></td>
+            <td><span class="fdesc">Личное владельца.</span></td>
+            <td><span class="pill ro">только чтение</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="map-legend">
+      <span><span class="pill write">пишем вместе</span> — тут можно вносить и менять</span>
+      <span><span class="pill read">читать всё</span> — можно открывать и читать</span>
+      <span><span class="pill ro">только чтение</span> — смотреть можно, менять нет</span>
+    </div>
+  </section>
+
+  <!-- ── БЛОК 9: следующий шаг ── -->
+  <section id="next">
+    <div class="next">
+      <h2>Следующий шаг — и он совсем простой</h2>
+      <p>Ничего сложного делать не нужно. Начни новый чат словами «Это Галина» и опиши задачу обычными словами.</p>
+      <p>Сомневаешься, можно ли, — просто спроси. <b>Спросить можно всё.</b></p>
+      <div class="start"><span class="q">«Это Галина…»</span> — и дальше своими словами</div>
+      <div class="small">Я рядом. Разберёмся вместе.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="hr"></div>
+    Памятка для <b>Галины Шумиловой</b> · AI Штаб компании «Марко Поло» · твой помощник Claude Code<br>
+    Этот файл открывается двойным кликом и работает без интернета. Можно распечатать и повесить на стену.
+  </footer>
+
+</div>
+
+<button class="totop" type="button" id="toTop" aria-label="Наверх, к началу">↑</button>
+
+<script>
+(function(){
+  // Подсветка активного раздела в навигации при прокрутке
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+  var map = {};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+
+  if('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var act = map[e.target.id];
+          if(act){
+            links.forEach(function(l){ l.classList.remove('active'); });
+            act.classList.add('active');
+            // держим активный пункт в поле зрения на мобильной прокручиваемой навигации
+            if(act.scrollIntoView){ act.scrollIntoView({block:'nearest', inline:'center'}); }
+          }
+        }
+      });
+    }, { rootMargin: '-30% 0px -62% 0px', threshold: 0 });
+
+    Array.prototype.slice.call(document.querySelectorAll('section[id]')).forEach(function(s){
+      if(map[s.id]) obs.observe(s);
+    });
+  }
+
+  // Кнопка «наверх»
+  var toTop = document.getElementById('toTop');
+  if(toTop){
+    var onScroll = function(){
+      if(window.pageYOffset > 500){ toTop.classList.add('show'); }
+      else { toTop.classList.remove('show'); }
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+    toTop.addEventListener('click', function(){
+      window.scrollTo({ top:0, behavior:'smooth' });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
