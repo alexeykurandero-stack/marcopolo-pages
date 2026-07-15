@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Подключаем твой Дзен-мани к Штабу — памятка для Галины</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f1117;
+    --card: #1a1e28;
+    --card2: #202534;
+    --text: #e8eaf0;
+    --muted: #9aa3b5;
+    --accent: #34d399;   /* эмеральд — «безопасно / всё под контролем» */
+    --accent2: #60a5fa;  /* мягкий синий — ссылки/акценты */
+    --amber: #facc15;
+    --red: #f87171;
+    --line: #2d3344;
+  }
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    line-height: 1.55;
+  }
+  .slide {
+    min-height: 100vh; scroll-snap-align: start;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 56px 8vw; position: relative;
+  }
+  .slide::after {
+    content: attr(data-n) " / 6";
+    position: absolute; bottom: 22px; right: 8vw;
+    color: var(--muted); font-size: 13px; letter-spacing: .08em;
+  }
+  .kicker {
+    font-size: 13px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 14px;
+  }
+  h1 { font-size: clamp(30px, 4.6vw, 54px); line-height: 1.12; font-weight: 800; }
+  h2 { font-size: clamp(24px, 3.2vw, 38px); line-height: 1.15; font-weight: 750; margin-bottom: 26px; }
+  h1 .g, h2 .g { color: var(--accent); }
+  .sub { color: #c3c9d6; font-size: clamp(15px, 1.5vw, 19px); margin-top: 18px; max-width: 780px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  .badge {
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+    padding: 9px 18px; font-size: 14px; color: var(--text);
+  }
+  .badge b { color: var(--accent); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; max-width: 960px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 22px; border-left: 4px solid var(--accent);
+  }
+  .card .ico { font-size: 26px; display: block; margin-bottom: 10px; }
+  .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  .card p { font-size: 14.5px; color: #c3c9d6; }
+
+  .big-points { display: flex; flex-direction: column; gap: 20px; max-width: 900px; }
+  .point { display: flex; gap: 18px; align-items: flex-start; }
+  .point .ico { font-size: 28px; line-height: 1.2; flex-shrink: 0; }
+  .point .body b { font-weight: 700; color: var(--text); }
+  .point .body { font-size: clamp(15px, 1.7vw, 19px); color: #c9cfdc; }
+
+  .axis-tag {
+    display: inline-block; border-radius: 999px; padding: 4px 14px;
+    font-size: 13px; font-weight: 700; margin-bottom: 16px;
+    background: rgba(52,211,153,.13); color: var(--accent); border: 1px solid rgba(52,211,153,.4);
+  }
+
+  .steps { counter-reset: s; display: flex; flex-direction: column; gap: 16px; max-width: 860px; }
+  .step { display: flex; gap: 16px; align-items: flex-start; }
+  .step::before {
+    counter-increment: s; content: counter(s);
+    background: var(--card2); border: 1px solid rgba(52,211,153,.4); color: var(--accent);
+    width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-weight: 700; flex-shrink: 0; font-size: 16px;
+  }
+  .step .body { font-size: 16.5px; padding-top: 4px; color: #d4d9e4; }
+  .step .body b { color: var(--text); }
+  .step .body .site {
+    font-family: Consolas, monospace; background: var(--card2); color: #bfeee0;
+    padding: 2px 9px; border-radius: 6px; font-size: 15px;
+  }
+  .step .body .note { color: var(--muted); font-size: 14px; display: block; margin-top: 3px; }
+
+  .go {
+    background: rgba(52,211,153,.07); border: 1px solid rgba(52,211,153,.3);
+    border-radius: 12px; padding: 18px 22px; margin-top: 28px; max-width: 900px; font-size: 15.5px;
+  }
+  .go b { color: var(--accent); }
+  .warn {
+    background: rgba(250,204,21,.07); border: 1px solid rgba(250,204,21,.35);
+    border-radius: 12px; padding: 16px 20px; margin-top: 26px; max-width: 900px; font-size: 15px;
+  }
+  .warn b { color: var(--amber); }
+
+  .dots {
+    position: fixed; right: 18px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 10px; z-index: 10;
+  }
+  .dots a { width: 9px; height: 9px; border-radius: 50%; background: #3a4256; display: block; transition: .2s; }
+  .dots a.on { background: var(--accent); transform: scale(1.35); }
+  .hint {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    color: var(--muted); font-size: 12.5px; opacity: .7; z-index: 10;
+  }
+  @media (max-width: 700px) { .dots, .hint { display: none; } .slide::after { right: 20px; } .slide { padding: 48px 22px; } }
+  @media print {
+    html { scroll-snap-type: none; }
+    body { background: #fff; color: #111; }
+    .slide { min-height: auto; page-break-after: always; padding: 32px; }
+    .card, .go, .warn { border-color: #ccc; }
+    .dots, .hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="dots" id="dots"></nav>
+<div class="hint">↑ ↓ или PgUp/PgDn — листать</div>
+
+<!-- 1. ТИТУЛ -->
+<section class="slide" data-n="1" id="s1">
+  <div class="kicker">Личный финучёт · памятка для Галины · 15.07.2026</div>
+  <h1>Подключаем твой Дзен-мани<br><span class="g">к AI Штабу</span></h1>
+  <p class="sub">Дзен-мани уже считает твои деньги сам. Мы бережно забираем копию этих цифр к Штабу — чтобы помогать тебе вести личный учёт. Всё остаётся у тебя: твой аккаунт, твой Google Диск, твой контроль. От тебя нужно всего <b>два простых шага</b>.</p>
+  <div class="badges">
+    <span class="badge"><b>2</b> шага от тебя</span>
+    <span class="badge">данные — только на <b>твоём</b> Google Диске</span>
+    <span class="badge">правки в аккаунт — только с <b>твоего</b> согласия</span>
+  </div>
+</section>
+
+<!-- 2. ЧТО ЭТО -->
+<section class="slide" data-n="2" id="s2">
+  <h2>Что происходит — <span class="g">простыми словами</span></h2>
+  <div class="big-points">
+    <div class="point"><div class="ico">📸</div><div class="body">
+      <b>Делаем «фотографию» твоих операций.</b> Дзен-мани хранит твои доходы и расходы. Штаб время от времени делает копию-снимок этих цифр — как сфотографировать страницу. Само приложение при этом не трогаем.
+    </div></div>
+    <div class="point"><div class="ico">🤝</div><div class="body">
+      <b>Зачем это нужно.</b> Чтобы AI Штаб мог помогать тебе с личными финансами: видеть картину, подсказывать, считать — так же, как помогает по рабочим задачам.
+    </div></div>
+    <div class="point"><div class="ico">🔒</div><div class="body">
+      <b>Чего мы НЕ делаем.</b> Ничего не меняем в твоём Дзен-мани без спроса. По умолчанию — только смотрим (делаем копию). Любая правка — отдельно и только с твоего «да».
+    </div></div>
+  </div>
+</section>
+
+<!-- 3. ПОЧЕМУ БЕЗОПАСНО -->
+<section class="slide" data-n="3" id="s3">
+  <span class="axis-tag">🛡 Твои деньги — под твоим контролем</span>
+  <h2>Почему это безопасно</h2>
+  <div class="grid">
+    <div class="card">
+      <span class="ico">🔑</span>
+      <h3>Аккаунт — твой</h3>
+      <p>Ключ от Дзен-мани получаешь ты сама, от своего личного аккаунта. Никто за тебя в него не заходит.</p>
+    </div>
+    <div class="card">
+      <span class="ico">💾</span>
+      <h3>Данные — на твоём Google Диске</h3>
+      <p>Копия цифр ложится в папку на <b>твоём</b> Google Диске, а не в системы компании. Это твоё личное пространство.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🙈</span>
+      <h3>Ключ нигде не хранится</h3>
+      <p>Вводится один раз в момент подключения, в защищённое поле. Ни в переписке, ни в файлах компании его нет.</p>
+    </div>
+    <div class="card">
+      <span class="ico">✋</span>
+      <h3>Правки — только с твоего «да»</h3>
+      <p>Если однажды понадобится что-то поправить в аккаунте — сделаем только после твоего подтверждения и сначала сохраним копию «как было».</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. ШАГ 1 -->
+<section class="slide" data-n="4" id="s4">
+  <span class="axis-tag">Шаг 1 из 2</span>
+  <h2>Получи ключ <span class="g">от своего Дзен-мани</span></h2>
+  <div class="steps">
+    <div class="step"><div class="body">
+      Открой сайт <span class="site">zerro.app</span> и нажми «Войти через Дзен-мани». Войди своим обычным аккаунтом — тем же, что в приложении на телефоне.
+      <span class="note">Zerro — известный бесплатный помощник для Дзен-мани. Вход обычный, как в само приложение.</span>
+    </div></div>
+    <div class="step"><div class="body">
+      Открой страницу <span class="site">zerro.app/token</span>.
+    </div></div>
+    <div class="step"><div class="body">
+      Нажми <b>«Показать токен»</b> — появится длинная строчка-код. Это и есть ключ. Скопируй его и держи под рукой.
+    </div></div>
+  </div>
+  <div class="warn"><b>Важно:</b> ключ никому не пересылай в переписке и не выкладывай в чат. Он понадобится <b>один раз</b> — в момент подключения ты сама вставишь его в защищённое поле. Сделаем это вместе.</div>
+</section>
+
+<!-- 5. ШАГ 2 -->
+<section class="slide" data-n="5" id="s5">
+  <span class="axis-tag">Шаг 2 из 2</span>
+  <h2>Выбери папку <span class="g">на своём Google Диске</span></h2>
+  <div class="steps">
+    <div class="step"><div class="body">
+      Реши, в какой папке на твоём Google Диске будут лежать данные учёта. Можно завести новую — например, назвать её «Финансы».
+    </div></div>
+    <div class="step"><div class="body">
+      Напиши нам две вещи: <b>название этой папки</b> и <b>на каком компьютере</b> будем подключаться.
+      <span class="note">На Google Диск попадёт только копия твоих цифр — без ключа. Больше туда ничего не кладём.</span>
+    </div></div>
+  </div>
+  <div class="go">Это всё, что нужно от тебя. Дальше подключение делаем мы — вместе с тобой, за пару минут.</div>
+</section>
+
+<!-- 6. ЧТО ДАЛЬШЕ -->
+<section class="slide" data-n="6" id="s6">
+  <h2>Что будет дальше</h2>
+  <div class="steps">
+    <div class="step"><div class="body">
+      Подключаемся вместе и делаем <b>первый снимок</b> твоих операций.
+    </div></div>
+    <div class="step"><div class="body">
+      Ты видишь короткую сводку: сколько операций, за какой период, какие счета.
+      <span class="note">Конкретные суммы в переписке не показываем — они остаются только у тебя на Диске.</span>
+    </div></div>
+    <div class="step"><div class="body">
+      Дальше — спокойный ритм: обновляем снимок <b>раз в неделю или месяц</b>, как тебе удобно.
+    </div></div>
+  </div>
+  <div class="go"><b>Ты в любой момент главная.</b> Любые изменения в твоём аккаунте — только с твоего «да». Вопросы — просто спроси, поможем на каждом шаге. 💚</div>
+</section>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const dotsBox = document.getElementById('dots');
+  slides.forEach((s) => {
+    const a = document.createElement('a');
+    a.href = '#' + s.id;
+    dotsBox.appendChild(a);
+  });
+  const dots = [...dotsBox.children];
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const i = slides.indexOf(e.target);
+        dots.forEach((d, j) => d.classList.toggle('on', i === j));
+      }
+    });
+  }, { threshold: 0.55 });
+  slides.forEach(s => io.observe(s));
+  document.addEventListener('keydown', e => {
+    const cur = dots.findIndex(d => d.classList.contains('on'));
+    if (['ArrowDown','PageDown',' '].includes(e.key) && cur < slides.length - 1) {
+      e.preventDefault(); slides[cur + 1].scrollIntoView();
+    } else if (['ArrowUp','PageUp'].includes(e.key) && cur > 0) {
+      e.preventDefault(); slides[cur - 1].scrollIntoView();
+    }
+  });
+</script>
+</body>
+</html>
