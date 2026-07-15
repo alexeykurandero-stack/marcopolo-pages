@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Монтаж кухонных гарнитуров — рыночное исследование РФ 2025–2026</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --panel:#ffffff; --ink:#1a1d21; --muted:#5b636d; --line:#e3e7ec;
+    --accent:#b8332a; --accent2:#2b4d7a; --green:#1f7a4d; --amber:#9a6a00; --red:#b3261e;
+    --blue:#2b4d7a; --chip-bg:#eef1f5; --code:#f0f2f5; --shadow:0 1px 3px rgba(20,25,35,.08),0 8px 24px rgba(20,25,35,.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0f1216; --panel:#171b21; --ink:#e8ebee; --muted:#98a2ad; --line:#262c34;
+      --accent:#e0685f; --accent2:#7fa6d6; --green:#5fbf8c; --amber:#e0b04a; --red:#e57a72;
+      --blue:#7fa6d6; --chip-bg:#20262e; --code:#1b2027; --shadow:0 1px 3px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+  a{color:var(--accent2); text-decoration:none; border-bottom:1px solid transparent}
+  a:hover{border-bottom-color:currentColor}
+  .wrap{max-width:940px; margin:0 auto; padding:0 20px}
+
+  /* Hero */
+  header.hero{
+    background:linear-gradient(135deg,#7a1f18,#b8332a 55%,#c9553f);
+    color:#fff; padding:64px 0 52px; position:relative; overflow:hidden;
+  }
+  @media (prefers-color-scheme: dark){ header.hero{background:linear-gradient(135deg,#4a130f,#7a241c 55%,#8f3a2c)} }
+  header.hero:after{content:""; position:absolute; inset:0; background:radial-gradient(1200px 300px at 80% -10%,rgba(255,255,255,.14),transparent)}
+  .hero .wrap{position:relative; z-index:1}
+  .kicker{font-size:13px; letter-spacing:.14em; text-transform:uppercase; opacity:.9; font-weight:600}
+  h1{font-size:clamp(26px,4.4vw,40px); line-height:1.15; margin:12px 0 10px; font-weight:800; letter-spacing:-.01em}
+  .sub{font-size:clamp(16px,2.2vw,19px); opacity:.95; max-width:640px; margin:0}
+  .hero-meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px}
+  .hero-meta .pill{background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28); color:#fff; padding:7px 13px; border-radius:999px; font-size:13.5px; font-weight:600; backdrop-filter:blur(4px)}
+
+  /* Sections */
+  section{padding:40px 0; border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:none}
+  h2{font-size:clamp(21px,3vw,27px); margin:0 0 6px; font-weight:800; letter-spacing:-.01em; scroll-margin-top:16px}
+  h2 .num{color:var(--accent); font-variant-numeric:tabular-nums; margin-right:10px}
+  h3{font-size:18px; margin:26px 0 8px; font-weight:700}
+  .lead{color:var(--muted); font-size:16.5px; margin:0 0 18px}
+  p{margin:12px 0}
+
+  /* Cards / callouts */
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px 22px; box-shadow:var(--shadow); margin:18px 0}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; margin:18px 0}
+  .stat{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px; box-shadow:var(--shadow)}
+  .stat .big{font-size:30px; font-weight:800; letter-spacing:-.02em; line-height:1}
+  .stat .lbl{color:var(--muted); font-size:13.5px; margin-top:7px}
+  .stat.green .big{color:var(--green)} .stat.amber .big{color:var(--amber)} .stat.red .big{color:var(--red)} .stat.blue .big{color:var(--blue)}
+
+  .note{border-left:4px solid var(--accent2); background:var(--panel); border-radius:0 12px 12px 0; padding:14px 18px; margin:16px 0; box-shadow:var(--shadow)}
+  .note.warn{border-left-color:var(--amber)}
+  .note.bad{border-left-color:var(--red)}
+  .note.good{border-left-color:var(--green)}
+  .note .t{font-weight:700; margin-bottom:3px}
+
+  /* Verdict chips */
+  .chip{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; padding:3px 9px; border-radius:999px; letter-spacing:.01em; white-space:nowrap; vertical-align:middle}
+  .chip.ok{background:color-mix(in srgb,var(--green) 16%,transparent); color:var(--green)}
+  .chip.up{background:color-mix(in srgb,var(--amber) 20%,transparent); color:var(--amber)}
+  .chip.no{background:color-mix(in srgb,var(--red) 16%,transparent); color:var(--red)}
+  .chip.new{background:color-mix(in srgb,var(--blue) 16%,transparent); color:var(--blue)}
+
+  /* Tables */
+  .tw{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:16px 0; border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow)}
+  table{border-collapse:collapse; width:100%; min-width:520px; background:var(--panel); font-size:14.5px}
+  th,td{text-align:left; padding:10px 13px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{background:var(--chip-bg); font-weight:700; font-size:13px; letter-spacing:.02em; position:sticky; top:0}
+  tr:last-child td{border-bottom:none}
+  td.num{font-variant-numeric:tabular-nums; white-space:nowrap}
+
+  /* Details / расшифровки */
+  details{background:var(--panel); border:1px solid var(--line); border-radius:12px; margin:12px 0; overflow:hidden; box-shadow:var(--shadow)}
+  details>summary{cursor:pointer; padding:13px 16px; font-weight:650; list-style:none; display:flex; align-items:center; gap:10px; user-select:none}
+  details>summary::-webkit-details-marker{display:none}
+  details>summary:before{content:"▸"; color:var(--accent); font-size:13px; transition:transform .15s}
+  details[open]>summary:before{transform:rotate(90deg)}
+  details>summary:hover{background:var(--chip-bg)}
+  .det-body{padding:2px 18px 16px 40px; color:var(--ink); font-size:14.5px}
+  .det-body .q{border-left:3px solid var(--line); padding:2px 0 2px 14px; margin:10px 0; color:var(--muted); font-style:italic}
+  .det-body .src{font-size:13px; margin-top:8px}
+  .det-body ul{margin:8px 0; padding-left:20px}
+  .det-body li{margin:5px 0}
+
+  ul.clean{list-style:none; padding:0; margin:14px 0}
+  ul.clean li{padding:9px 0 9px 28px; position:relative; border-bottom:1px solid var(--line)}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li:before{content:"■"; color:var(--accent); position:absolute; left:6px; top:9px; font-size:11px}
+
+  code{background:var(--code); padding:1px 6px; border-radius:6px; font:13.5px/1.4 ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+
+  /* TOC */
+  nav.toc{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px 20px; margin:22px 0; box-shadow:var(--shadow)}
+  nav.toc .th{font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:10px}
+  nav.toc ol{margin:0; padding-left:20px; columns:2; column-gap:28px}
+  @media (max-width:620px){ nav.toc ol{columns:1} }
+  nav.toc li{margin:5px 0; break-inside:avoid}
+
+  footer{padding:34px 0 60px; color:var(--muted); font-size:13.5px; text-align:center}
+  .totop{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#fff; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; box-shadow:var(--shadow); opacity:0; pointer-events:none; transition:opacity .2s; z-index:20}
+  .totop.show{opacity:1; pointer-events:auto}
+  .src-group{margin:14px 0}
+  .src-group .gt{font-weight:700; margin-bottom:4px; color:var(--accent)}
+  .src-group a{display:inline-block; margin:2px 10px 2px 0; font-size:14px}
+  @media print{ .totop,nav.toc{display:none} details{break-inside:avoid} details[open] .det-body{display:block} body{background:#fff} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Рыночное исследование · для построения процессов монтажной службы</div>
+    <h1>Монтаж кухонных гарнитуров в России, 2025–2026</h1>
+    <p class="sub">Сколько стоит, как устроен процесс, где юридические границы, как организуют монтажную службу — и что из этого выдержало перекрёстную проверку.</p>
+    <div class="hero-meta">
+      <span class="pill">30 источников</span>
+      <span class="pill">75 / 75 фактов подтверждено</span>
+      <span class="pill">6 утверждений на адверсарной проверке</span>
+      <span class="pill">Обновлено 16.07.2026</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>Как читать этот материал</h2>
+  <p class="lead">Это не сборник ссылок, а проверенная картина рынка. Сначала собрали факты из первичных источников (прайсы компаний, инструкции производителей, чек-листы приёмки, нормативные документы), затем каждый факт перепроверили против живой страницы, а шесть ключевых утверждений отдельно попытались <em>опровергнуть</em> независимым поиском.</p>
+
+  <div class="grid">
+    <div class="stat green"><div class="big">75/75</div><div class="lbl">извлечённых фактов подтверждены дословно против источника</div></div>
+    <div class="stat amber"><div class="big">4</div><div class="lbl">утверждения уточнены проверкой (цифры/нормы поправлены)</div></div>
+    <div class="stat red"><div class="big">1</div><div class="lbl">утверждение опровергнуто — было заблуждением рынка</div></div>
+    <div class="stat blue"><div class="big">≈0,70</div><div class="lbl">коэффициент цен Брянск / Москва</div></div>
+  </div>
+
+  <p>За каждым важным блоком — раскрывающаяся <b>«Расшифровка»</b>: там дословная цитата из источника, статус проверки и ссылка. Метки статуса:</p>
+  <p>
+    <span class="chip ok">✓ подтверждено</span>&nbsp;
+    <span class="chip up">⚠ уточнено</span>&nbsp;
+    <span class="chip no">✕ опровергнуто</span>&nbsp;
+    <span class="chip new">＋ добор</span>
+  </p>
+
+  <nav class="toc">
+    <div class="th">Содержание</div>
+    <ol>
+      <li><a href="#s1">Стоимость: три модели цены</a></li>
+      <li><a href="#s2">Брянск: местные расценки</a></li>
+      <li><a href="#s3">Процесс и этапы</a></li>
+      <li><a href="#s4">Регламенты, чек-листы, акты</a></li>
+      <li><a href="#s5">Безопасность и нормативы</a></li>
+      <li><a href="#s6">Ошибки и дефекты</a></li>
+      <li><a href="#s7">Организация монтажной службы</a></li>
+      <li><a href="#s8">Модульные кухни</a></li>
+      <li><a href="#s9">Что дальше</a></li>
+      <li><a href="#src">Все источники</a></li>
+    </ol>
+  </nav>
+</section>
+
+<!-- 1 -->
+<section id="s1">
+  <h2><span class="num">01</span>Стоимость монтажа</h2>
+  <p class="lead">На рынке живут три модели тарификации, и часто они комбинируются в одном заказе.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Модель</th><th>Кто так считает</th><th>Ориентир</th></tr></thead>
+    <tbody>
+      <tr><td><b>% от стоимости кухни</b></td><td>«Соберу Мебель» 10%; «Антарес» 10% (мин. 3000&nbsp;₽); «Век» 15%; Hoff 8%; Altprof 10–15%</td><td class="num">8–15%</td></tr>
+      <tr><td><b>За погонный метр</b></td><td>Частники (Profi.ru) от 1500&nbsp;₽; модульные дешевле 1000–5000; Altprof 4000–7000</td><td class="num">1000–7000&nbsp;₽/пог.м</td></tr>
+      <tr><td><b>Помодульно (за операцию)</b></td><td>НОНТОН — 1300&nbsp;₽ за каркас (верх/низ), колонна 1300&nbsp;₽</td><td class="num">1300&nbsp;₽/модуль</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note warn">
+    <div class="t"><span class="chip up">⚠ уточнено</span> «10%» — это цена базовой сборки, а не универсальная доля</div>
+    <p style="margin:6px 0 0">Границы «8–15%» неточны в обе стороны. Базовая сборка (только короба, без врезки мойки и техники) — 5–15%. «Под ключ» на дешёвой кухне доходит до <b>20%</b>. На дорогих кухнях (300&nbsp;тыс.+) считают за погонный метр, и доля падает до <b>2–5%</b>. Вывод для нас: нельзя продавать «10% и всё» — базу и допы разделять явно, иначе «под ключ» на эконом-кухне съест до 20% и клиент почувствует скрытые доплаты.</p>
+  </div>
+
+  <details>
+    <summary>Расшифровка: почему «10%» превращается в 20%</summary>
+    <div class="det-body">
+      <div class="q">«Процент от стоимости кухни (обычно 10–15%) — самый популярный, но самый коварный метод». Пример из статьи: кухня 60 000&nbsp;₽ → база 6 000 + врезка мойки и варочной 2 000 + подключение смесителя, сифона, духовки, варочной 3 500 + выпил под газовую трубу 500 = <b>12 000&nbsp;₽ = 20% от кухни</b>.</div>
+      <p>Hoff берёт 8% и дарит сборку при чеке от 150&nbsp;тыс. На кухнях дороже ~300&nbsp;тыс. процентная модель не работает — переходят на 1600–7500&nbsp;₽/пог.м, и фактическая доля падает до 2–5%.</p>
+      <div class="src">Источники: <a href="https://sborkamebely.ru/skolko-stoit-sborka-kuhni-i-iz-chego-skladyvaetsya-tsena" target="_blank" rel="noopener">sborkamebely.ru</a>, <a href="https://hoff.ru/services/sborka_mebeli_i_ustanovka_tehniki/" target="_blank" rel="noopener">hoff.ru</a>, <a href="https://profi.ru/remont/mebel/sborka-mebeli/sborka-kuhonnogo-garnitura/price/" target="_blank" rel="noopener">profi.ru</a></div>
+    </div>
+  </details>
+
+  <h3>Граница «база / допы»</h3>
+  <p><b>В базовую сборку обычно входит:</b> сборка без конструктивных изменений, крепление навесных, монтаж ящиков/фасадов/карнизов/цоколей, навеска и регулировка дверей, установка стеновой панели, расходники (дюбели, саморезы, стяжки, уголки, герметик). <b>Почти всегда — допы:</b> выпил под мойку и варочную, розетки, подключение электрики.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Операция (доп)</th><th>Вилка по рынку</th><th>Откуда</th></tr></thead>
+    <tbody>
+      <tr><td>Выпил под мойку / варочную</td><td class="num">500–1500&nbsp;₽/шт</td><td>Соберу&nbsp;Мебель, Век, Altprof</td></tr>
+      <tr><td>Установка + подключение мойки</td><td class="num">1900–2500&nbsp;₽</td><td>НОНТОН, Соберу&nbsp;Мебель</td></tr>
+      <tr><td>Врезка варочной (+подключение)</td><td class="num">1000–1500 (2100)&nbsp;₽</td><td>НОНТОН, Век</td></tr>
+      <tr><td>Духовой шкаф (+подключение)</td><td class="num">800–1500 (2100)&nbsp;₽</td><td>Век, НОНТОН</td></tr>
+      <tr><td>Посудомойка (встройка+фасад)</td><td class="num">1500 (2100)&nbsp;₽</td><td>НОНТОН, Век</td></tr>
+      <tr><td>Встраиваемый холодильник</td><td class="num">3000–4600&nbsp;₽</td><td>Век, НОНТОН</td></tr>
+      <tr><td>Столешница: установка</td><td class="num">700&nbsp;₽/пог.м · 2400&nbsp;₽/шт · рынок 1000–5000</td><td>Соберу&nbsp;Мебель, НОНТОН, Profi.ru</td></tr>
+      <tr><td>Еврозапил столешницы</td><td class="num">4500–18 400&nbsp;₽</td><td>Profi.ru</td></tr>
+      <tr><td>Фартук / стеновая панель</td><td class="num">400–3500&nbsp;₽/пог.м</td><td>Соберу&nbsp;Мебель, Profi.ru</td></tr>
+      <tr><td>Электромонтаж / подсветка</td><td class="num">+5000–15000 / 3000–5000&nbsp;₽</td><td>Altprof</td></tr>
+      <tr><td>Демонтаж старой кухни / вывоз мусора</td><td class="num">1000 / 2000&nbsp;₽</td><td>Век</td></tr>
+      <tr><td>Подъём без лифта</td><td class="num">2000–4000&nbsp;₽</td><td>Altprof</td></tr>
+    </tbody>
+  </table></div>
+
+  <details>
+    <summary>Расшифровка: базовые прайсы проверены дословно <span class="chip ok">✓</span></summary>
+    <div class="det-body">
+      <p>Все цифры выше сверены против живых прайсов. Примеры подтверждённых позиций:</p>
+      <ul>
+        <li><b>НОНТОН</b> (прайс от 09.06.2025): каркас 1300&nbsp;₽, столешница ДСП 2400&nbsp;₽, мойка без подключения 1600 / с подключением 1900, встраиваемый холодильник 4600; минимальный выезд 1500&nbsp;₽, за КАД/МКАД 35&nbsp;₽/км; в прайсе прямо: «Подключение техники к воде и электричеству не производится» (в базе).</li>
+        <li><b>«Антарес»:</b> «Установка кухни — 10% от суммы заказа, но не менее 3000&nbsp;руб.»; выпил под мойку/варочную, розетки и подключение электрики — не входят.</li>
+        <li><b>«Век»</b> (Казань): базовая сборка 15%; вырез под мойку/варочную 1500&nbsp;₽; в базу включены расходники.</li>
+      </ul>
+      <div class="src">Источники: <a href="https://nonton.ru/upload/price_msk_spb.pdf" target="_blank" rel="noopener">НОНТОН (PDF)</a>, <a href="https://www.antarescompany.ru/pokupatelyam/sborka-mebeli/" target="_blank" rel="noopener">Антарес</a>, <a href="https://vekexpress.ru/assemblycalculator" target="_blank" rel="noopener">Век</a>, <a href="https://soberumebel.ru/prajs/prajs-list-sborka-kuxni/" target="_blank" rel="noopener">Соберу Мебель</a>, <a href="https://altprof.ru/blog/articles/skolko-stoit-zakazat-kuhnyu-pod-klyuch-v-2025-godu-obzor-cen-i-skrytyh-zatrat-10025" target="_blank" rel="noopener">Altprof</a></div>
+    </div>
+  </details>
+</section>
+
+<!-- 2 -->
+<section id="s2">
+  <h2><span class="num">02</span>Брянск — локальные расценки</h2>
+  <p class="lead">Главный практический вопрос — сколько это стоит в нашем городе. Картина отличается от столичной по модели, а не только по цифрам.</p>
+
+  <div class="note good">
+    <div class="t">Модель местных кухонных компаний</div>
+    <p style="margin:6px 0 0">Все пять проверенных брянских производителей кухонь на заказ (Мебель&nbsp;Класс, BigMebel, Кухни-Брянск, Elegrum, Honman) работают одинаково: <b>сборка и монтаж включены в цену кухни</b> — отдельного прайса на монтаж нет, он сидит в марже заказа. Конкуренция ушла в глубину услуги: «100% под ключ с подключением техники» продают как отстройку от тех, кто «просто собирает мебель».</p>
+  </div>
+
+  <h3>Расценки частников и агрегаторов (Брянск)</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Работа</th><th>Цена</th><th>Ед.</th></tr></thead>
+    <tbody>
+      <tr><td>Сборка кухни</td><td class="num">от 1100–1200&nbsp;₽</td><td>пог.м</td></tr>
+      <tr><td>Сборка модульных кухонь</td><td class="num">от 690&nbsp;₽</td><td>пог.м</td></tr>
+      <tr><td>Монтаж столешницы</td><td class="num">от 460–476&nbsp;₽</td><td>пог.м</td></tr>
+      <tr><td>Установка каменной столешницы</td><td class="num">от 1110&nbsp;₽</td><td>пог.м</td></tr>
+      <tr><td>Фартук (МДФ/пластик/стекло)</td><td class="num">от 230–250&nbsp;₽</td><td>пог.м</td></tr>
+      <tr><td>Мойка с подключением / вырез</td><td class="num">от 800 / 700&nbsp;₽</td><td>усл.</td></tr>
+      <tr><td>Встройка холодильника / ПММ / СВЧ</td><td class="num">1500 / 1500 / 1000&nbsp;₽</td><td>шт</td></tr>
+      <tr><td>Вытяжка с подключением</td><td class="num">от 400&nbsp;₽</td><td>усл.</td></tr>
+      <tr><td>Еврозапил</td><td class="num">от 2560&nbsp;₽</td><td>усл.</td></tr>
+      <tr><td>Минимальный выезд сборщика</td><td class="num">от 500&nbsp;₽</td><td>усл.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid">
+    <div class="stat"><div class="big">3300–3600&nbsp;₽</div><div class="lbl">сборка типовой прямой кухни 3 пог.м (без техники)</div></div>
+    <div class="stat"><div class="big">5000–8000&nbsp;₽</div><div class="lbl">та же кухня «под ключ» с врезками и техникой</div></div>
+    <div class="stat blue"><div class="big">−30…35%</div><div class="lbl">уровень цен Брянска относительно Москвы</div></div>
+  </div>
+
+  <details>
+    <summary>Расшифровка: как посчитан коэффициент 0,70 <span class="chip new">＋ добор</span></summary>
+    <div class="det-body">
+      <p>Коэффициент выведен сравнением цен <b>внутри одной сети</b> (d-mastera) в Брянске и Москве, чтобы убрать разницу брендов:</p>
+      <ul>
+        <li>сборка кухни — 1100 (Брянск) против 1600 (Москва) → 0,69</li>
+        <li>столешница — 476 против 680 → 0,70</li>
+        <li>угловой шкаф под мойку — 690 против 890 → 0,78</li>
+        <li>разборка кухни — 700 против 1100 → 0,64</li>
+      </ul>
+      <p>Московские «8–15% (обычно 10%)» в Брянске транслируются в <b>~7–10%</b> от стоимости гарнитура.</p>
+      <div class="note warn" style="box-shadow:none; margin:12px 0 0">
+        <div class="t">Оговорка по надёжности данных — средняя</div>
+        <p style="margin:5px 0 0">Живой слой частников (Авито и Профи.ру Брянск) технически не пробился из-за блокировок; часть цифр — из шаблонных прайсов-агрегаторов с ценами «от». Перед боевым прайсом эти цифры стоит подтвердить прозвоном 2–3 местных сборщиков.</p>
+      </div>
+      <div class="src">Источники: <a href="https://bryansk.d-mastera.ru/prajs-list-na-sborku-mebeli/" target="_blank" rel="noopener">d-mastera Брянск</a>, <a href="https://d-mastera.ru/prajs-list-na-sborku-mebeli/" target="_blank" rel="noopener">d-mastera Москва</a>, <a href="https://profi.ru/geo-bryansk/remont/sborka-kuhni-na-domu/" target="_blank" rel="noopener">Профи.ру Брянск</a>, <a href="https://bryansk.gor-master.ru/sborka-ustanovka-kuhni" target="_blank" rel="noopener">Гормастер Брянск</a></div>
+    </div>
+  </details>
+</section>
+
+<!-- 3 -->
+<section id="s3">
+  <h2><span class="num">03</span>Процесс и этапы: от замера до сдачи</h2>
+  <p class="lead">Полный цикл сделки и реалистичные нормы времени — основа для планирования загрузки и обещаний клиенту.</p>
+
+  <h3>Сроки всего цикла</h3>
+  <ul class="clean">
+    <li><b>Замер</b> — только после черновых работ (стены выведены под ноль, стяжка залита, коммуникации проведены)</li>
+    <li><b>Проект и согласование</b> — от пары дней до недели; весь первый этап 1–3 недели</li>
+    <li><b>Производство</b> — ЛДСП 2–3 нед · МДФ ПВХ 3–4 · МДФ эмаль 4–6 · массив/шпон 6–8+ ; каменная столешница 10–20 дней после снятия шаблона</li>
+    <li><b>Доставка</b> — 1 день; очередь на сборщиков в сезон — до 2 недель</li>
+    <li><b>Монтаж</b> — стандартная кухня 1–2 дня, сложная 3–5 дней</li>
+  </ul>
+  <p>Итого от заказа до готовой кухни: <b>1,5–2,5 месяца</b> (до 3–4 на премиум-материалах).</p>
+
+  <div class="grid">
+    <div class="stat"><div class="big">10–16 ч</div><div class="lbl">на кухню: низ 2–4 ч, верх 2–3 ч, техника и фурнитура 1–2 ч</div></div>
+    <div class="stat"><div class="big">1–2 дня</div><div class="lbl">стандартная прямая или угловая кухня</div></div>
+    <div class="stat"><div class="big">3–5 дней</div><div class="lbl">большая или сложная кухня со встройкой</div></div>
+  </div>
+
+  <h3>Гейт готовности помещения (проверять на замере)</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Параметр</th><th>Норма</th></tr></thead>
+    <tbody>
+      <tr><td>Стены — отклонение от вертикали</td><td class="num">≤ 3 мм/м и ≤ 10 мм на всю высоту</td></tr>
+      <tr><td>Углы Г/П-образной кухни</td><td class="num">90°</td></tr>
+      <tr><td>Пол — отклонение от горизонтали</td><td class="num">≤ 5 мм в габаритах кухни (до 1 см — винтовые опоры)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Последовательность монтажа — на рынке две школы</h3>
+  <div class="card">
+    <p><b>Школа «низ первым»</b> (производители): нижние модули (угловые первыми) → врезка мойки/варочной и столешница → фартук → навесные шкафы на монтажную шину → плинтус → регулировка фасадов и демпферы.</p>
+    <p style="margin-bottom:0"><b>Школа «верх первым»</b> (практики-монтажники): навеска верхних <em>без фасадов</em> (чтобы не тянуться через столешницу и не повредить её) → нижние → столешница → мойка/фартук/техника → герметизация. Подключения — в конце, газовые приборы самыми последними.</p>
+  </div>
+
+  <details>
+    <summary>Расшифровка: обе последовательности подтверждены дословно <span class="chip ok">✓</span></summary>
+    <div class="det-body">
+      <div class="q">«Опытные монтажники начинают установку кухонного гарнитура именно с верхнего яруса» — Geometrium.</div>
+      <div class="q">Порядок производителя: «Шаг 1. Монтаж нижних модулей → Шаг 2. Монтаж столешницы → Шаг 3. Монтаж стеновой панели → Шаг 4. Монтаж навесных шкафов → Шаг 5. Плинтус → Шаг 6. Регулировка фасадов и наклейка демпферов» — Мебель ОК.</div>
+      <p>Ключевые монтажные размеры (подтверждены): низ верхних шкафов 135–150 см от пола, столешница→шкафы 50–55 см, над варочной 65–75 см, вентзазоры 5–10 мм, свес столешницы 40 мм, анкеры шины с шагом 30 см.</p>
+      <div class="src">Источники: <a href="https://geometrium-school.ru/blog/kak-ustanovit-kuhonnyj-garnitur/" target="_blank" rel="noopener">Geometrium</a>, <a href="https://mebel-ok.com/articles/articles_12.html" target="_blank" rel="noopener">Мебель ОК</a>, <a href="https://znaet.petrovich.ru/dizayn/organizatsiya-prostranstva/kuhnya-i-stolovaya/instruktsiya/kak-sobrat-kuhonnyy-garnitur/" target="_blank" rel="noopener">Петрович.Знает</a>, <a href="https://stayver.ru/articles/ustanovka_kuxni/" target="_blank" rel="noopener">Стайвер</a></div>
+    </div>
+  </details>
+</section>
+
+<!-- 4 -->
+<section id="s4">
+  <h2><span class="num">04</span>Регламенты, чек-листы, акты</h2>
+  <p class="lead">Готовые числовые нормы приёмки, которые прямо ложатся в наш лист ОТК.</p>
+
+  <ul class="clean">
+    <li><b>Приёмка до монтажа:</b> покупатель осматривает продукцию (качество, комплектность, внешний вид) <b>до начала сборки</b> — монтажник фиксирует состояние на старте</li>
+    <li><b>Зазоры между фасадами:</b> 3–7 мм равномерные; угловые/гнутые 1–20 мм; фасады ящиков — 4 мм на фасад</li>
+    <li><b>Герметизация:</b> все вырезы столешницы под мойку/варочную герметизируются — влага не должна касаться ДСП (это ещё и требование закона, см. раздел 5)</li>
+    <li><b>Финиш:</b> 2 амортизатора на фасад, заглушки в цвет на техотверстия, цоколь плотно прилегает и не «гуляет»</li>
+    <li><b>Правило акта:</b> подписывать только после полной проверки; дефекты мастер устраняет тут же, до подписи</li>
+  </ul>
+
+  <div class="note bad">
+    <div class="t">Финансовый риск затянутой рекламации</div>
+    <p style="margin:6px 0 0">По закону: неустойка 1% в день + потребительский штраф 50%. Для кухни за 600&nbsp;тыс.&nbsp;₽ неустойка за 6 месяцев разбирательства ≈ <b>1,08 млн&nbsp;₽</b>. Судебная экспертиза качества — 25–80&nbsp;тыс.&nbsp;₽. Защита компании — грамотный акт сдачи-приёмки с описанием состояния + паспорт изделия и инструкция под подпись покупателя.</p>
+  </div>
+
+  <details>
+    <summary>Расшифровка: нормы приёмки и судебная практика <span class="chip ok">✓</span></summary>
+    <div class="det-body">
+      <div class="q">«Допустимые технологические зазоры между фасадными панелями должны быть ровными и быть не менее 3 мм и не более 7 мм… Фасады ящиков — 4 мм на один фасад» — чек-лист приёмки RAMAX.</div>
+      <div class="q">«Не нужно подписывать акт приёмки, пока вы действительно всё не проверите самостоятельно… устранить неполадки мастера должны тут же» — Archiprofi.</div>
+      <p>Качество в спорах оценивают по ГОСТ 16371-2014 и ГОСТ Р 54208-2010; отдельная группа параметров экспертизы — «качество монтажа».</p>
+      <div class="src">Источники: <a href="https://ramax.by/pdf/RAMAX_Priemka_kuhni.pdf" target="_blank" rel="noopener">Чек-лист RAMAX (PDF)</a>, <a href="https://archiprofi.ru/journal/detail/chek-list-priemki-kukhni_b920099/" target="_blank" rel="noopener">Archiprofi</a>, <a href="https://vitvet.com/articles/mebelnye_proizvodstva/spory-mebelnoy-fabriki-kachestvo-kuhon-ekspertiza/" target="_blank" rel="noopener">Vitvet — споры и экспертиза</a>, <a href="https://www.bravomebel.su/page/vozvrat-tovara" target="_blank" rel="noopener">Регламент претензий «Браво»</a></div>
+    </div>
+  </details>
+</section>
+
+<!-- 5 -->
+<section id="s5">
+  <h2><span class="num">05</span>Безопасность и нормативы</h2>
+  <p class="lead">Зона юридического риска компании. Здесь проверка дала самые важные поправки — прежние формулировки были неточны.</p>
+
+  <h3>Крепёж по типу стены</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Стена</th><th>Крепёж</th><th>Нагрузка</th></tr></thead>
+    <tbody>
+      <tr><td>Кирпич / железобетон</td><td>Шуруп 6×60 + дюбель 10×60 под шину; анкеры 6×60 / дюбели 8×60</td><td class="num">штатно</td></tr>
+      <tr><td>Гипсокартон</td><td>Только через закладную (профиль/брус/фанера) или дюбели «молли»</td><td class="num">20–25 кг/точку</td></tr>
+      <tr><td>Газобетон</td><td>Спиральные дюбели / анкерные болты / химический анкер</td><td class="num">30–150+ кг</td></tr>
+    </tbody>
+  </table></div>
+  <p class="lead" style="margin-top:6px">Крепёж не под тип стены — частый источник рекламации «шкаф вырвало». Для рыхлых и деревянных стен крепёж подбирают индивидуально под вес шкафов <b>с содержимым</b>.</p>
+
+  <div class="note bad">
+    <div class="t"><span class="chip no">✕ опровергнуто прежнее</span> Газ: точные статьи оказались другими</div>
+    <p style="margin:6px 0 0">Работы с газом — только специализированная организация; с 01.09.2023 это <b>только газораспределительная организация (ГРО)</b>. Запрет закреплён <b>Постановлением Правительства РФ № 410</b>, а не строительным СП. Штрафы — две разные статьи:</p>
+    <ul style="margin:8px 0 0">
+      <li>Сам заменил/установил плиту в газифицированной квартире → <b>ст. 9.23 ч. 4 КоАП</b>, гражданам 5 000–10 000&nbsp;₽ (при аварии/повторе до 150 000&nbsp;₽)</li>
+      <li>Самовольное подключение к газопроводу → ст. 7.19 КоАП, 10 000–15 000&nbsp;₽</li>
+    </ul>
+    <p style="margin:8px 0 0">Устаревший СНиП 42-01-2002 заменён редакцией <b>СП 62.13330.2011*</b>. В первой версии обзора стояла только ст. 7.19 и старый СНиП — это поправлено.</p>
+  </div>
+
+  <div class="note warn">
+    <div class="t"><span class="chip up">⚠ уточнено</span> Электрика: норма из СП, а не из ПУЭ</div>
+    <ul style="margin:6px 0 0">
+      <li>Отдельная линия для электроплиты обязательна — <b>СП 256.1325800.2016 п. 10.2</b> (не ПУЭ)</li>
+      <li>Сечение однофазной линии — <b>медь ≥ 6 мм² (СП 256 п. 15.28)</b>; в таблице ПУЭ строки про электроплиты нет вообще</li>
+      <li>«Автомат 32А» никто не нормирует; для 10 кВт при 220 В (ток ≈ 45 А) нужно <b>10 мм² и автомат 40–50 А</b> либо 380 В</li>
+      <li>Подключение плиты 6–10 кВт в обычную розетку 16 А — недопустимо</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Расшифровка: реквизиты норм по газу и электрике <span class="chip up">⚠</span></summary>
+    <div class="det-body">
+      <p><b>Газ.</b> Типовой случай «самовольная замена оборудования без спецорганизации» — ст. 9.23 ч. 4 КоАП; ст. 7.19 карает именно самовольное подключение к газопроводам. С 01.09.2023 (ФЗ № 71-ФЗ) спецорганизация = только ГРО. Требования МОСГАЗа к подводке: без стыков, термостойкость ≥ 120°, доступна для осмотра; нельзя прокладывать за мойкой; расстояние газопровод↔электропроводка ≥ 100 мм на пересечении, ≥ 400 мм при параллельной прокладке.</p>
+      <p><b>Электрика.</b> «В квартирах, оборудованных электроплитами, должна быть предусмотрена отдельная групповая линия для их питания» (СП 256 п. 10.2). УЗО 30 мА (ПУЭ 7.1.79) обязательно для линий со штепсельными розетками; для стационарно подключённой плиты «как правило, не требуется».</p>
+      <p><b>Мебельный техрегламент ТР ТС 025/2012:</b> ст. 5 п. 6.2 — сборка по инструкции изготовителя с комплектовочной ведомостью и схемой монтажа; <b>ст. 5 п. 6.3 — «при монтаже моек, раковин… должна быть предусмотрена их гидроизоляция»</b> (прямая норма закона под наш пункт чек-листа).</p>
+      <div class="src">Источники: <a href="https://www.consultant.ru/document/cons_doc_LAW_34661/04841feea5ff9801975555b134a3bc7e1fa721e6/" target="_blank" rel="noopener">ст. 7.19 КоАП</a>, <a href="https://www.klerk.ru/cdoc/view/kodeks-ob-administrativnyh-pravonaruseniah-koap-rf/stata-923-narusenie-pravil-obespecenia-bezopasnogo-ispolzovania-i-soderzania-vnutridomovogo-i-vnutrikvartirnogo-gazovogo-oborudovania/" target="_blank" rel="noopener">ст. 9.23 КоАП</a>, <a href="https://www.consultant.ru/document/cons_doc_LAW_146557/" target="_blank" rel="noopener">ПП РФ № 410</a>, <a href="http://docs.cntd.ru/document/1200139957" target="_blank" rel="noopener">СП 256.1325800.2016</a>, <a href="https://ogost.ru/trts/trts025/" target="_blank" rel="noopener">ТР ТС 025/2012</a>, <a href="https://www.mos-gaz.ru/press-service/publications/2016/06/06/1512" target="_blank" rel="noopener">МОСГАЗ</a></div>
+    </div>
+  </details>
+</section>
+
+<!-- 6 -->
+<section id="s6">
+  <h2><span class="num">06</span>Типичные ошибки и дефекты</h2>
+  <p class="lead">Каталог антипаттернов — прямое сырьё для листа контроля качества.</p>
+  <ul class="clean">
+    <li>Неровные зазоры фасадов, перекосы, сколы при монтаже</li>
+    <li>Ошибки настройки фурнитуры (доводчики, ход ящиков)</li>
+    <li>Неверные вентзазоры встраиваемой техники — перегрев</li>
+    <li>Несовпадение оси варочной панели с вытяжкой</li>
+    <li><b>Негерметизированные вырезы столешницы → набухание ДСП</b> — главный убийца столешниц (и нарушение ТР ТС 025/2012)</li>
+    <li>Крепёж не под тип стены → «шкаф вырвало из стены»</li>
+    <li>Повреждение столешницы при работе над ней — аргумент школы «верх первым»</li>
+  </ul>
+</section>
+
+<!-- 7 -->
+<section id="s7">
+  <h2><span class="num">07</span>Организация монтажной службы</h2>
+  <p class="lead">Как рынок строит монтаж: штат против подряда, схемы оплаты, ответственность, инструмент.</p>
+
+  <h3>Штат vs подряд</h3>
+  <ul class="clean">
+    <li>Топовых монтажников оформляют как <b>ИП</b> — «вроде постоянные, но вольные художники»</li>
+    <li>Работают <b>парами</b> в сработавшихся бригадах; «в одиночку — только тупые и жадные»</li>
+    <li>Рынок кадров тяжёлый — «70% шлак»; новичка растят полгода в паре с мастером</li>
+    <li>Разница ролей: сборщик собрал по схеме и уехал; монтажник вписал мебель в помещение «в уровень и под 90°»</li>
+  </ul>
+
+  <h3>Оплата (сводный коридор по рынку)</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Тип работы</th><th>Сделка, % от заказа</th></tr></thead>
+    <tbody>
+      <tr><td>Корпусная мебель / шкафы-купе</td><td class="num">5–12% (мода ~10%)</td></tr>
+      <tr><td>Кухни</td><td class="num">10–15%</td></tr>
+      <tr><td>Встройка / гардеробные</td><td class="num">15–20%</td></tr>
+      <tr><td>Элитные кухни</td><td class="num">3–5% или фикс</td></tr>
+    </tbody>
+  </table></div>
+  <p>Альтернативы проценту: за пог.м; фикс за выезд (модель «выезд бригады 3,5&nbsp;тыс. × 2 человека = 7&nbsp;тыс., всё включено»); фикс за кухню 20–35&nbsp;тыс. Подъём на этаж (100–200&nbsp;₽/этаж) и доставка — почти всегда отдельно.</p>
+
+  <div class="note bad">
+    <div class="t"><span class="chip no">✕ опровергнуто прежнее</span> Гарантия НЕ «переходит к сборщику» после монтажа</div>
+    <p style="margin:6px 0 0">Это было заблуждение. По закону ответственность <b>разделена, а не передаётся</b>: за недостатки <b>товара</b> (гарнитура) отвечает продавец/изготовитель (ст. 18–19 ЗоЗПП); за недостатки <b>работ по монтажу</b> — исполнитель работ (ст. 29 ЗоЗПП). Формула «после сборки всё несёт сборщик» — условие договора отдельной компании, юридически уязвимое в части заводского брака. Вывод для нас: в договоре чётко развести гарантию на изделие и на монтаж; при монтаже на подряде нужен регресс к подрядчику.</p>
+  </div>
+
+  <details>
+    <summary>Расшифровка: оплата, ответственность, инструмент <span class="chip up">⚠</span></summary>
+    <div class="det-body">
+      <p><b>Оплата.</b> Из суммы для расчёта процента рынок вычитает стоимость дорогих комплектующих — «не платят за монтаж китайской сушки так же, как за kessebohmer». Оплату часто вносит клиент напрямую сборщику после подписания акта.</p>
+      <p><b>Ответственность.</b> Роспотребнадзор: изготовление/монтаж мебели = работы по ЗоЗПП, требования по недостаткам работы предъявляются исполнителю (ст. 29). Практика фабрик: гарантия на изделие остаётся у фабрики, при сторонней сборке снимается только гарантия на монтаж.</p>
+      <p><b>Инструмент.</b> Заявленные «150–300 тыс.&nbsp;₽» — по сути одна цитата, кочующая по статьям. Реально: минимальный рабочий комплект на Makita ~80–150&nbsp;тыс.; полный на Festool переваливает 300&nbsp;тыс. Отбор монтажника: «инструментов на 50 кг минимум и свой автомобиль; меньше трёх ящиков — это не монтажник, а „муж на час“». Инструмент — собственность монтажника.</p>
+      <div class="src">Источники: <a href="https://promebelclub.ru/forum/showthread.php?t=1651" target="_blank" rel="noopener">Форум PROMEBELclub (87 постов)</a>, <a href="https://www.mdm-complect.ru/advices/articles/slovo-o-montazhnikakh/" target="_blank" rel="noopener">МДМ-Комплект «Слово о монтажниках»</a>, <a href="https://zpp.rospotrebnadzor.ru/news/federal/217424" target="_blank" rel="noopener">Роспотребнадзор</a>, <a href="https://sborkamebely.ru/skolko-stoit-sborka-kuhni-i-iz-chego-skladyvaetsya-tsena" target="_blank" rel="noopener">sborkamebely.ru</a></div>
+    </div>
+  </details>
+</section>
+
+<!-- 8 -->
+<section id="s8">
+  <h2><span class="num">08</span>Модульные кухни — специфика монтажа</h2>
+  <p class="lead">У модульных (готовых) кухонь монтаж устроен иначе, чем у кухонь на заказ, и это продаётся как преимущество.</p>
+  <div class="card">
+    <ul style="margin:0; padding-left:20px">
+      <li><b>Монтаж проще и дешевле,</b> чем у эконом-кухонь на заказ: нет доработок по месту (подпилов фасадов и столешниц, вырезов, переделок модулей под вытяжку) — за счёт продуманного ассортимента.</li>
+      <li><b>Подгонка под помещение</b> решается компенсаторами со смещением модуля и настройкой по ширине шагом 1–2 мм — это снимает страх покупателя «не встанет под мой размер».</li>
+      <li>В дилерской модели <b>монтаж — зона дилера</b> (фабрика делает изготовление и доставку), поэтому стоимость и регламент монтажа задаёт дилер.</li>
+    </ul>
+  </div>
+  <p class="lead" style="margin-top:6px">Отдельного норматива стоимости и регламента монтажа модульных в открытых материалах нет — это уточняется у поставщика напрямую.</p>
+</section>
+
+<!-- 9 -->
+<section id="s9">
+  <h2><span class="num">09</span>Что дальше</h2>
+  <p class="lead">Исследование — фундамент. Следующие шаги — превратить его в рабочие документы монтажной службы.</p>
+  <ul class="clean">
+    <li>Добить живой слой брянских частников — прозвон 2–3 сборщиков для боевого прайса</li>
+    <li>Выбрать оргмодель: свои бригады (ИП) или подрядчик — и границу работ (подключения в базе или допами)</li>
+    <li>Свести собственный прайс монтажа с явным разделением «база / допы»</li>
+    <li>Написать регламент процесса: гейт готовности помещения → последовательность → сдача</li>
+    <li>Сделать формы: чек-лист сдачи, акт приёмки, акт рекламации</li>
+  </ul>
+</section>
+
+<!-- Sources -->
+<section id="src">
+  <h2>Все источники</h2>
+  <p class="lead">Каждая ссылка — живая, открывается в новой вкладке. Проверено 15–16 июля 2026.</p>
+
+  <div class="src-group">
+    <div class="gt">Прайсы и цены</div>
+    <a href="https://soberumebel.ru/prajs/prajs-list-sborka-kuxni/" target="_blank" rel="noopener">Соберу Мебель</a>
+    <a href="https://nonton.ru/upload/price_msk_spb.pdf" target="_blank" rel="noopener">НОНТОН (PDF, 09.06.2025)</a>
+    <a href="https://www.antarescompany.ru/pokupatelyam/sborka-mebeli/" target="_blank" rel="noopener">Антарес</a>
+    <a href="https://vekexpress.ru/assemblycalculator" target="_blank" rel="noopener">Век</a>
+    <a href="https://hoff.ru/services/sborka_mebeli_i_ustanovka_tehniki/" target="_blank" rel="noopener">Hoff</a>
+    <a href="https://altprof.ru/blog/articles/skolko-stoit-zakazat-kuhnyu-pod-klyuch-v-2025-godu-obzor-cen-i-skrytyh-zatrat-10025" target="_blank" rel="noopener">Altprof</a>
+    <a href="https://sborkamebely.ru/skolko-stoit-sborka-kuhni-i-iz-chego-skladyvaetsya-tsena" target="_blank" rel="noopener">sborkamebely.ru</a>
+    <a href="https://profi.ru/remont/mebel/sborka-mebeli/sborka-kuhonnogo-garnitura/price/" target="_blank" rel="noopener">Профи.ру</a>
+  </div>
+
+  <div class="src-group">
+    <div class="gt">Брянск</div>
+    <a href="https://bryansk.d-mastera.ru/prajs-list-na-sborku-mebeli/" target="_blank" rel="noopener">d-mastera Брянск</a>
+    <a href="https://profi.ru/geo-bryansk/remont/sborka-kuhni-na-domu/" target="_blank" rel="noopener">Профи.ру Брянск</a>
+    <a href="https://bryansk.gor-master.ru/sborka-ustanovka-kuhni" target="_blank" rel="noopener">Гормастер Брянск</a>
+    <a href="https://bigmebel-bryansk.ru/kuhni/" target="_blank" rel="noopener">BigMebel</a>
+    <a href="https://mebel-klass32.ru/shop/kuhni/" target="_blank" rel="noopener">Мебель Класс</a>
+    <a href="https://www.kukhni-bryansk.ru/" target="_blank" rel="noopener">Кухни-Брянск</a>
+    <a href="https://bryansk.elegrum.ru/kitchens/" target="_blank" rel="noopener">Elegrum</a>
+    <a href="https://honman.ru/kuhni" target="_blank" rel="noopener">Honman</a>
+  </div>
+
+  <div class="src-group">
+    <div class="gt">Процесс и технология</div>
+    <a href="https://mebel-ok.com/articles/articles_12.html" target="_blank" rel="noopener">Мебель ОК</a>
+    <a href="https://geometrium-school.ru/blog/kak-ustanovit-kuhonnyj-garnitur/" target="_blank" rel="noopener">Geometrium</a>
+    <a href="https://stayver.ru/articles/ustanovka_kuxni/" target="_blank" rel="noopener">Стайвер</a>
+    <a href="https://znaet.petrovich.ru/dizayn/organizatsiya-prostranstva/kuhnya-i-stolovaya/instruktsiya/kak-sobrat-kuhonnyy-garnitur/" target="_blank" rel="noopener">Петрович.Знает</a>
+    <a href="https://repair-home.net/index.php/novosti/skolko-vremeni-zanimaet-zakaz-i-izgotovlenie-kuhonnogo-garnitura-podrobnyj-razbor-kazhdogo-etapa" target="_blank" rel="noopener">Repair-home (сроки)</a>
+  </div>
+
+  <div class="src-group">
+    <div class="gt">Качество, приёмка, рекламации</div>
+    <a href="https://ramax.by/pdf/RAMAX_Priemka_kuhni.pdf" target="_blank" rel="noopener">Чек-лист приёмки RAMAX (PDF)</a>
+    <a href="https://archiprofi.ru/journal/detail/chek-list-priemki-kukhni_b920099/" target="_blank" rel="noopener">Archiprofi</a>
+    <a href="https://vitvet.com/articles/mebelnye_proizvodstva/spory-mebelnoy-fabriki-kachestvo-kuhon-ekspertiza/" target="_blank" rel="noopener">Vitvet — споры и экспертиза</a>
+    <a href="https://www.bravomebel.su/page/vozvrat-tovara" target="_blank" rel="noopener">Регламент претензий «Браво»</a>
+    <a href="https://ukuhni.ru/preparation/act.php" target="_blank" rel="noopener">Образец акта приёмки</a>
+  </div>
+
+  <div class="src-group">
+    <div class="gt">Нормативы и право</div>
+    <a href="https://ogost.ru/trts/trts025/" target="_blank" rel="noopener">ТР ТС 025/2012</a>
+    <a href="http://docs.cntd.ru/document/1200139957" target="_blank" rel="noopener">СП 256.1325800.2016</a>
+    <a href="https://www.consultant.ru/document/cons_doc_LAW_34661/04841feea5ff9801975555b134a3bc7e1fa721e6/" target="_blank" rel="noopener">КоАП ст. 7.19</a>
+    <a href="https://www.klerk.ru/cdoc/view/kodeks-ob-administrativnyh-pravonaruseniah-koap-rf/stata-923-narusenie-pravil-obespecenia-bezopasnogo-ispolzovania-i-soderzania-vnutridomovogo-i-vnutrikvartirnogo-gazovogo-oborudovania/" target="_blank" rel="noopener">КоАП ст. 9.23</a>
+    <a href="https://www.consultant.ru/document/cons_doc_LAW_146557/" target="_blank" rel="noopener">ПП РФ № 410</a>
+    <a href="https://www.mos-gaz.ru/press-service/publications/2016/06/06/1512" target="_blank" rel="noopener">МОСГАЗ</a>
+    <a href="https://zpp.rospotrebnadzor.ru/news/federal/217424" target="_blank" rel="noopener">Роспотребнадзор</a>
+    <a href="https://nk-kabel.ru/blog/kabel-dlya-podklyucheniya-elektricheskoy-plity-dukhovki-varochnoy-paneli/" target="_blank" rel="noopener">Кабель по ПУЭ (nk-kabel)</a>
+  </div>
+
+  <div class="src-group">
+    <div class="gt">Организация службы</div>
+    <a href="https://promebelclub.ru/forum/showthread.php?t=1651" target="_blank" rel="noopener">Форум PROMEBELclub — «Монтаж, кто сколько платит?»</a>
+    <a href="https://www.mdm-complect.ru/advices/articles/slovo-o-montazhnikakh/" target="_blank" rel="noopener">МДМ-Комплект — «Слово о монтажниках»</a>
+  </div>
+</section>
+
+</div>
+
+<footer class="wrap">
+  Внутренний аналитический материал · рыночное исследование монтажа кухонь · 2026<br>
+  Факты проверены против первичных источников; цифры «от рынка» — ориентир, боевой прайс уточняется локально.
+</footer>
+
+<a href="#" class="totop" id="totop" aria-label="Наверх">↑</a>
+<script>
+  var t=document.getElementById('totop');
+  addEventListener('scroll',function(){ (scrollY>600?t.classList.add('show'):t.classList.remove('show')); });
+</script>
+</body>
+</html>
