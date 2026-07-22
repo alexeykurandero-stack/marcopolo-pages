@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Смета монтажа кухни · разбор по прайсу московской бригады · Марко Поло</title>
+<style>
+  :root{
+    --cream:#FBF6EF;
+    --cream-2:#F4EADD;
+    --paper:#FFFDFA;
+    --ink:#31251E;
+    --ink-soft:#544235;
+    --muted:#6E5A49;
+    --line:#E7DBC9;
+    --terra:#B5522F;
+    --terra-deep:#8E3E21;
+    --terra-soft:#FBEADF;
+    --ochre:#B87A2E;
+    --ochre-bg:#FAF0D9;
+    --wood:#79502F;
+    --green:#3F6B44;
+    --green-text:#356038;
+    --green-bg:#EBF3E6;
+    --green-line:#CDE0C4;
+    --amber:#8F631C;
+    --amber-bg:#FAF0D9;
+    --amber-line:#EBD8AE;
+    --teal:#2F6E6B;
+    --teal-bg:#E3F0EE;
+    --teal-line:#C3E0DC;
+    --shadow:0 10px 30px rgba(120,80,50,.09);
+    --shadow-soft:0 4px 14px rgba(120,80,50,.07);
+    --radius:22px;
+    --radius-sm:14px;
+    --maxw:960px;
+  }
+  *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 500px at 82% -10%, #FBEEDF 0%, rgba(251,238,223,0) 60%),
+      radial-gradient(900px 420px at -10% 4%, #F5E7D4 0%, rgba(245,231,212,0) 55%),
+      var(--cream);
+    line-height:1.62;
+    font-size:17px;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .slide{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:38px 40px 34px;
+    margin:26px auto;
+    max-width:var(--maxw);
+    position:relative;
+  }
+  .slide .num{
+    position:absolute;top:22px;right:26px;
+    font-size:13px;font-weight:700;color:var(--muted);
+    background:var(--cream-2);border:1px solid var(--line);
+    border-radius:999px;padding:2px 11px;letter-spacing:.4px;
+  }
+  h1{font-size:38px;line-height:1.2;margin:0 0 12px;color:var(--terra-deep);letter-spacing:-.4px}
+  h2{font-size:27px;line-height:1.25;margin:0 0 6px;color:var(--terra-deep);letter-spacing:-.2px}
+  h3{font-size:18px;margin:22px 0 8px;color:var(--wood)}
+  .lead{font-size:19px;color:var(--ink-soft);margin:0 0 18px}
+  .kicker{
+    font-size:13px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;
+    color:var(--terra);margin:0 0 10px;
+  }
+  p{margin:0 0 12px}
+  strong{color:var(--terra-deep)}
+  .muted{color:var(--muted)}
+
+  .cover{background:linear-gradient(155deg,#FFFDFA 0%,#FBEEDF 55%,#F7E3CE 100%);padding:56px 44px 46px}
+  .cover .axis{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--terra-soft);border:1px solid #F0CDB8;
+    color:var(--terra-deep);font-weight:800;font-size:14px;
+    border-radius:999px;padding:5px 14px;margin-bottom:18px;
+  }
+  .cover .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .cover .meta span{
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-sm);
+    padding:7px 13px;font-size:14.5px;color:var(--ink-soft);box-shadow:var(--shadow-soft);
+  }
+  .stamp{
+    margin-top:26px;padding:14px 18px;border-radius:var(--radius-sm);
+    background:var(--amber-bg);border:1px solid var(--amber-line);
+    color:var(--amber);font-weight:700;font-size:16px;
+  }
+
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:15.5px}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.7px;font-weight:800}
+  tbody tr:last-child td{border-bottom:0}
+  td.n,th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  tr.total td{background:var(--terra-soft);font-weight:800;color:var(--terra-deep);border-bottom:0}
+  tr.total td.n{font-size:17px}
+  .tbl-wrap{overflow-x:auto}
+
+  .b{display:inline-block;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700;white-space:nowrap}
+  .b-me{background:var(--teal-bg);border:1px solid var(--teal-line);color:var(--teal)}
+  .b-you{background:var(--terra-soft);border:1px solid #F0CDB8;color:var(--terra-deep)}
+  .b-both{background:var(--ochre-bg);border:1px solid var(--amber-line);color:var(--amber)}
+  .b-ok{background:var(--green-bg);border:1px solid var(--green-line);color:var(--green-text)}
+
+  .modes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+  .card{background:var(--cream);border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 20px}
+  .card h4{margin:0 0 8px;font-size:17px;color:var(--terra-deep)}
+  .card p{font-size:15px;margin:0 0 8px;color:var(--ink-soft)}
+  .card p:last-child{margin:0}
+
+  .defect{
+    background:var(--terra-soft);border:1px solid #F0CDB8;border-left:4px solid var(--terra);
+    border-radius:12px;padding:14px 17px;margin:14px 0;font-size:15.5px;color:var(--ink-soft);
+  }
+  .defect b{color:var(--terra-deep)}
+  .callout{
+    background:var(--teal-bg);border:1px solid var(--teal-line);border-left:4px solid var(--teal);
+    border-radius:12px;padding:14px 17px;margin:16px 0;font-size:15.5px;color:var(--ink-soft);
+  }
+  .callout b{color:var(--teal)}
+  .okbox{
+    background:var(--green-bg);border:1px solid var(--green-line);border-left:4px solid var(--green);
+    border-radius:12px;padding:14px 17px;margin:16px 0;font-size:15.5px;color:var(--ink-soft);
+  }
+  .okbox b{color:var(--green-text)}
+
+  /* блоки сметы */
+  .blocks{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+  .blk{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:16px 18px;text-align:center}
+  .blk .l{font-size:12px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--terra);margin-bottom:6px}
+  .blk .v{font-size:26px;font-weight:800;color:var(--wood);line-height:1.15;font-variant-numeric:tabular-nums}
+  .blk .s{font-size:13.5px;color:var(--muted);margin-top:4px}
+  .blk.key{background:var(--terra-soft);border-color:#F0CDB8}
+  .blk.key .v{color:var(--terra-deep)}
+
+  /* полоса долей */
+  .bar{display:flex;height:34px;border-radius:10px;overflow:hidden;border:1px solid var(--line);margin:14px 0 6px}
+  .bar div{display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff}
+  .bar .s1{background:var(--wood)}
+  .bar .s2{background:var(--ochre)}
+  .bar .s3{background:var(--teal)}
+  .legend-bar{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-bottom:6px}
+  .legend-bar i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px}
+  .lb1{background:var(--wood)}.lb2{background:var(--ochre)}.lb3{background:var(--teal)}
+
+  ul{margin:6px 0 12px;padding-left:20px}
+  li{margin:5px 0}
+  .go{background:linear-gradient(155deg,#FFFDFA,#F7E3CE);border:1px solid #F0CDB8}
+  footer{text-align:center;color:var(--muted);font-size:13.5px;padding:8px 0 40px}
+  svg{max-width:100%;height:auto}
+
+  @media (max-width:860px){
+    .modes,.blocks{grid-template-columns:1fr}
+    .slide{padding:28px 22px}
+    h1{font-size:30px}
+  }
+  @media print{
+    body{background:#fff;font-size:12.5px}
+    .slide{
+      box-shadow:none;border:1px solid #ddd;margin:0 0 12px;
+      page-break-inside:avoid;break-inside:avoid;padding:22px 24px;
+    }
+    .cover{page-break-after:always}
+    tr,.blk,.card,.defect,.callout,.okbox{page-break-inside:avoid;break-inside:avoid}
+    h2,h3{page-break-after:avoid;break-after:avoid}
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ ТИТУЛ ══ -->
+<section class="slide cover">
+  <div class="axis">🔴 ДЕЛО · якорь '26 — Кухни ПМ · узел 13 «Монтаж»</div>
+  <h1>Сколько стоит смонтировать<br>нашу кухню</h1>
+  <p class="lead">Разбор живого прайса действующей московской бригады и полная смета на конкретный Г-образный проект — по трём блокам: сборка, вырезы, техника.</p>
+  <div class="meta">
+    <span>📅 22 июля 2026</span>
+    <span>📄 источник — прайс на 105 позиций</span>
+    <span>🍳 кухня 4,0 × 3,2 м, Г-образная</span>
+    <span>💰 итог 28,7–31,7 тыс. ₽ (Москва)</span>
+  </div>
+  <div class="stamp">Внутренний рабочий документ. Ни цена клиенту, ни прайс компании — это разбор чужой сметы, чтобы построить свою.</div>
+</section>
+
+<!-- ══ 1. ИСТОЧНИК ══ -->
+<section class="slide">
+  <div class="num">1 / 8</div>
+  <div class="kicker">Откуда цифры</div>
+  <h2>Первый живой прайс исполнителя</h2>
+  <p class="lead">До сих пор в нашем исследовании были прайсы сборочных фирм и агрегаторов — витрины. Здесь впервые внутренний документ бригады, которая реально ездит на объекты.</p>
+
+  <table>
+    <tbody>
+      <tr><td style="width:190px"><strong>Кто</strong></td><td>Частная монтажная бригада, Москва. Работают парой — ровно та модель, которую предсказало исследование рынка</td></tr>
+      <tr><td><strong>Что за документ</strong></td><td>Пооперационный прайс-лист на 105 позиций: сборка, столешницы, сантехника, техника, демонтаж</td></tr>
+      <tr><td><strong>Модель цены</strong></td><td>«Условно процент от стоимости мебели + допы», но по факту всё считается по операциям. Минимальный выезд — 25 000 ₽</td></tr>
+      <tr><td><strong>Дата</strong></td><td>Получен 22 июля 2026</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Три находки, которых не было в исследовании</h3>
+  <div class="modes">
+    <div class="card">
+      <h4>Прайс сам разделён на наши две ветки</h4>
+      <p>Сборка каркаса <strong>проектной</strong> кухни — 1 300 ₽, <strong>стандартной фабричной</strong> — 900 ₽. Разница 31%.</p>
+      <p>Это первое числовое подтверждение аргумента модульных кухонь «нас дешевле собирать».</p>
+    </div>
+    <div class="card">
+      <h4>Условие приёма заказа</h4>
+      <p>Считать берётся только «при полной информации об изделии, условиях и помещении, включая режим доступа».</p>
+      <p>Практик сформулировал за нас требования ко <strong>входу монтажа</strong> — что доставка обязана передать до выезда бригады.</p>
+    </div>
+  </div>
+  <div class="okbox">
+    <b>Газ бригада не подключает</b> — только электрическую часть плиты и духовки. Совпадает с законом: с сентября 2023 года работы с газом имеет право делать лишь газораспределительная организация. Прайс писал человек, понимающий границу ответственности.
+  </div>
+  <div class="defect">
+    <b>Что не копировать.</b> По всей технике указаны клеммные колодки «32 А» — расхожая цифра, которая нормативом не установлена и для мощной плиты недостаточна. И сам прайс собран из кусков: четыре позиции дублируются под разными номерами. Структуру берём, ошибки — нет.
+  </div>
+</section>
+
+<!-- ══ 2. КУХНЯ ══ -->
+<section class="slide">
+  <div class="num">2 / 8</div>
+  <div class="kicker">Что считаем</div>
+  <h2>Кухня из проекта: Г-образная, 4,0 × 3,2 м</h2>
+
+  <svg viewBox="0 0 900 300" role="img" aria-label="Схема кухни: две стены, верхний и нижний ряды модулей">
+    <defs>
+      <style>
+        .wall{fill:#F4EADD;stroke:#E7DBC9}
+        .box{fill:#FFFDFA;stroke:#B5522F;stroke-width:1.5}
+        .boxw{fill:#F7F4EF;stroke:#B5522F;stroke-width:1.5}
+        .col{fill:#FBEADF;stroke:#8E3E21;stroke-width:2}
+        .dim{font:600 12px 'Segoe UI',Arial;fill:#6E5A49}
+        .lbl{font:800 13px 'Segoe UI',Arial;fill:#8E3E21}
+        .cap{font:600 12.5px 'Segoe UI',Arial;fill:#544235}
+      </style>
+    </defs>
+
+    <text x="10" y="20" class="lbl">Левая стена — 4000 мм</text>
+    <rect x="10" y="34" width="420" height="228" class="wall"/>
+    <!-- колонна -->
+    <rect x="20" y="44" width="56" height="208" class="col"/>
+    <text x="26" y="150" class="dim">600</text>
+    <text x="22" y="170" class="cap">колонна</text>
+    <text x="22" y="186" class="cap">2140</text>
+    <!-- верхние -->
+    <rect x="80" y="44" width="42" height="70" class="boxw"/><text x="88" y="86" class="dim">450</text>
+    <rect x="124" y="44" width="52" height="70" class="boxw"/><text x="134" y="86" class="dim">550</text>
+    <rect x="178" y="44" width="56" height="70" class="boxw"/><text x="190" y="86" class="dim">600</text>
+    <text x="250" y="86" class="cap">далее верхних нет</text>
+    <!-- столешница -->
+    <rect x="80" y="170" width="340" height="10" fill="#79502F"/>
+    <!-- нижние -->
+    <rect x="80" y="180" width="46" height="72" class="box"/><text x="88" y="222" class="dim">500</text>
+    <rect x="128" y="180" width="42" height="72" class="box"/><text x="136" y="222" class="dim">450</text>
+    <rect x="172" y="180" width="56" height="72" class="box"/><text x="184" y="222" class="dim">600</text>
+    <rect x="230" y="180" width="60" height="72" class="box"/><text x="238" y="222" class="dim">угол</text>
+    <text x="300" y="222" class="cap">встроены СВЧ</text>
+    <text x="300" y="238" class="cap">и духовой шкаф</text>
+
+    <text x="470" y="20" class="lbl">Правая стена — 3200 мм</text>
+    <rect x="470" y="34" width="330" height="228" class="wall"/>
+    <rect x="480" y="44" width="74" height="70" class="boxw"/><text x="500" y="86" class="dim">800</text>
+    <rect x="556" y="44" width="34" height="70" class="boxw"/><text x="558" y="86" class="dim">350</text>
+    <rect x="480" y="170" width="166" height="10" fill="#79502F"/>
+    <rect x="480" y="180" width="46" height="72" class="box"/><text x="488" y="222" class="dim">500</text>
+    <rect x="528" y="180" width="56" height="72" class="box"/><text x="540" y="222" class="dim">600</text>
+    <text x="600" y="200" class="cap">торец со свесом 20 мм</text>
+  </svg>
+
+  <table>
+    <thead><tr><th style="width:230px">Элемент</th><th>Количество</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Колонна</strong></td><td>1 шт — 600 × 2140, встроенные СВЧ и духовой шкаф</td></tr>
+      <tr><td><strong>Навесные шкафы</strong></td><td>5 шт — 450, 550, 600 по левой стене; 800, 350 по правой</td></tr>
+      <tr><td><strong>Нижние модули</strong></td><td>6 шт, включая угловой</td></tr>
+      <tr><td><strong>Столешница</strong></td><td>2 элемента ЛДСП, стык в углу</td></tr>
+      <tr><td><strong>Приборы</strong></td><td>мойка, смеситель, варочная панель, духовой шкаф, СВЧ</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <b>Чего на проекте нет</b> — вытяжки, фартука, посудомоечной машины, холодильника, подсветки. Если они появятся, цена вырастет: сколько именно — в конце, отдельной таблицей.
+  </div>
+</section>
+
+<!-- ══ 3. МЕТОД ══ -->
+<section class="slide">
+  <div class="num">3 / 8</div>
+  <div class="kicker">Как считали</div>
+  <h2>Три блока вместо одной суммы</h2>
+  <p class="lead">В прайсе всё слеплено: строка «установка и подключение мойки» включает и вырез в столешнице, и саму установку, и подключение к воде. Одной цифрой не видно, за что платишь.</p>
+
+  <div class="defect">
+    <b>Разделили через парные позиции самого прайса.</b> У бригады есть цена «с подключением» и «без подключения» на один и тот же прибор — разница между ними и есть чистая цена подключения. Так же вынимается вырез: он продаётся отдельной строкой.
+  </div>
+
+  <table>
+    <thead><tr><th style="width:220px">Мойка врезная</th><th>Что входит</th><th class="n">₽</th></tr></thead>
+    <tbody>
+      <tr><td>Полная цена по прайсу</td><td>вырез + установка + подключение</td><td class="n">2 400</td></tr>
+      <tr><td>Она же «без подключения»</td><td>вырез + установка</td><td class="n">1 600</td></tr>
+      <tr><td>Вырез отдельной строкой</td><td>только вырез в столешнице</td><td class="n">1 040</td></tr>
+      <tr class="total"><td>Разложение</td><td>вырез 1 040 · установка 560 · подключение 800</td><td class="n">2 400</td></tr>
+    </tbody>
+  </table>
+
+  <div class="okbox">
+    <b>Сумма сходится копейка в копейку</b> — значит разбивка честная, а не придуманная. Дальше тем же способом разложены варочная панель, духовой шкаф и смеситель.
+  </div>
+  <p class="muted" style="font-size:15px">Еврозапил столешницы (8 000 ₽) из расчёта исключён — угол соединяется планкой, она входит в установку столешницы. Минимальная стоимость выезда 25 000 ₽ тоже не применяется: считаем чистую сумму работ.</p>
+</section>
+
+<!-- ══ 4. БЛОК А ══ -->
+<section class="slide">
+  <div class="num">4 / 8</div>
+  <div class="kicker">Блок А</div>
+  <h2>Сборка и установка мебели</h2>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Работа</th><th class="n">Заказ</th><th class="n">Модуль</th></tr></thead>
+    <tbody>
+      <tr><td>Каркасы нижние, 6 шт</td><td class="n">7 800</td><td class="n">5 400</td></tr>
+      <tr><td>Каркасы верхние, 5 шт</td><td class="n">6 500</td><td class="n">4 500</td></tr>
+      <tr><td>Колонна под СВЧ и духовой шкаф</td><td class="n">1 300</td><td class="n">900</td></tr>
+      <tr><td>Столешница, 2 элемента</td><td class="n">4 800</td><td class="n">4 800</td></tr>
+      <tr><td>Цоколь и пристенный плинтус</td><td class="n">входят</td><td class="n">1 800</td></tr>
+      <tr class="total"><td>Итого блок А</td><td class="n">20 400</td><td class="n">17 400</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout">
+    Крепёж, герметик, установка ручек, навеска и регулировка фасадов, подпил ножек и уборка после работы — <b>уже внутри цены каркаса</b>. Отдельно за них не платят. У проектной кухни туда же входят цоколь и плинтус, у стандартной они продаются отдельно.
+  </div>
+</section>
+
+<!-- ══ 5. БЛОКИ Б и В ══ -->
+<section class="slide">
+  <div class="num">5 / 8</div>
+  <div class="kicker">Блок Б</div>
+  <h2>Вырезы</h2>
+
+  <table>
+    <thead><tr><th>Вырез</th><th class="n">₽</th></tr></thead>
+    <tbody>
+      <tr><td>Вырез под мойку в столешнице</td><td class="n">1 040</td></tr>
+      <tr><td>Вырез под варочную панель</td><td class="n">1 040</td></tr>
+      <tr><td>Технологические вырезы под трубы и розетки, 3 шт</td><td class="n">1 200</td></tr>
+      <tr class="total"><td>Итого блок Б</td><td class="n">3 280</td></tr>
+    </tbody>
+  </table>
+
+  <div class="kicker" style="margin-top:26px">Блок В</div>
+  <h2>Техника: установка и подключение</h2>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Прибор</th><th class="n">Установка</th><th class="n">Подключение</th><th class="n">Итого</th></tr></thead>
+    <tbody>
+      <tr><td>Мойка врезная</td><td class="n">560</td><td class="n">800</td><td class="n">1 360</td></tr>
+      <tr><td>Смеситель</td><td class="n">460</td><td class="n">905</td><td class="n">1 365</td></tr>
+      <tr><td>Варочная панель, электрическая</td><td class="n">460</td><td class="n">600</td><td class="n">1 060</td></tr>
+      <tr><td>Духовой шкаф встраиваемый</td><td class="n">1 500</td><td class="n">600</td><td class="n">2 100</td></tr>
+      <tr><td>СВЧ встраиваемая</td><td class="n">1 500</td><td class="n">600</td><td class="n">2 100</td></tr>
+      <tr class="total"><td>Итого блок В</td><td class="n">4 480</td><td class="n">3 505</td><td class="n">7 985</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="muted" style="font-size:15px">По СВЧ прайс даёт только полную цену — разбивка взята по аналогии с духовым шкафом и помечена как расчётная. Отверстие под смеситель прайс отдельной строкой не выделяет, оно сидит внутри подключения.</p>
+</section>
+
+<!-- ══ 6. СВОД ══ -->
+<section class="slide">
+  <div class="num">6 / 8</div>
+  <div class="kicker">Итог</div>
+  <h2>Что получилось</h2>
+
+  <div class="blocks">
+    <div class="blk"><div class="l">Блок А · сборка</div><div class="v">20 400</div><div class="s">64% сметы</div></div>
+    <div class="blk"><div class="l">Блок Б · вырезы</div><div class="v">3 280</div><div class="s">10% сметы</div></div>
+    <div class="blk"><div class="l">Блок В · техника</div><div class="v">7 985</div><div class="s">25% сметы</div></div>
+  </div>
+
+  <div class="legend-bar">
+    <span><i class="lb1"></i>сборка мебели</span>
+    <span><i class="lb2"></i>вырезы</span>
+    <span><i class="lb3"></i>техника</span>
+  </div>
+  <div class="bar">
+    <div class="s1" style="width:64%">64%</div>
+    <div class="s2" style="width:10%">10%</div>
+    <div class="s3" style="width:25%">25%</div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Вариант кухни</th><th class="n">Москва</th><th class="n">Тверь (оценка)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Заказ</strong> — индивидуальный конструктив</td><td class="n">31 665</td><td class="n">23 700 – 26 900</td></tr>
+      <tr><td><strong>Модуль</strong> — стандартная фабричная</td><td class="n">28 665</td><td class="n">21 500 – 24 400</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout">
+    <b>Тверь — пока оценка, а не факт.</b> Взят коэффициент 0,75–0,85 к Москве: Тверь в 170 км от столицы, кадры утекают в область, поэтому она заметно дороже дальних регионов. Чтобы цифра стала твёрдой, нужен живой слой тверских расценок — это последнее незакрытое белое пятно исследования.
+  </div>
+
+  <h3>Проверка здравым смыслом</h3>
+  <p>Если такая кухня в индивидуальном заказе стоит около 400 000 ₽, монтаж 31 665 ₽ — это <strong>7,9% от чека</strong>. Рыночный ориентир за базовую сборку — около 10%. Значит прайс бригады не завышен: он нормальный московский, и на нём можно строить свои расчёты.</p>
+</section>
+
+<!-- ══ 7. ВЫВОДЫ ══ -->
+<section class="slide">
+  <div class="num">7 / 8</div>
+  <div class="kicker">Что показала разбивка</div>
+  <h2>Три вывода, которых не видно в общей сумме</h2>
+
+  <h3>1. Всё подключение стоит 3 505 ₽ — одну девятую сметы</h3>
+  <p>Именно из этой девятой приходят потоп под мойкой и сгоревшая плита. Спорить, брать ли за подключение отдельно, экономически бессмысленно — деньги там небольшие. Решать надо другое: <strong>кто физически подключает и кто за это отвечает</strong>.</p>
+
+  <h3>2. Вырезы — 3 280 ₽, самая дешёвая работа с самыми дорогими последствиями</h3>
+  <p>Незагерметизированный вырез — главный убийца столешниц: вода попадает в срез, плита разбухает, меняется целиком. Это ещё и прямое нарушение технического регламента, где герметизация в местах контакта с мойкой прописана отдельной нормой. <strong>10% сметы держат риск в разы больше собственной цены</strong> — значит в акте сдачи это отдельный пункт под подпись.</p>
+
+  <h3>3. Ветки расходятся только в сборке</h3>
+  <p>Блок А: 20 400 против 17 400. Блоки Б и В у обеих веток совпадают <strong>до рубля</strong> — вырезы и техника не знают, заказная кухня или модульная. Итоговая разница между ветками — 3 000 ₽, около 9%.</p>
+  <div class="defect">
+    <b>Отсюда осторожность с аргументом «модульные дешевле в монтаже».</b> Он верен ровно для одного блока из трёх. На чеке клиента разница почти не читается — продавать модульную кухню надо сроком, предсказуемостью и отсутствием доделок по месту, а не экономией на сборке.
+  </div>
+</section>
+
+<!-- ══ 8. ДАЛЬШЕ ══ -->
+<section class="slide go">
+  <div class="num">8 / 8</div>
+  <div class="kicker">Что дальше</div>
+  <h2>Развилки и допы</h2>
+
+  <h3>Если на проекте появится</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Опция</th><th class="n">Заказ</th><th class="n">Модуль</th></tr></thead>
+    <tbody>
+      <tr><td>Вытяжка с подключением и гофрой 2 м</td><td class="n">+3 150</td><td class="n">+3 150</td></tr>
+      <tr><td>Вырезы под воздуховод, 2 шт</td><td class="n">+800</td><td class="n">+800</td></tr>
+      <tr><td>Стеновая панель — фартук, 2 элемента</td><td class="n">+5 600</td><td class="n">+3 600</td></tr>
+      <tr><td>Подсветка светодиодной лентой</td><td class="n">+2 300</td><td class="n">+2 300</td></tr>
+      <tr><td>Еврозапил столешницы вместо планки</td><td class="n">+8 000</td><td class="n">+8 000</td></tr>
+      <tr><td>Дополнительное крепление колонны к стене</td><td class="n">+180</td><td class="n">+180</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Решения, без которых не пишется наш прайс</h3>
+  <table>
+    <thead><tr><th style="width:230px">Развилка</th><th>Варианты</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Оргмодель</strong></td><td>свои бригады-ИП, работающие парами, или подрядчик целиком</td></tr>
+      <tr><td><strong>Граница работ</strong></td><td>подключения воды и электрики в базовой цене или отдельными строками</td></tr>
+      <tr><td><strong>Модель цены</strong></td><td>погонный метр, процент от чека или пооперационно, как в этом прайсе</td></tr>
+      <tr><td><strong>Минимальный выезд</strong></td><td>вводим свой порог или считаем всё по факту</td></tr>
+    </tbody>
+  </table>
+
+  <div class="stamp">Следующий шаг — снятие факта по узлу «Монтаж»: как это происходит у нас сегодня. Дальше плейбук, чек-лист сдачи и акты. Каждый шаг — по отдельному «го».</div>
+</section>
+
+<footer>Смета монтажа кухни · разбор прайса московской бригады · 22.07.2026 · внутренний документ AI Штаба «Марко Поло»</footer>
+
+</body>
+</html>
