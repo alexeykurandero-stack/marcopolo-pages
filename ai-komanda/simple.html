@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Простое объяснение идеи конструктора ИИ-команд для разных бизнесов и рынков.">
+<title>ИИ-команда для любого бизнеса · простая версия</title>
+<style>
+  :root{
+    --paper:#fffdfa;
+    --canvas:#eee8df;
+    --ink:#171b21;
+    --muted:#5e6872;
+    --line:#ddd6cc;
+    --red:#c8102e;
+    --red-soft:#fbe9ed;
+    --blue:#254d73;
+    --blue-soft:#e8f0f6;
+    --teal:#267269;
+    --teal-soft:#e5f2ef;
+    --gold:#9b721f;
+    --gold-soft:#f8efd9;
+    --shadow:0 24px 70px rgba(60,45,30,.12),0 3px 12px rgba(60,45,30,.06);
+    --radius:28px;
+    --max:1180px;
+  }
+
+  *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+  body{
+    margin:0;color:var(--ink);
+    background:
+      radial-gradient(900px 520px at 10% -8%,rgba(255,255,255,.95),transparent 68%),
+      radial-gradient(900px 520px at 105% 18%,rgba(200,16,46,.06),transparent 70%),
+      var(--canvas);
+    font:17px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  button{font:inherit}
+  strong{font-weight:850}
+  .red{color:var(--red)}
+  .muted{color:var(--muted)}
+
+  .slide{min-height:100svh;scroll-snap-align:start;display:grid;place-items:center;padding:34px;position:relative}
+  .sheet{
+    width:min(var(--max),100%);min-height:min(760px,calc(100svh - 68px));
+    background:var(--paper);border:1px solid rgba(110,94,77,.17);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:clamp(36px,5vw,70px);position:relative;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .sheet:before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;right:-190px;top:-210px;border:70px solid rgba(200,16,46,.045)}
+  .content{position:relative;z-index:1}
+  .brand,.slide-no{position:absolute;top:25px;z-index:2;font-size:12px;font-weight:850;letter-spacing:.11em;text-transform:uppercase;color:#7b746c}
+  .brand{left:30px;display:flex;align-items:center;gap:9px}
+  .brand:before{content:"";width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:14px 0 0 var(--blue),28px 0 0 var(--teal);margin-right:30px}
+  .slide-no{right:30px}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;margin:0 0 18px;color:var(--red);font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+  .eyebrow:before{content:"";width:32px;height:2px;background:currentColor}
+  h1,h2,h3,p{margin-top:0}
+  h1{font-size:clamp(43px,6.7vw,83px);line-height:.98;letter-spacing:-.045em;margin-bottom:27px;max-width:980px}
+  h2{font-size:clamp(32px,4.5vw,56px);line-height:1.06;letter-spacing:-.035em;margin-bottom:18px;max-width:1000px}
+  h3{font-size:22px;line-height:1.18;margin-bottom:9px;letter-spacing:-.015em}
+  .lead{font-size:clamp(20px,2.35vw,27px);line-height:1.42;color:#4d5761;max-width:900px;margin-bottom:25px}
+
+  .hero .sheet{color:#fff;background:radial-gradient(650px 440px at 88% 12%,rgba(255,255,255,.16),transparent 66%),radial-gradient(480px 360px at 10% 96%,rgba(38,114,105,.34),transparent 70%),linear-gradient(138deg,#181c24 0%,#242a35 48%,#7e1528 120%);border-color:rgba(255,255,255,.12)}
+  .hero .sheet:before{border-color:rgba(255,255,255,.05);width:520px;height:520px;right:-230px;top:-280px}
+  .hero .brand,.hero .slide-no{color:rgba(255,255,255,.62)}
+  .hero .eyebrow{color:#ffbcc8}.hero .lead{color:rgba(255,255,255,.8)}.hero .red{color:#ff6f88}
+  .pills{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+  .pill{border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:9px 14px;font-size:14px;font-weight:750;background:rgba(255,255,255,.08);color:#fff}
+
+  .big-idea{margin-top:28px;display:grid;grid-template-columns:1fr 80px 1fr;gap:14px;align-items:center}
+  .idea-box{border:1px solid var(--line);border-radius:22px;padding:30px;background:#fff;min-height:230px;display:flex;flex-direction:column;justify-content:center}
+  .idea-box.bad{opacity:.72}.idea-box.good{background:linear-gradient(145deg,#fff,var(--teal-soft));border-color:#bedbd4}
+  .idea-icon{font-size:42px;line-height:1;margin-bottom:17px}
+  .idea-box p{color:var(--muted);margin:0}.arrow{font-size:45px;color:var(--red);text-align:center}
+
+  .recipe{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:27px}
+  .recipe-card{border:1px solid var(--line);border-radius:21px;padding:25px;background:#fff;position:relative;overflow:hidden}
+  .recipe-card:nth-child(1){background:var(--gold-soft)}.recipe-card:nth-child(2){background:var(--blue-soft)}.recipe-card:nth-child(3){background:var(--teal-soft)}
+  .recipe-card .icon{font-size:36px;margin-bottom:15px}.recipe-card p{margin:0;color:var(--muted)}
+
+  .inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:25px}
+  .input{border:1px solid var(--line);border-radius:17px;padding:20px;background:#fff}
+  .input b{display:block;font-size:18px;margin-bottom:5px}.input span{color:var(--muted);font-size:14px}
+  .input .n{width:30px;height:30px;border-radius:9px;background:var(--red);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;margin-bottom:13px}
+  .note{margin-top:18px;border-left:5px solid var(--gold);padding:15px 19px;background:var(--gold-soft);border-radius:0 14px 14px 0;color:#654e20}
+
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:28px}
+  .step{border:1px solid var(--line);border-radius:19px;padding:23px 20px;background:#fff;min-height:230px}
+  .step .num{font-size:12px;font-weight:900;letter-spacing:.12em;color:var(--red);margin-bottom:14px}
+  .step .icon{font-size:34px;margin-bottom:13px}.step p{font-size:14.5px;color:var(--muted);margin:0}
+  .step:nth-child(2){background:var(--blue-soft)}.step:nth-child(3){background:var(--teal-soft)}.step:nth-child(4){background:var(--red-soft)}
+
+  .example{display:grid;grid-template-columns:.9fr 1.2fr 1fr;gap:16px;margin-top:26px;align-items:stretch}
+  .example-box{border:1px solid var(--line);border-radius:22px;padding:25px;background:#fff}
+  .example-box h3{font-size:24px}.example-box p{color:var(--muted)}
+  .example-box.source{background:var(--gold-soft)}.example-box.team{background:var(--blue-soft)}.example-box.result{background:var(--teal-soft)}
+  .simple-list{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:10px}
+  .simple-list li{position:relative;padding-left:24px;color:#4f5962;font-size:15px}
+  .simple-list li:before{content:"✓";position:absolute;left:0;color:var(--teal);font-weight:900}
+
+  .markets{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:27px}
+  .market{border:1px solid var(--line);border-radius:21px;padding:25px;background:#fff}
+  .market .icon{font-size:38px}.market h3{margin:15px 0 8px}.market p{color:var(--muted);font-size:14.5px;margin:0}
+  .market:nth-child(2){background:var(--teal-soft)}
+  .warning{margin-top:18px;padding:16px 19px;background:var(--red-soft);border:1px solid #efc7cf;border-radius:15px;color:#6f2735}
+
+  .human-ai{display:grid;grid-template-columns:1fr 90px 1fr;gap:15px;align-items:stretch;margin-top:27px}
+  .role{border:1px solid var(--line);border-radius:23px;padding:28px;background:#fff}
+  .role.ai{border-top:7px solid var(--blue)}.role.human{border-top:7px solid var(--red)}
+  .role h3{font-size:27px}.role ul{margin:17px 0 0;padding-left:21px;color:var(--muted)}.role li{margin:8px 0}
+  .plus{display:grid;place-items:center;color:var(--red);font-size:44px;font-weight:300}
+
+  .road{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:28px}
+  .road-card{border:1px solid var(--line);border-radius:21px;padding:26px;background:#fff;min-height:235px}
+  .road-card .n{width:42px;height:42px;border-radius:13px;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:900;margin-bottom:18px}
+  .road-card:nth-child(2) .n{background:var(--gold)}.road-card:nth-child(3) .n{background:var(--teal)}
+  .road-card p{color:var(--muted);margin:0}
+
+  .final .sheet{background:radial-gradient(620px 460px at 84% 18%,rgba(38,114,105,.2),transparent 68%),linear-gradient(145deg,#faf7f1,#fff 58%,#f8e8eb)}
+  .final h2{font-size:clamp(41px,5.8vw,72px);max-width:1000px}
+  .final-line{font-size:clamp(21px,2.7vw,31px);max-width:900px;line-height:1.35;color:#46515c;margin:22px 0 30px}
+  .test{display:inline-flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px 18px;box-shadow:0 8px 24px rgba(40,35,30,.06);font-weight:800}
+  .test:before{content:"✓";width:29px;height:29px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center}
+  .details{display:inline-block;margin-top:19px;color:var(--blue);font-size:14px;font-weight:750;text-decoration:none}.details:hover{text-decoration:underline}
+
+  .controls{position:fixed;right:20px;bottom:18px;z-index:20;display:flex;align-items:center;gap:8px;padding:7px;border:1px solid rgba(120,110,100,.2);border-radius:999px;background:rgba(255,253,250,.88);box-shadow:0 9px 28px rgba(45,35,25,.13);backdrop-filter:blur(12px)}
+  .controls button{width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:var(--ink);cursor:pointer;font-weight:900}.controls button:hover{background:#eee8df}
+  .counter{font-size:12px;color:var(--muted);min-width:42px;text-align:center;font-variant-numeric:tabular-nums}
+  .progress{position:fixed;left:0;top:0;height:4px;background:var(--red);width:0;z-index:30;transition:width .18s ease}
+  .print-btn{position:fixed;left:20px;bottom:18px;z-index:20;border:1px solid rgba(120,110,100,.2);border-radius:999px;background:rgba(255,253,250,.88);box-shadow:0 9px 28px rgba(45,35,25,.13);padding:11px 16px;cursor:pointer;color:var(--ink);font-size:13px;font-weight:800}
+
+  @media(max-width:900px){
+    html{scroll-snap-type:none}body{overflow-x:hidden}.slide{width:100%;min-width:0;padding:14px;min-height:auto;overflow:hidden;display:flex;justify-content:center;align-items:flex-start}.sheet{width:calc(100vw - 28px);max-width:calc(100vw - 28px);min-width:0;min-height:auto;padding:70px 24px 46px;border-radius:20px}.content{width:100%;min-width:0}.brand{left:22px}.slide-no{right:22px}
+    .recipe,.inputs,.markets,.road{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.example{grid-template-columns:1fr}.human-ai{grid-template-columns:1fr}.plus{height:35px}
+  }
+  @media(max-width:640px){
+    h1{font-size:38px;overflow-wrap:break-word}.big-idea,.recipe,.inputs,.steps,.markets,.road{grid-template-columns:1fr}.big-idea .arrow{transform:rotate(90deg);height:42px}.lead{font-size:18px}.controls{right:10px;bottom:10px}.print-btn{display:none}
+  }
+  @media print{
+    @page{size:A4 landscape;margin:0}html,body{background:#fff;scroll-snap-type:none}.progress,.controls,.print-btn{display:none!important}
+    .slide{width:297mm;height:210mm;min-height:210mm;padding:8mm;page-break-after:always;break-after:page}.slide:last-child{page-break-after:auto}
+    .sheet{width:281mm;height:194mm;min-height:194mm;box-shadow:none;border-radius:6mm;padding:15mm;overflow:hidden}h1{font-size:52pt}h2{font-size:33pt}.lead{font-size:16pt}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<main id="deck">
+  <section class="slide hero" data-title="Главная идея">
+    <div class="sheet">
+      <div class="brand">Марко Поло · AI Lab</div><div class="slide-no">01 / 08</div>
+      <div class="content">
+        <div class="eyebrow">Объясняем на пальцах</div>
+        <h1>Берём бизнес —<br>собираем под него <span class="red">ИИ-команду</span>.</h1>
+        <p class="lead">Не одного «умного помощника на всё», а несколько виртуальных специалистов. У каждого — своя работа. Вместе они превращают факты о бизнесе в понятный план маркетинга и готовые материалы.</p>
+        <div class="pills"><span class="pill">первая проверка — кухни ПМ</span><span class="pill">дальше — другие ниши</span><span class="pill">человек сохраняет контроль</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Простая аналогия">
+    <div class="sheet">
+      <div class="brand">Простая аналогия</div><div class="slide-no">02 / 08</div>
+      <div class="content">
+        <div class="eyebrow">Как обычная рабочая бригада</div>
+        <h2>Один мастер не должен делать всё.</h2>
+        <p class="lead">Хорошую кухню не строят одним молотком. Нужны замерщик, дизайнер, сборщик и тот, кто проверит результат. С маркетингом — так же.</p>
+        <div class="big-idea">
+          <div class="idea-box bad"><div class="idea-icon">🤹</div><h3>Один ИИ на все случаи</h3><p>Исследует рынок, придумывает стратегию, пишет рекламу и сам себя проверяет. Легко запутаться и ошибиться.</p></div>
+          <div class="arrow">→</div>
+          <div class="idea-box good"><div class="idea-icon">👥</div><h3>Команда с разделением работы</h3><p>Один изучает покупателей, другой строит план, третий готовит материалы, четвёртый проверяет.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Что нужно на входе">
+    <div class="sheet">
+      <div class="brand">С чего начинаем</div><div class="slide-no">03 / 08</div>
+      <div class="content">
+        <div class="eyebrow">Шесть простых ответов</div>
+        <h2>Сначала рассказываем, что у нас за бизнес.</h2>
+        <div class="inputs">
+          <div class="input"><div class="n">1</div><b>Что продаём?</b><span>Товар или услуга.</span></div>
+          <div class="input"><div class="n">2</div><b>Кому?</b><span>Каким людям или компаниям.</span></div>
+          <div class="input"><div class="n">3</div><b>Где?</b><span>Город, регион или страна.</span></div>
+          <div class="input"><div class="n">4</div><b>Через какой канал?</b><span>VK, сайт, Авито, маркетплейс и т. д.</span></div>
+          <div class="input"><div class="n">5</div><b>Чего хотим?</b><span>Например, больше заявок на замер.</span></div>
+          <div class="input"><div class="n">6</div><b>Что уже знаем?</b><span>Продажи, отзывы, переписки, ограничения.</span></div>
+        </div>
+        <div class="note"><strong>Если фактов мало, система не выдумывает красивый ответ.</strong> Она показывает, чего не хватает и что нужно проверить.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Что делает система">
+    <div class="sheet">
+      <div class="brand">Как идёт работа</div><div class="slide-no">04 / 08</div>
+      <div class="content">
+        <div class="eyebrow">Четыре понятных шага</div>
+        <h2>Из сырых данных — в рабочий отдел.</h2>
+        <div class="steps">
+          <div class="step"><div class="num">ШАГ 1</div><div class="icon">🔎</div><h3>Разобраться</h3><p>Изучить бизнес, покупателей, конкурентов и рынок. Отделить факты от догадок.</p></div>
+          <div class="step"><div class="num">ШАГ 2</div><div class="icon">🧑‍💼</div><h3>Собрать команду</h3><p>Выбрать нужных специалистов именно для этой задачи и не создавать лишних.</p></div>
+          <div class="step"><div class="num">ШАГ 3</div><div class="icon">🔗</div><h3>Связать работу</h3><p>Объяснить, кто что получает, что делает и кому передаёт результат.</p></div>
+          <div class="step"><div class="num">ШАГ 4</div><div class="icon">✅</div><h3>Проверить делом</h3><p>Дать реальную задачу, сверить результат с бизнесом и исправить слабые места.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Пример с кухнями">
+    <div class="sheet">
+      <div class="brand">Первый пример</div><div class="slide-no">05 / 08</div>
+      <div class="content">
+        <div class="eyebrow">Кухни Марко Поло</div>
+        <h2>Вот как это выглядит на живом бизнесе.</h2>
+        <div class="example">
+          <div class="example-box source"><h3>Что даём</h3><ul class="simple-list"><li>модульные кухни ПМ;</li><li>покупатели в Твери;</li><li>реальные проекты и отзывы;</li><li>цель — заявки на замер;</li><li>канал — ВКонтакте.</li></ul></div>
+          <div class="example-box team"><h3>Кого собираем</h3><ul class="simple-list"><li>исследователь покупателей;</li><li>аналитик конкурентов;</li><li>маркетолог-стратег;</li><li>автор рекламных текстов;</li><li>специалист по VK;</li><li>проверяющий качество.</li></ul></div>
+          <div class="example-box result"><h3>Что получаем</h3><ul class="simple-list"><li>понятные группы клиентов;</li><li>выбранное предложение;</li><li>путь от рекламы до заявки;</li><li>готовые объявления и контент;</li><li>цифры для проверки результата.</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Почему команды разные">
+    <div class="sheet">
+      <div class="brand">Каждому бизнесу — своё</div><div class="slide-no">06 / 08</div>
+      <div class="content">
+        <div class="eyebrow">Нельзя просто заменить слова</div>
+        <h2>Кухни, стоматология и онлайн-школа продаются по-разному.</h2>
+        <div class="markets">
+          <div class="market"><div class="icon">🍽️</div><h3>Кухни</h3><p>Важны замер, проект, внешний вид, цена комплекта и доверие к установке.</p></div>
+          <div class="market"><div class="icon">🦷</div><h3>Стоматология</h3><p>Важны врач, безопасность, страх пациента, диагноз и медицинские ограничения.</p></div>
+          <div class="market"><div class="icon">🎓</div><h3>Онлайн-школа</h3><p>Важны программа, преподаватель, результат ученика и решение о долгом обучении.</p></div>
+        </div>
+        <div class="warning"><strong>Поэтому для каждой новой темы мы создаём отдельную команду и отдельную «комнату» с фактами.</strong> Знания про кухни не притворяются знаниями про медицину.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Роль человека">
+    <div class="sheet">
+      <div class="brand">Кто за что отвечает</div><div class="slide-no">07 / 08</div>
+      <div class="content">
+        <div class="eyebrow">ИИ помогает, человек решает</div>
+        <h2>Это не волшебная кнопка и не бизнес на автопилоте.</h2>
+        <div class="human-ai">
+          <div class="role ai"><h3>🤖 ИИ-команда</h3><ul><li>быстро разбирает много информации;</li><li>находит закономерности и варианты;</li><li>готовит планы, тексты и материалы;</li><li>повторяет работу по понятным правилам.</li></ul></div>
+          <div class="plus">+</div>
+          <div class="role human"><h3>👤 Владелец бизнеса</h3><ul><li>даёт правдивые исходные данные;</li><li>выбирает, на кого делаем ставку;</li><li>проверяет живой голос и обещания;</li><li>принимает итог и отвечает за решение.</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide final" data-title="Что получится">
+    <div class="sheet">
+      <div class="brand">Куда идём</div><div class="slide-no">08 / 08</div>
+      <div class="content">
+        <div class="eyebrow">Сначала проверить, потом масштабировать</div>
+        <h2>Один понятный способ собирать <span class="red">разные ИИ-команды</span> под разные задачи.</h2>
+        <p class="final-line">Сначала полностью проверяем подход на кухнях ПМ. Затем берём совсем другую нишу. Если система справляется в обоих случаях — превращаем её в готовый инструмент.</p>
+        <div class="test">Главная проверка: команда делает полезную работу, а бизнес принимает результат.</div><br>
+        <a class="details" href="index.html">Открыть подробную версию →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<button class="print-btn" type="button" onclick="window.print()" title="Сохранить презентацию в PDF">Печать / PDF</button>
+<nav class="controls" aria-label="Навигация по слайдам">
+  <button type="button" id="prev" aria-label="Предыдущий слайд">↑</button>
+  <span class="counter" id="counter">1 / 8</span>
+  <button type="button" id="next" aria-label="Следующий слайд">↓</button>
+</nav>
+
+<script>
+(() => {
+  const slides = [...document.querySelectorAll('.slide')];
+  const counter = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  let current = 0;
+
+  const nearest = () => {
+    const center = window.scrollY + window.innerHeight / 2;
+    let best = 0;
+    let distance = Infinity;
+    slides.forEach((slide, index) => {
+      const slideCenter = slide.offsetTop + slide.offsetHeight / 2;
+      const nextDistance = Math.abs(slideCenter - center);
+      if (nextDistance < distance) { distance = nextDistance; best = index; }
+    });
+    return best;
+  };
+
+  const update = () => {
+    current = nearest();
+    counter.textContent = `${current + 1} / ${slides.length}`;
+    progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+    document.title = `${slides[current].dataset.title} · ИИ-команда простыми словами`;
+  };
+
+  const go = index => {
+    current = Math.max(0, Math.min(slides.length - 1, index));
+    slides[current].scrollIntoView({behavior:'smooth', block:'start'});
+  };
+
+  document.getElementById('prev').addEventListener('click', () => go(current - 1));
+  document.getElementById('next').addEventListener('click', () => go(current + 1));
+  document.addEventListener('keydown', event => {
+    if (['ArrowDown','ArrowRight','PageDown',' '].includes(event.key)) { event.preventDefault(); go(nearest() + 1); }
+    if (['ArrowUp','ArrowLeft','PageUp'].includes(event.key)) { event.preventDefault(); go(nearest() - 1); }
+    if (event.key === 'Home') { event.preventDefault(); go(0); }
+    if (event.key === 'End') { event.preventDefault(); go(slides.length - 1); }
+  });
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
+</body>
+</html>
