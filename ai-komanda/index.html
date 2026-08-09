@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Концепция конструктора отдельных ИИ-отделов маркетинга под разные продукты, рынки и задачи.">
+<title>Конструктор ИИ-отделов маркетинга · Марко Поло</title>
+<style>
+  :root{
+    --paper:#fffdfa;
+    --canvas:#eee8df;
+    --ink:#171b21;
+    --muted:#66707a;
+    --line:#ddd6cc;
+    --red:#c8102e;
+    --red-deep:#941124;
+    --red-soft:#fbe9ed;
+    --blue:#254d73;
+    --blue-soft:#e8f0f6;
+    --teal:#267269;
+    --teal-soft:#e5f2ef;
+    --gold:#a77b24;
+    --gold-soft:#f8efd9;
+    --green:#3d704e;
+    --green-soft:#e8f1e9;
+    --shadow:0 24px 70px rgba(60,45,30,.12),0 3px 12px rgba(60,45,30,.06);
+    --radius:28px;
+    --max:1180px;
+  }
+
+  *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+  body{
+    margin:0;
+    color:var(--ink);
+    background:
+      radial-gradient(900px 520px at 10% -8%,rgba(255,255,255,.95),transparent 68%),
+      radial-gradient(900px 520px at 105% 18%,rgba(200,16,46,.06),transparent 70%),
+      var(--canvas);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  button{font:inherit}
+  strong{font-weight:800}
+  .red{color:var(--red)}
+  .blue{color:var(--blue)}
+  .teal{color:var(--teal)}
+  .muted{color:var(--muted)}
+  .nowrap{white-space:nowrap}
+
+  .deck{position:relative}
+  .slide{
+    min-height:100svh;
+    scroll-snap-align:start;
+    display:grid;
+    place-items:center;
+    padding:34px;
+    position:relative;
+  }
+  .sheet{
+    width:min(var(--max),100%);
+    min-height:min(760px,calc(100svh - 68px));
+    background:var(--paper);
+    border:1px solid rgba(110,94,77,.17);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:clamp(36px,5vw,70px);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .sheet:before{
+    content:"";
+    position:absolute;
+    width:340px;height:340px;border-radius:50%;
+    right:-190px;top:-210px;
+    border:70px solid rgba(200,16,46,.045);
+    pointer-events:none;
+  }
+  .sheet:after{
+    content:"";
+    position:absolute;
+    width:190px;height:190px;border-radius:50%;
+    left:-110px;bottom:-120px;
+    background:rgba(37,77,115,.035);
+    pointer-events:none;
+  }
+  .content{position:relative;z-index:1}
+  .slide-no{
+    position:absolute;right:30px;top:26px;z-index:2;
+    font-size:12px;font-weight:800;letter-spacing:.12em;color:#8b847c;
+  }
+  .brand{
+    position:absolute;left:30px;top:24px;z-index:2;
+    display:flex;align-items:center;gap:9px;
+    font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#716b64;
+  }
+  .brand:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:12px 0 0 var(--blue),24px 0 0 var(--teal);margin-right:25px}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    margin:0 0 18px;
+    color:var(--red);font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;
+  }
+  .eyebrow:before{content:"";width:32px;height:2px;background:currentColor}
+  h1,h2,h3,p{margin-top:0}
+  h1{
+    font-size:clamp(42px,6.6vw,82px);
+    line-height:.98;
+    letter-spacing:-.045em;
+    margin-bottom:26px;
+    max-width:980px;
+  }
+  h2{
+    font-size:clamp(31px,4.4vw,55px);
+    line-height:1.05;
+    letter-spacing:-.035em;
+    margin-bottom:18px;
+    max-width:980px;
+  }
+  h3{font-size:20px;line-height:1.2;margin-bottom:8px;letter-spacing:-.01em}
+  .lead{font-size:clamp(18px,2.2vw,25px);line-height:1.42;color:#4d5761;max-width:850px;margin-bottom:26px}
+  .small{font-size:14px;color:var(--muted)}
+
+  .hero .sheet{
+    color:white;
+    background:
+      radial-gradient(650px 440px at 88% 12%,rgba(255,255,255,.16),transparent 66%),
+      radial-gradient(480px 360px at 10% 96%,rgba(43,120,110,.36),transparent 70%),
+      linear-gradient(138deg,#181c24 0%,#242a35 48%,#7e1528 120%);
+    border-color:rgba(255,255,255,.12);
+  }
+  .hero .sheet:before{border-color:rgba(255,255,255,.05);width:520px;height:520px;right:-230px;top:-280px}
+  .hero .sheet:after{background:rgba(255,255,255,.035);width:300px;height:300px;left:-170px;bottom:-180px}
+  .hero .brand,.hero .slide-no{color:rgba(255,255,255,.62)}
+  .hero .eyebrow{color:#ffbcc8}
+  .hero .lead{color:rgba(255,255,255,.77);max-width:780px}
+  .hero .accent{color:#ff6f88}
+  .hero-foot{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+  .pill{border:1px solid var(--line);border-radius:999px;padding:9px 14px;font-size:13px;font-weight:750;background:white;color:var(--ink)}
+  .hero .pill{background:rgba(255,255,255,.08);color:white;border-color:rgba(255,255,255,.2);backdrop-filter:blur(8px)}
+
+  .grid{display:grid;gap:18px;margin-top:24px}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;
+    box-shadow:0 8px 24px rgba(40,35,30,.05);
+  }
+  .card p{margin:0;color:var(--muted);font-size:14.5px}
+  .card .num{font-size:12px;color:var(--red);font-weight:900;letter-spacing:.1em;margin-bottom:13px}
+  .card.blue{background:var(--blue-soft);border-color:#cdddea;color:var(--ink)}
+  .card.teal{background:var(--teal-soft);border-color:#c7dfda;color:var(--ink)}
+  .card.red{background:var(--red-soft);border-color:#f0c9d1;color:var(--ink)}
+  .card.gold{background:var(--gold-soft);border-color:#ead9ae;color:var(--ink)}
+  .card.green{background:var(--green-soft);border-color:#cfdfd1;color:var(--ink)}
+
+  .versus{display:grid;grid-template-columns:1fr 70px 1fr;align-items:stretch;gap:12px;margin-top:30px}
+  .vs-box{border:1px solid var(--line);border-radius:22px;padding:28px;background:#fff}
+  .vs-box.old{opacity:.74}
+  .vs-box.new{background:linear-gradient(145deg,#fff,var(--red-soft));border-color:#e9b7c1}
+  .vs-box .label{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:14px}
+  .vs-box .big{font-size:clamp(25px,3.3vw,39px);font-weight:850;line-height:1.08;letter-spacing:-.025em}
+  .vs-box p{color:var(--muted);margin:14px 0 0}
+  .versus .arrow{display:grid;place-items:center;font-size:35px;color:var(--red);font-weight:300}
+
+  .levels{display:grid;gap:14px;margin-top:28px}
+  .level{display:grid;grid-template-columns:100px 180px 1fr;align-items:center;gap:20px;border-radius:18px;padding:19px 22px;border:1px solid var(--line)}
+  .level .n{font-size:12px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
+  .level .title{font-size:23px;font-weight:850;letter-spacing:-.02em}
+  .level .desc{color:var(--muted)}
+  .level.engine{background:var(--blue-soft);border-color:#cbdce9}.level.engine .n{color:var(--blue)}
+  .level.case{background:var(--gold-soft);border-color:#ead8ac}.level.case .n{color:var(--gold)}
+  .level.department{background:var(--teal-soft);border-color:#c7dfd9}.level.department .n{color:var(--teal)}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
+  .column{border-radius:22px;padding:26px;border:1px solid var(--line);background:white}
+  .column.fixed{border-top:6px solid var(--blue)}
+  .column.generated{border-top:6px solid var(--red)}
+  .column h3{font-size:25px}
+  .clean-list{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:11px}
+  .clean-list li{padding-left:28px;position:relative;color:#4e5963}
+  .clean-list li:before{content:"";position:absolute;left:0;top:.42em;width:13px;height:13px;border-radius:4px;background:var(--blue-soft);border:2px solid var(--blue)}
+  .generated .clean-list li:before{background:var(--red-soft);border-color:var(--red)}
+
+  .pipeline{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:30px;align-items:stretch}
+  .pipe{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 13px;min-height:150px}
+  .pipe:not(:last-child):after{content:"›";position:absolute;right:-10px;top:50%;transform:translateY(-50%);z-index:2;width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:17px;line-height:1}
+  .pipe .pn{font-size:11px;font-weight:900;color:var(--red);letter-spacing:.12em}
+  .pipe h3{font-size:15px;margin:10px 0 7px}
+  .pipe p{font-size:12.5px;color:var(--muted);margin:0;line-height:1.42}
+  .gate{margin-top:18px;padding:14px 18px;border-radius:14px;background:var(--gold-soft);border:1px solid #e7d29d;color:#6d531d;font-size:14px}
+
+  .orbit{display:grid;grid-template-columns:1fr 1.2fr 1fr;grid-template-rows:auto auto;gap:14px;margin-top:24px;align-items:stretch}
+  .core{
+    grid-column:2;grid-row:1 / span 2;display:flex;flex-direction:column;justify-content:center;
+    border-radius:26px;padding:28px;color:white;background:linear-gradient(145deg,var(--blue),#17324c);box-shadow:0 16px 36px rgba(37,77,115,.22)
+  }
+  .core .over{font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:#b8d5eb}
+  .core .big{font-size:31px;line-height:1.07;font-weight:850;letter-spacing:-.025em;margin:10px 0}
+  .core p{color:#d5e2ec;margin:0;font-size:14px}
+  .orbit .card{min-height:145px}
+
+  .adapter-map{display:grid;grid-template-columns:1fr 120px 1.2fr;gap:18px;align-items:center;margin-top:30px}
+  .neutral{background:linear-gradient(145deg,#202630,#343c49);color:#fff;border-radius:24px;padding:30px}
+  .neutral .tag{font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:#b7c6d5}
+  .neutral h3{font-size:28px;margin:10px 0}
+  .neutral p{margin:0;color:#ced6df}
+  .adapter-arrow{text-align:center;color:var(--red);font-size:15px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+  .adapter-arrow:after{content:"→";display:block;font-size:44px;font-weight:300;line-height:1}
+  .platforms{display:grid;gap:12px}
+  .platform{border:1px solid var(--line);border-radius:16px;padding:17px 20px;background:#fff}
+  .platform b{display:block;font-size:17px;margin-bottom:3px}.platform span{color:var(--muted);font-size:13px}
+
+  .rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  .room{border-radius:20px;padding:24px;border:1px solid var(--line);position:relative;overflow:hidden;background:#fff}
+  .room:before{content:"";position:absolute;inset:0 0 auto;height:7px;background:var(--red)}
+  .room:nth-child(2):before{background:var(--teal)}
+  .room:nth-child(3):before{background:var(--gold)}
+  .room .slug{font:700 12px/1.3 "SFMono-Regular",Consolas,monospace;color:var(--muted);margin-bottom:12px}
+  .room h3{font-size:21px}
+  .room p{font-size:14px;color:var(--muted);margin:0}
+  .audit{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+  .audit div{border-radius:12px;background:#f3f1ed;padding:12px;text-align:center;font-size:12px;color:var(--muted)}
+  .audit b{display:block;color:var(--ink);font-size:14px;margin-bottom:2px}
+
+  .limit-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;margin-top:24px}
+  .proven{border-radius:22px;padding:27px;background:var(--green-soft);border:1px solid #c9ddcd}
+  .unknown{border-radius:22px;padding:27px;background:var(--gold-soft);border:1px solid #e5d19f}
+  .limit-grid h3{font-size:24px}
+  .limit-grid ul{margin:15px 0 0;padding-left:20px;color:#53605a}
+  .limit-grid li{margin:7px 0}
+  .honest{margin-top:18px;border-left:5px solid var(--red);padding:16px 19px;background:var(--red-soft);border-radius:0 14px 14px 0;font-size:17px}
+
+  .road{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:30px;counter-reset:road}
+  .milestone{position:relative;padding:25px 20px 20px;border:1px solid var(--line);background:#fff;border-radius:18px;min-height:220px}
+  .milestone:before{counter-increment:road;content:counter(road);width:38px;height:38px;border-radius:12px;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:900;margin-bottom:17px}
+  .milestone:nth-child(2):before{background:var(--gold)}
+  .milestone:nth-child(3):before{background:var(--teal)}
+  .milestone:nth-child(4):before{background:var(--blue)}
+  .milestone h3{font-size:18px}
+  .milestone p{font-size:13.5px;color:var(--muted);margin:0}
+
+  .final .sheet{
+    background:
+      radial-gradient(620px 460px at 84% 18%,rgba(38,114,105,.22),transparent 68%),
+      linear-gradient(145deg,#faf7f1,#fff 58%,#f8e8eb);
+  }
+  .final h2{font-size:clamp(39px,5.7vw,71px);max-width:960px}
+  .claim{font-size:clamp(21px,2.8vw,31px);max-width:900px;line-height:1.35;color:#46515c;margin:22px 0 34px}
+  .test{display:inline-flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px 18px;box-shadow:0 8px 24px rgba(40,35,30,.06);font-weight:750}
+  .test:before{content:"✓";width:29px;height:29px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center}
+
+  .controls{
+    position:fixed;right:20px;bottom:18px;z-index:20;
+    display:flex;align-items:center;gap:8px;padding:7px;
+    border:1px solid rgba(120,110,100,.2);border-radius:999px;
+    background:rgba(255,253,250,.88);box-shadow:0 9px 28px rgba(45,35,25,.13);backdrop-filter:blur(12px)
+  }
+  .controls button{width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:var(--ink);cursor:pointer;font-weight:900}
+  .controls button:hover{background:#eee8df}
+  .controls .counter{font-size:12px;color:var(--muted);min-width:42px;text-align:center;font-variant-numeric:tabular-nums}
+  .progress{position:fixed;left:0;top:0;height:4px;background:var(--red);width:0;z-index:30;transition:width .18s ease}
+  .print-btn{position:fixed;left:20px;bottom:18px;z-index:20;border:1px solid rgba(120,110,100,.2);border-radius:999px;background:rgba(255,253,250,.88);box-shadow:0 9px 28px rgba(45,35,25,.13);backdrop-filter:blur(12px);padding:11px 16px;cursor:pointer;color:var(--ink);font-size:13px;font-weight:800}
+
+  @media(max-width:900px){
+    html{scroll-snap-type:none}
+    .slide{padding:14px;min-height:auto}
+    .sheet{min-height:auto;padding:70px 24px 46px;border-radius:20px}
+    .brand{left:22px}.slide-no{right:22px}
+    .g3,.g4,.rooms,.road{grid-template-columns:1fr 1fr}
+    .levels .level{grid-template-columns:74px 140px 1fr}
+    .pipeline{grid-template-columns:1fr 1fr}
+    .pipe:not(:last-child):after{display:none}
+    .adapter-map{grid-template-columns:1fr}.adapter-arrow:after{content:"↓"}
+    .adapter-arrow{padding:3px}
+  }
+  @media(max-width:640px){
+    .g2,.g3,.g4,.split,.rooms,.road,.limit-grid{grid-template-columns:1fr}
+    .versus{grid-template-columns:1fr}.versus .arrow{transform:rotate(90deg);height:38px}
+    .levels .level{grid-template-columns:1fr;gap:7px}
+    .orbit{grid-template-columns:1fr}.core{grid-column:1;grid-row:auto}.orbit .card{min-height:auto}
+    .pipeline{grid-template-columns:1fr}
+    .audit{grid-template-columns:1fr 1fr}
+    .controls{right:10px;bottom:10px}.print-btn{display:none}
+    .lead{font-size:18px}
+  }
+
+  @media print{
+    @page{size:A4 landscape;margin:0}
+    html,body{background:#fff;scroll-snap-type:none}
+    .progress,.controls,.print-btn{display:none!important}
+    .slide{width:297mm;height:210mm;min-height:210mm;padding:8mm;page-break-after:always;break-after:page}
+    .slide:last-child{page-break-after:auto}
+    .sheet{width:281mm;height:194mm;min-height:194mm;box-shadow:none;border-radius:6mm;padding:15mm;overflow:hidden}
+    h1{font-size:54pt}h2{font-size:34pt}.lead{font-size:16pt}
+    .pipeline{gap:5px}.pipe{min-height:120px;padding:12px 9px}.pipe h3{font-size:12px}.pipe p{font-size:10px}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<main class="deck" id="deck">
+  <section class="slide hero" id="slide-1" data-title="Замысел">
+    <div class="sheet">
+      <div class="brand">Марко Поло · AI Lab</div><div class="slide-no">01 / 11</div>
+      <div class="content">
+        <div class="eyebrow">Концепция продукта · v0.1</div>
+        <h1>Не одна команда.<br><span class="accent">Фабрика ИИ-отделов</span> маркетинга.</h1>
+        <p class="lead">Берём конкретный продукт, нишу, рынок и цель — собираем отдельный отдел со своими сотрудниками, знаниями, маршрутом работы и проверкой качества.</p>
+        <div class="hero-foot">
+          <span class="pill">первый полигон — кухни ПМ</span>
+          <span class="pill">методическая основа — курс Церебро</span>
+          <span class="pill">выход — работающий отдел, не набор промптов</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-2" data-title="Смена масштаба">
+    <div class="sheet">
+      <div class="brand">Смена масштаба</div><div class="slide-no">02 / 11</div>
+      <div class="content">
+        <div class="eyebrow">Что меняется</div>
+        <h2>Кухни ПМ — не конечный продукт. Это первый доказательный кейс.</h2>
+        <p class="lead">Единицей проектирования становится не один сотрудник и не одна команда, а воспроизводимый способ собирать отделы под разные условия.</p>
+        <div class="versus">
+          <div class="vs-box old">
+            <div class="label">Исходная рамка</div>
+            <div class="big">Собрать ИИ-команду для кухонь ПМ</div>
+            <p>Один бизнес, один контекст, один отдел.</p>
+          </div>
+          <div class="arrow">→</div>
+          <div class="vs-box new">
+            <div class="label">Рамка высокого порядка</div>
+            <div class="big">Собирать отдельный отдел для каждого кейса</div>
+            <p>Один движок, много изолированных команд и рынков.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-3" data-title="Три уровня">
+    <div class="sheet">
+      <div class="brand">Архитектура</div><div class="slide-no">03 / 11</div>
+      <div class="content">
+        <div class="eyebrow">Три уровня системы</div>
+        <h2>Метод постоянный. Фактура переменная. Отдел рождается заново.</h2>
+        <div class="levels">
+          <div class="level engine">
+            <div class="n">Уровень 1</div><div class="title">Движок</div>
+            <div class="desc">Вход, исследования, найм, сборка ролей, рабочая цепь, оценка и упаковка. Хранит метод, но не факты конкретной ниши.</div>
+          </div>
+          <div class="level case">
+            <div class="n">Уровень 2</div><div class="title">Кейс</div>
+            <div class="desc">Продукт + рынок + география + канал + коммерческая цель + доказательства и ограничения.</div>
+          </div>
+          <div class="level department">
+            <div class="n">Уровень 3</div><div class="title">Отдел</div>
+            <div class="desc">Состав команды, должности, скиллы, передача результатов, первый рабочий прогон и вердикт о готовности.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-4" data-title="Постоянное и переменное">
+    <div class="sheet">
+      <div class="brand">Граница системы</div><div class="slide-no">04 / 11</div>
+      <div class="content">
+        <div class="eyebrow">Не копировать один отдел</div>
+        <h2>Постоянны инструменты конструктора. Сотрудники принадлежат кейсу.</h2>
+        <div class="split">
+          <div class="column fixed">
+            <h3>Постоянный движок</h3>
+            <p class="muted">Повторяется в каждом запуске.</p>
+            <ul class="clean-list">
+              <li>диагностика входа и пробелов;</li>
+              <li>внутреннее и внешнее исследование;</li>
+              <li>процедура найма 5–7 ролей;</li>
+              <li>шаблон должности и handoff;</li>
+              <li>проверка фактов и результата;</li>
+              <li>адаптеры под рабочую среду.</li>
+            </ul>
+          </div>
+          <div class="column generated">
+            <h3>Генерируемый отдел</h3>
+            <p class="muted">Собирается отдельно под каждый рынок.</p>
+            <ul class="clean-list">
+              <li>состав и названия ролей;</li>
+              <li>ответственность каждого сотрудника;</li>
+              <li>разрешённые источники;</li>
+              <li>рабочие скиллы;</li>
+              <li>цепочка артефактов;</li>
+              <li>критерии успеха конкретного кейса.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-5" data-title="Конвейер">
+    <div class="sheet">
+      <div class="brand">Конвейер кейса</div><div class="slide-no">05 / 11</div>
+      <div class="content">
+        <div class="eyebrow">От запроса до отдела v1</div>
+        <h2>Сначала доказательства. Потом роли. Затем работа.</h2>
+        <div class="pipeline">
+          <div class="pipe"><div class="pn">01</div><h3>Карточка</h3><p>Продукт, рынок, гео, канал, цель, ограничения.</p></div>
+          <div class="pipe"><div class="pn">02</div><h3>Контекст</h3><p>Факты бизнеса и два внешних исследования.</p></div>
+          <div class="pipe"><div class="pn">03</div><h3>Найм</h3><p>5–7 ролей, три приоритетные, без дублей.</p></div>
+          <div class="pipe"><div class="pn">04</div><h3>Сборка</h3><p>Должности, скиллы, входы, выходы, запреты.</p></div>
+          <div class="pipe"><div class="pn">05</div><h3>Работа</h3><p>ЦА → сегмент → воронка → материалы.</p></div>
+          <div class="pipe"><div class="pn">06</div><h3>Проверка</h3><p>Реальная задача, экспертная сверка, контроль.</p></div>
+          <div class="pipe"><div class="pn">07</div><h3>Отдел v1</h3><p>Принятые роли, маршрут и история изменений.</p></div>
+        </div>
+        <div class="gate"><strong>Гейт владельца:</strong> исходные факты · ставка на сегмент · живой голос · финальный вердикт. Эти решения модель не принимает за бизнес.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-6" data-title="Комплект отдела">
+    <div class="sheet">
+      <div class="brand">Что получает пользователь</div><div class="slide-no">06 / 11</div>
+      <div class="content">
+        <div class="eyebrow">Отдел — это система</div>
+        <h2>Не папка с промптами, а сохраняемая организационная единица.</h2>
+        <div class="orbit">
+          <div class="card red"><div class="num">01</div><h3>Команда</h3><p>Состав, приоритетные роли, границы ответственности.</p></div>
+          <div class="core"><div class="over">Результат сборки</div><div class="big">Отдельный ИИ-отдел маркетинга</div><p>Его можно запустить снова, проверить, улучшить и перенести на другую платформу.</p></div>
+          <div class="card teal"><div class="num">02</div><h3>Источники</h3><p>Принятый контекст и происхождение каждого факта.</p></div>
+          <div class="card gold"><div class="num">03</div><h3>Маршрут</h3><p>Кто что получает, производит и передаёт дальше.</p></div>
+          <div class="card blue"><div class="num">04</div><h3>Приёмка</h3><p>Первый прогон, оценка, вердикт и версия отдела.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-7" data-title="Платформы">
+    <div class="sheet">
+      <div class="brand">Без привязки к одному поставщику</div><div class="slide-no">07 / 11</div>
+      <div class="content">
+        <div class="eyebrow">Платформенно-нейтральное ядро</div>
+        <h2>Один отдел — несколько способов исполнения.</h2>
+        <p class="lead">Источник правды описывает роли, источники, маршруты и критерии. Адаптер переводит это в механику конкретной среды.</p>
+        <div class="adapter-map">
+          <div class="neutral">
+            <div class="tag">Нейтральный пакет</div>
+            <h3>department spec</h3>
+            <p>Команда · роли · workflow · inputs · outputs · evaluation · version</p>
+          </div>
+          <div class="adapter-arrow">адаптер</div>
+          <div class="platforms">
+            <div class="platform"><b>Claude Code</b><span>папка кейса + CLAUDE.md + отдельные skills + handoff через файлы</span></div>
+            <div class="platform"><b>ChatGPT Project</b><span>Project instructions + Sources + роли + отдельные чаты под результаты</span></div>
+            <div class="platform"><b>Агентная среда — позже</b><span>те же роли как отдельные агенты после доказательства методики</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-8" data-title="Чистота кейсов">
+    <div class="sheet">
+      <div class="brand">Изоляция знания</div><div class="slide-no">08 / 11</div>
+      <div class="content">
+        <div class="eyebrow">Каждому рынку — своя комната</div>
+        <h2>Метод передаётся. Выводы между нишами — нет.</h2>
+        <div class="rooms">
+          <div class="room"><div class="slug">cases/kuhni-pm</div><h3>Кухни ПМ</h3><p>Тверь, VK, заявки на замер, реальные проекты и CRM.</p></div>
+          <div class="room"><div class="slug">cases/online-school</div><h3>Онлайн-школа</h3><p>Другой продукт, цикл покупки, контент и критерий успеха.</p></div>
+          <div class="room"><div class="slug">cases/b2b-service</div><h3>B2B-услуга</h3><p>Длинная сделка, несколько ЛПР, иная команда и маршрут.</p></div>
+        </div>
+        <div class="audit">
+          <div><b>status</b>draft / accepted</div>
+          <div><b>role</b>кто сделал</div>
+          <div><b>inputs</b>что прочитано</div>
+          <div><b>approved</b>кто принял</div>
+        </div>
+        <div class="gate"><strong>Правило:</strong> следующая роль читает только принятый артефакт. Непроверенная гипотеза не должна становиться наследуемым фактом.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-9" data-title="Граница применимости">
+    <div class="sheet">
+      <div class="brand">Честность продукта</div><div class="slide-no">09 / 11</div>
+      <div class="content">
+        <div class="eyebrow">Не обещать «любой рынок» заранее</div>
+        <h2>Широкий замысел — да. Доказанная универсальность — ещё нет.</h2>
+        <div class="limit-grid">
+          <div class="proven">
+            <h3>Опорная цепочка курса</h3>
+            <ul>
+              <li>контекст бизнеса;</li>
+              <li>анализ и сегментация ЦА;</li>
+              <li>выбор приоритетного сегмента;</li>
+              <li>воронка и контент;</li>
+              <li>VK-реклама.</li>
+            </ul>
+          </div>
+          <div class="unknown">
+            <h3>Пока требует проверки</h3>
+            <ul>
+              <li>B2B с длинным циклом;</li>
+              <li>маркетплейсы и SEO;</li>
+              <li>международные рынки;</li>
+              <li>тендеры и сложные закупки;</li>
+              <li>продукты без фактических клиентов.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="honest"><strong>Законный результат конструктора:</strong> «Данных недостаточно. Вот гипотезы и проверки, без которых отдел будет декорацией».</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-10" data-title="Дорожная карта">
+    <div class="sheet">
+      <div class="brand">Путь к продукту</div><div class="slide-no">10 / 11</div>
+      <div class="content">
+        <div class="eyebrow">Сначала доказать, потом автоматизировать</div>
+        <h2>Четыре ступени — от ручного полигона к движку v1.</h2>
+        <div class="road">
+          <div class="milestone"><h3>Кейс ПМ</h3><p>Пройти цепочку вручную. Отметить универсальное, нишевое, VK-специфичное и решения владельца.</p></div>
+          <div class="milestone"><h3>Движок v0.1</h3><p>Извлечь процедуры, шаблон роли, статусы, проверки и первый адаптер Claude.</p></div>
+          <div class="milestone"><h3>Контрастный кейс</h3><p>Выбрать нишу далеко от мебели. Проверить, родится ли действительно другой отдел.</p></div>
+          <div class="milestone"><h3>Движок v1</h3><p>Автоматизировать сборку ролей, аудит входов, упаковку под платформы и реестр отделов.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide final" id="slide-11" data-title="Итог">
+    <div class="sheet">
+      <div class="brand">Итоговый образ</div><div class="slide-no">11 / 11</div>
+      <div class="content">
+        <div class="eyebrow">Критерий настоящего продукта</div>
+        <h2>Новая ниша должна получить <span class="red">новый обоснованный отдел</span>, а не кухонный шаблон с заменёнными словами.</h2>
+        <p class="claim">Первый продукт системы — доказуемый способ собирать отдельные маркетинговые отделы под разные рынки.</p>
+        <div class="test">Работу подтверждает выполненная задача и приёмка, а не количество созданных скиллов.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<button class="print-btn" type="button" onclick="window.print()" title="Сохранить презентацию в PDF">Печать / PDF</button>
+<nav class="controls" aria-label="Навигация по слайдам">
+  <button type="button" id="prev" aria-label="Предыдущий слайд">↑</button>
+  <span class="counter" id="counter">1 / 11</span>
+  <button type="button" id="next" aria-label="Следующий слайд">↓</button>
+</nav>
+
+<script>
+(() => {
+  const slides = [...document.querySelectorAll('.slide')];
+  const counter = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  let current = 0;
+
+  const nearest = () => {
+    const center = window.scrollY + window.innerHeight / 2;
+    let best = 0;
+    let distance = Infinity;
+    slides.forEach((slide, index) => {
+      const slideCenter = slide.offsetTop + slide.offsetHeight / 2;
+      const nextDistance = Math.abs(slideCenter - center);
+      if (nextDistance < distance) { distance = nextDistance; best = index; }
+    });
+    return best;
+  };
+
+  const update = () => {
+    current = nearest();
+    counter.textContent = `${current + 1} / ${slides.length}`;
+    progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+    document.title = `${slides[current].dataset.title} · Конструктор ИИ-отделов`;
+  };
+
+  const go = index => {
+    current = Math.max(0, Math.min(slides.length - 1, index));
+    slides[current].scrollIntoView({behavior:'smooth', block:'start'});
+  };
+
+  document.getElementById('prev').addEventListener('click', () => go(current - 1));
+  document.getElementById('next').addEventListener('click', () => go(current + 1));
+  document.addEventListener('keydown', event => {
+    if (['ArrowDown','ArrowRight','PageDown',' '].includes(event.key)) { event.preventDefault(); go(nearest() + 1); }
+    if (['ArrowUp','ArrowLeft','PageUp'].includes(event.key)) { event.preventDefault(); go(nearest() - 1); }
+    if (event.key === 'Home') { event.preventDefault(); go(0); }
+    if (event.key === 'End') { event.preventDefault(); go(slides.length - 1); }
+  });
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
+</body>
+</html>
