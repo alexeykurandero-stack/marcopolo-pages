@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0b0d0c">
+  <title>AI-система продаж кухонь через Авито · Марко Поло</title>
+  <style>
+    :root {
+      --bg: #0b0d0c;
+      --bg-soft: #111411;
+      --surface: rgba(255,255,255,.055);
+      --surface-strong: #171b17;
+      --line: rgba(255,255,255,.12);
+      --ink: #f6f3ea;
+      --muted: #aeb7aa;
+      --lime: #d8ff68;
+      --orange: #ff7657;
+      --blue: #7eb7ff;
+      --violet: #bca7ff;
+      --green: #77dca0;
+      --shadow: 0 28px 80px rgba(0,0,0,.35);
+      --radius: 28px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 4%, rgba(126,183,255,.15), transparent 30rem),
+        radial-gradient(circle at 88% 16%, rgba(216,255,104,.1), transparent 31rem),
+        var(--bg);
+      font-family: Inter, Manrope, "Segoe UI", Arial, sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .16;
+      background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, #000, transparent 88%);
+      z-index: -1;
+    }
+
+    a { color: inherit; }
+    button { font: inherit; }
+
+    .progress {
+      position: fixed;
+      z-index: 100;
+      left: 0; top: 0;
+      height: 3px;
+      width: 0;
+      background: linear-gradient(90deg, var(--orange), var(--lime), var(--blue));
+      box-shadow: 0 0 20px rgba(216,255,104,.45);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      backdrop-filter: blur(18px);
+      background: rgba(11,13,12,.72);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .topbar-inner {
+      width: min(calc(100% - 36px), var(--max));
+      margin: 0 auto;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 760;
+      letter-spacing: -.02em;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 28px; height: 28px;
+      border-radius: 9px;
+      background: conic-gradient(from 120deg, var(--lime), var(--blue), var(--orange), var(--lime));
+      position: relative;
+      box-shadow: 0 0 24px rgba(126,183,255,.22);
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border-radius: 5px;
+      background: #0b0d0c;
+    }
+
+    .topnav { display: flex; gap: 22px; }
+    .topnav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color .2s ease;
+    }
+    .topnav a:hover { color: var(--ink); }
+
+    .wrap { width: min(calc(100% - 36px), var(--max)); margin: 0 auto; }
+    .section { padding: 112px 0; position: relative; }
+    .section.compact { padding: 82px 0; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--lime);
+      font-size: 12px;
+      font-weight: 780;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin: 20px 0 24px;
+      max-width: 930px;
+      font-size: clamp(48px, 7.3vw, 104px);
+      line-height: .94;
+      letter-spacing: -.068em;
+      font-weight: 790;
+    }
+
+    h1 .accent {
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(246,243,234,.82);
+    }
+
+    h2 {
+      margin: 16px 0 22px;
+      max-width: 900px;
+      font-size: clamp(36px, 5vw, 68px);
+      line-height: 1.02;
+      letter-spacing: -.055em;
+      font-weight: 760;
+    }
+
+    h3 {
+      margin-bottom: 11px;
+      font-size: 20px;
+      line-height: 1.17;
+      letter-spacing: -.025em;
+    }
+
+    .lead {
+      max-width: 780px;
+      color: var(--muted);
+      font-size: clamp(18px, 2.2vw, 25px);
+      line-height: 1.42;
+      letter-spacing: -.02em;
+    }
+
+    .hero {
+      min-height: calc(100vh - 64px);
+      display: grid;
+      align-items: center;
+      padding: 82px 0 64px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.24fr) minmax(330px, .76fr);
+      gap: 70px;
+      align-items: center;
+    }
+
+    .hero-copy .lead { max-width: 720px; }
+    .hero-note {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,.035);
+      font-size: 13px;
+    }
+
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+    .dot.live { background: var(--green); box-shadow: 0 0 13px rgba(119,220,160,.55); }
+    .dot.next { background: var(--lime); box-shadow: 0 0 13px rgba(216,255,104,.45); }
+    .dot.future { background: var(--violet); box-shadow: 0 0 13px rgba(188,167,255,.45); }
+
+    .phone-stage { position: relative; min-height: 580px; display: grid; place-items: center; }
+    .orbit {
+      position: absolute;
+      width: 510px; height: 510px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.09);
+      background: radial-gradient(circle, rgba(216,255,104,.09), transparent 62%);
+    }
+    .orbit::before, .orbit::after {
+      content: ""; position: absolute; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.07);
+    }
+    .orbit::before { inset: 58px; }
+    .orbit::after { inset: 116px; }
+
+    .phone {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 350px);
+      border: 1px solid rgba(255,255,255,.19);
+      border-radius: 38px;
+      padding: 13px;
+      background: linear-gradient(145deg, #252925, #111411);
+      box-shadow: 0 42px 100px rgba(0,0,0,.52), inset 0 1px 0 rgba(255,255,255,.1);
+      transform: rotate(2deg);
+    }
+
+    .screen {
+      min-height: 490px;
+      border-radius: 29px;
+      padding: 22px 16px 18px;
+      background: #f3f2ed;
+      color: #171917;
+      overflow: hidden;
+    }
+
+    .screen-head { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: #667066; }
+    .avatar { width: 34px; height: 34px; border-radius: 12px; background: linear-gradient(135deg, #20251f, #839776); color: white; display: grid; place-items: center; font-weight: 800; }
+    .contact { display: flex; gap: 9px; align-items: center; margin: 16px 0 20px; }
+    .contact strong { display: block; font-size: 13px; }
+    .contact span { color: #788078; font-size: 10px; }
+    .bubble { max-width: 86%; padding: 11px 13px; border-radius: 15px; font-size: 12px; line-height: 1.38; margin-bottom: 9px; }
+    .bubble.client { background: white; border: 1px solid #e4e6e0; border-bottom-left-radius: 5px; }
+    .bubble.manager { background: #dff3b1; margin-left: auto; border-bottom-right-radius: 5px; }
+    .ai-tip { margin-top: 18px; padding: 15px; border-radius: 18px; background: #151915; color: white; box-shadow: 0 14px 34px rgba(24,33,22,.2); }
+    .ai-tip-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #cdd5ca; font-size: 9px; text-transform: uppercase; letter-spacing: .09em; }
+    .ai-tip p { margin: 10px 0 12px; font-size: 11px; line-height: 1.42; }
+    .ai-action { display: flex; justify-content: space-between; align-items: center; font-size: 9px; color: #9fab9c; }
+    .ai-action b { padding: 7px 9px; border-radius: 8px; background: var(--lime); color: #141714; }
+
+    .float-card {
+      position: absolute;
+      z-index: 3;
+      padding: 12px 14px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 16px;
+      background: rgba(20,24,20,.84);
+      backdrop-filter: blur(13px);
+      box-shadow: var(--shadow);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .float-card b { color: var(--ink); display: block; font-size: 14px; }
+    .fc-a { left: -5px; top: 92px; }
+    .fc-b { right: -10px; bottom: 80px; }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 72px;
+    }
+
+    .stat {
+      min-height: 140px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+    }
+    .stat strong { display: block; font-size: clamp(30px, 4vw, 48px); line-height: 1; letter-spacing: -.05em; }
+    .stat span { display: block; color: var(--muted); margin-top: 12px; font-size: 13px; }
+    .stat:nth-child(1) strong { color: var(--lime); }
+    .stat:nth-child(2) strong { color: var(--blue); }
+    .stat:nth-child(3) strong { color: var(--orange); }
+    .stat:nth-child(4) strong { color: var(--violet); }
+
+    .section-head { display: grid; grid-template-columns: 1fr minmax(280px, .48fr); gap: 60px; align-items: end; margin-bottom: 52px; }
+    .section-head .aside { color: var(--muted); font-size: 15px; border-left: 1px solid var(--line); padding-left: 22px; }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      min-height: 250px;
+    }
+    .card::after {
+      content: "";
+      position: absolute;
+      right: -70px; bottom: -90px;
+      width: 170px; height: 170px;
+      border-radius: 50%;
+      background: var(--glow, rgba(216,255,104,.1));
+      filter: blur(10px);
+    }
+    .card p { color: var(--muted); font-size: 14px; }
+    .card .num { color: var(--lime); font-size: 12px; font-weight: 780; letter-spacing: .12em; margin-bottom: 54px; }
+    .card.blue { --glow: rgba(126,183,255,.17); }
+    .card.orange { --glow: rgba(255,118,87,.17); }
+    .card.violet { --glow: rgba(188,167,255,.17); }
+
+    .insight {
+      margin-top: 18px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 25px;
+      align-items: center;
+      border: 1px solid rgba(216,255,104,.28);
+      border-radius: var(--radius);
+      background: linear-gradient(120deg, rgba(216,255,104,.11), rgba(126,183,255,.055));
+    }
+    .insight-mark { width: 54px; height: 54px; border-radius: 18px; display: grid; place-items: center; background: var(--lime); color: #101310; font-size: 25px; font-weight: 900; }
+    .insight p { margin: 0; font-size: clamp(18px, 2.2vw, 26px); line-height: 1.32; letter-spacing: -.02em; }
+
+    .source-switcher {
+      display: grid;
+      grid-template-columns: .72fr 1.28fr;
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .source-tabs { padding: 16px; border-right: 1px solid var(--line); }
+    .source-tab {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 17px;
+      border: 0;
+      border-radius: 17px;
+      text-align: left;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease;
+    }
+    .source-tab:hover { color: var(--ink); }
+    .source-tab.active { color: #151815; background: var(--lime); }
+    .source-tab .tab-no { font-weight: 800; }
+    .source-tab strong { display: block; font-size: 15px; }
+    .source-tab small { display: block; margin-top: 3px; opacity: .74; }
+    .source-content { min-height: 430px; padding: 46px; display: flex; flex-direction: column; justify-content: space-between; }
+    .source-kicker { color: var(--lime); font-size: 12px; text-transform: uppercase; letter-spacing: .12em; font-weight: 800; }
+    .source-content h3 { margin-top: 13px; max-width: 650px; font-size: clamp(28px, 4vw, 48px); letter-spacing: -.05em; }
+    .source-content p { max-width: 700px; color: var(--muted); font-size: 17px; }
+    .source-metrics { display: flex; flex-wrap: wrap; gap: 10px; }
+    .source-metrics span { padding: 10px 13px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 12px; }
+
+    .inventory {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .inventory-item {
+      min-height: 190px;
+      padding: 27px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+    }
+    .inventory-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; }
+    .inventory-icon { width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; background: rgba(255,255,255,.08); font-size: 22px; }
+    .tag {
+      padding: 6px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: rgba(119,220,160,.11);
+      border: 1px solid rgba(119,220,160,.2);
+    }
+    .inventory-item h3 { margin-top: 30px; }
+    .inventory-item p { margin-bottom: 0; color: var(--muted); font-size: 14px; }
+
+    .reality {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: .55fr 1.45fr;
+      overflow: hidden;
+      border-radius: 28px;
+      background: #e8ede2;
+      color: #161a16;
+    }
+    .reality-number { padding: 36px; background: var(--lime); display: flex; flex-direction: column; justify-content: space-between; }
+    .reality-number strong { font-size: clamp(48px, 7vw, 84px); line-height: .9; letter-spacing: -.065em; }
+    .reality-number span { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; font-weight: 800; }
+    .reality-copy { padding: 36px; }
+    .reality-copy h3 { font-size: 27px; }
+    .reality-copy p { color: #596359; margin-bottom: 0; }
+
+    .system-map {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+    .system-node {
+      min-height: 220px;
+      padding: 20px 17px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+    }
+    .system-node .node-no { color: var(--muted); font-size: 11px; letter-spacing: .1em; }
+    .system-node h3 { margin-top: 38px; font-size: 17px; }
+    .system-node p { color: var(--muted); font-size: 12px; margin-bottom: 0; }
+    .system-node .phase { margin-top: auto; padding-top: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(--green); }
+    .system-node.next { border-color: rgba(216,255,104,.34); background: rgba(216,255,104,.08); }
+    .system-node.next .phase { color: var(--lime); }
+    .system-node.future .phase { color: var(--violet); }
+
+    .loop {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .loop-line { height: 1px; flex: 1; background: linear-gradient(90deg, transparent, rgba(188,167,255,.6), transparent); }
+
+    .mvp-layout { display: grid; grid-template-columns: .82fr 1.18fr; gap: 22px; align-items: stretch; }
+    .mvp-manifest {
+      padding: 38px;
+      border-radius: 30px;
+      background: var(--lime);
+      color: #131713;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .mvp-manifest .big { font-size: clamp(36px, 5vw, 60px); line-height: .98; letter-spacing: -.055em; font-weight: 790; }
+    .mvp-manifest p { color: #394132; font-size: 16px; }
+    .mvp-manifest .rule { padding-top: 24px; border-top: 1px solid rgba(17,23,17,.2); font-size: 13px; font-weight: 750; }
+
+    .steps { display: grid; gap: 10px; }
+    .step {
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      min-height: 86px;
+      padding: 16px 20px;
+      border: 1px solid var(--line);
+      border-radius: 21px;
+      background: var(--surface);
+    }
+    .step-no { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; background: rgba(255,255,255,.08); font-weight: 800; }
+    .step strong { display: block; font-size: 15px; }
+    .step small { display: block; color: var(--muted); margin-top: 3px; }
+    .step .who { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+    .step.highlight { border-color: rgba(216,255,104,.35); }
+    .step.highlight .step-no { background: var(--lime); color: #131713; }
+
+    .dialog-demo {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+    }
+    .demo-panel { padding: 30px; border: 1px solid var(--line); border-radius: 29px; background: var(--surface); }
+    .demo-panel h3 { font-size: 24px; }
+    .chat {
+      margin-top: 24px;
+      padding: 22px;
+      min-height: 410px;
+      border-radius: 24px;
+      background: #f1f0eb;
+      color: #171a17;
+    }
+    .chat .bubble { font-size: 14px; }
+    .chat-meta { display: flex; justify-content: space-between; color: #717a71; font-size: 11px; margin-bottom: 18px; }
+    .copilot-card { display: flex; flex-direction: column; min-height: 410px; margin-top: 24px; padding: 24px; border-radius: 24px; background: linear-gradient(150deg, #202620, #121512); }
+    .signal-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 18px 0 24px; }
+    .signal { padding: 11px; border-radius: 12px; background: rgba(255,255,255,.06); color: var(--muted); font-size: 11px; }
+    .signal b { display: block; color: var(--ink); font-size: 13px; margin-top: 3px; }
+    .recommendation { padding: 17px; border-left: 3px solid var(--lime); background: rgba(216,255,104,.075); border-radius: 0 14px 14px 0; color: #dfe5db; font-size: 14px; }
+    .recommendation small { display: block; margin-top: 12px; color: #92a18e; }
+    .decision-row { display: flex; gap: 8px; margin-top: auto; padding-top: 22px; }
+    .decision { flex: 1; padding: 11px; border: 1px solid var(--line); border-radius: 12px; background: transparent; color: var(--muted); font-size: 11px; text-align: center; }
+    .decision.primary { background: var(--lime); color: #151815; border-color: var(--lime); font-weight: 800; }
+
+    .north-star {
+      padding: 38px;
+      border-radius: 32px;
+      background: linear-gradient(130deg, #d8ff68, #b9ed91 55%, #9cdcd0);
+      color: #131713;
+    }
+    .north-star-grid { display: grid; grid-template-columns: .75fr 1.25fr; gap: 50px; align-items: end; }
+    .north-star h3 { font-size: clamp(34px, 5vw, 62px); line-height: .98; letter-spacing: -.055em; }
+    .north-star p { color: #3a4737; }
+    .funnel { display: grid; gap: 8px; }
+    .funnel-row { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 18px; border: 1px solid rgba(19,23,19,.18); border-radius: 14px; background: rgba(255,255,255,.23); font-size: 13px; }
+    .funnel-row strong { font-size: 16px; }
+    .funnel-row.star { background: #141814; color: white; border-color: #141814; }
+    .funnel-row.star span { color: var(--lime); }
+
+    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px; }
+    .metric { padding: 25px; border: 1px solid var(--line); border-radius: 23px; background: var(--surface); }
+    .metric b { display: block; color: var(--lime); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 34px; }
+    .metric strong { display: block; font-size: 20px; }
+    .metric p { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+
+    .roadmap { position: relative; display: grid; gap: 0; }
+    .roadmap::before { content: ""; position: absolute; left: 23px; top: 30px; bottom: 30px; width: 1px; background: linear-gradient(var(--green), var(--lime), var(--violet)); }
+    .road-step { position: relative; display: grid; grid-template-columns: 48px 180px 1fr; gap: 23px; align-items: start; padding: 20px 0; }
+    .road-dot { width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center; background: var(--surface-strong); border: 1px solid var(--line); z-index: 1; font-weight: 800; }
+    .road-step.active .road-dot { background: var(--lime); color: #141714; border-color: var(--lime); }
+    .road-label { padding-top: 4px; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+    .road-label strong { display: block; color: var(--ink); font-size: 17px; text-transform: none; letter-spacing: -.02em; margin-bottom: 3px; }
+    .road-card { padding: 24px; border: 1px solid var(--line); border-radius: 21px; background: var(--surface); }
+    .road-card p { margin: 0; color: var(--muted); }
+
+    .moat {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .moat-main { padding: 42px; min-height: 490px; border-radius: 32px; background: #efeee8; color: #151815; display: flex; flex-direction: column; justify-content: space-between; }
+    .moat-main h3 { max-width: 550px; font-size: clamp(36px, 5vw, 62px); line-height: 1; letter-spacing: -.055em; }
+    .moat-main p { max-width: 540px; color: #596159; font-size: 17px; }
+    .moat-ring { width: 190px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; align-self: flex-end; border: 22px solid #151815; border-left-color: var(--orange); border-bottom-color: var(--blue); font-weight: 800; text-align: center; line-height: 1.1; }
+    .moat-list { display: grid; gap: 12px; }
+    .moat-item { padding: 24px; border: 1px solid var(--line); border-radius: 23px; background: var(--surface); }
+    .moat-item span { color: var(--lime); font-size: 12px; font-weight: 800; }
+    .moat-item p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+
+    .honesty { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .honest-card { padding: 28px; border: 1px solid rgba(255,118,87,.24); border-radius: 24px; background: rgba(255,118,87,.055); }
+    .honest-card b { color: var(--orange); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+    .honest-card h3 { margin-top: 28px; }
+    .honest-card p { margin-bottom: 0; color: var(--muted); }
+
+    .finale { padding: 130px 0 100px; }
+    .final-card {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(36px, 7vw, 86px);
+      min-height: 600px;
+      border-radius: 40px;
+      background:
+        radial-gradient(circle at 85% 15%, rgba(126,183,255,.27), transparent 27rem),
+        radial-gradient(circle at 18% 92%, rgba(255,118,87,.19), transparent 28rem),
+        #151a15;
+      border: 1px solid rgba(255,255,255,.13);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .final-card h2 { max-width: 900px; font-size: clamp(48px, 8vw, 96px); }
+    .final-card .lead { max-width: 650px; }
+    .launch-strip { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
+    .launch-strip div { padding: 19px; border-right: 1px solid var(--line); }
+    .launch-strip div:last-child { border-right: 0; }
+    .launch-strip small { color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .launch-strip strong { display: block; margin-top: 7px; }
+    .footer { display: flex; justify-content: space-between; gap: 20px; padding-top: 30px; color: var(--muted); font-size: 12px; }
+
+    .reveal { opacity: 1; transform: none; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .topnav { display: none; }
+      .hero-grid, .section-head, .mvp-layout, .dialog-demo, .north-star-grid, .moat { grid-template-columns: 1fr; }
+      .hero { padding-top: 62px; }
+      .phone-stage { min-height: 530px; }
+      .stat-grid, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .system-map { grid-template-columns: repeat(3, 1fr); }
+      .source-switcher { grid-template-columns: 1fr; }
+      .source-tabs { border-right: 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: repeat(3, 1fr); }
+      .source-tab { grid-template-columns: 1fr; }
+      .source-tab small { display: none; }
+      .source-content { min-height: 360px; }
+      .section-head .aside { border-left: 0; padding-left: 0; }
+      .road-step { grid-template-columns: 48px 140px 1fr; }
+    }
+
+    @media (max-width: 660px) {
+      .topbar-inner, .wrap { width: min(calc(100% - 24px), var(--max)); }
+      .section { padding: 82px 0; }
+      .section.compact { padding: 60px 0; }
+      .hero-grid > *, .hero-copy { min-width: 0; max-width: 100%; }
+      h1 { max-width: 100%; font-size: clamp(42px, 13vw, 52px); }
+      h2 { font-size: clamp(34px, 12vw, 52px); }
+      .hero-grid { gap: 34px; }
+      .phone-stage { min-height: 480px; }
+      .phone { width: 300px; }
+      .screen { min-height: 430px; }
+      .orbit { width: 390px; height: 390px; }
+      .fc-a { left: 0; top: 45px; }
+      .fc-b { right: 0; bottom: 35px; }
+      .pill { max-width: 100%; white-space: normal; }
+      .stat-grid, .grid-3, .grid-4, .inventory, .metric-grid, .honesty { grid-template-columns: 1fr; }
+      .stat { min-height: 116px; }
+      .card { min-height: 215px; }
+      .source-tabs { grid-template-columns: 1fr; }
+      .source-tab { grid-template-columns: 28px 1fr; padding: 13px; }
+      .source-content { padding: 28px 22px; min-height: 400px; }
+      .source-tab small { display: block; }
+      .reality { grid-template-columns: 1fr; }
+      .reality-number { min-height: 190px; }
+      .system-map { grid-template-columns: 1fr 1fr; }
+      .system-node { min-height: 185px; }
+      .step { grid-template-columns: 46px 1fr; }
+      .step .who { display: none; }
+      .demo-panel { padding: 19px; }
+      .chat, .copilot-card { min-height: 380px; padding: 17px; }
+      .road-step { grid-template-columns: 48px 1fr; }
+      .road-card { grid-column: 2; }
+      .launch-strip { grid-template-columns: 1fr 1fr; }
+      .launch-strip div { border-bottom: 1px solid var(--line); }
+      .launch-strip div:nth-child(2) { border-right: 0; }
+      .launch-strip div:nth-child(3), .launch-strip div:nth-child(4) { border-bottom: 0; }
+      .final-card { min-height: 720px; padding: 36px 24px; }
+      .footer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    @media print {
+      * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .topbar, .progress { display: none; }
+      body { background: #0b0d0c; }
+      .section, .hero, .finale { break-inside: avoid; page-break-inside: avoid; padding: 44px 0; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"></span>Марко Поло · продуктовая концепция</div>
+      <nav class="topnav" aria-label="Разделы презентации">
+        <a href="#context">Почему Авито</a>
+        <a href="#system">Система</a>
+        <a href="#mvp">Первый MVP</a>
+        <a href="#roadmap">Путь к продукту</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div class="hero-copy reveal">
+            <span class="eyebrow">Кухни × Авито × AI</span>
+            <h1>Не бот.<br><span class="accent">Система продаж</span> кухонь через Авито.</h1>
+            <p class="lead">Сначала доказываем её на собственном бизнесе. Затем предлагаем рынку не обещание нейросети, а работающую технологию, которая ведёт диалог к состоявшемуся замеру.</p>
+            <div class="hero-note">
+              <span class="pill"><span class="dot live"></span>Приёмник уже работает</span>
+              <span class="pill"><span class="dot next"></span>Следующий шаг — AI-помощник</span>
+              <span class="pill"><span class="dot future"></span>Платформа — после доказательства</span>
+            </div>
+          </div>
+
+          <div class="phone-stage reveal" aria-label="Пример подсказки менеджеру">
+            <div class="orbit"></div>
+            <div class="float-card fc-a"><b>Контекст объявления</b>AI понимает, откуда пришёл клиент</div>
+            <div class="float-card fc-b"><b>Цель: замер</b>не просто «ответить в чате»</div>
+            <div class="phone">
+              <div class="screen">
+                <div class="screen-head"><span>09:41</span><span>Авито · новое обращение</span></div>
+                <div class="contact"><span class="avatar">А</span><div><strong>Анастасия</strong><span>Объявление: светлая угловая кухня</span></div></div>
+                <div class="bubble client">Здравствуйте! Сколько примерно стоит такая кухня?</div>
+                <div class="bubble manager">Здравствуйте! Подскажите, кухня будет прямая или угловая?</div>
+                <div class="ai-tip">
+                  <div class="ai-tip-top"><span>AI-помощник</span><span>этап: квалификация</span></div>
+                  <p>Следующий лучший ход: уточнить срок ремонта и предложить бесплатный замер как способ получить точный проект и стоимость.</p>
+                  <div class="ai-action"><span>Скрипт → ветка «первый контакт»</span><b>Менеджер решает</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-grid reveal">
+          <div class="stat"><strong>3</strong><span>контура трафика внутри одной площадки</span></div>
+          <div class="stat"><strong>8–9 лет</strong><span>накопленной практики продаж кухонь</span></div>
+          <div class="stat"><strong>785</strong><span>реальных диалогов в первой выборке</span></div>
+          <div class="stat"><strong>1 цель</strong><span>состоявшийся замер, а не активность</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="context">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <span class="eyebrow">Почему отдельный продукт</span>
+            <h2>Авито — это не ещё один мессенджер.</h2>
+          </div>
+          <p class="aside">На площадке клиент часто сравнивает похожие предложения одновременно. Побеждает не тот, кто громче обещает AI, а тот, кто быстрее понимает контекст и увереннее ведёт к следующему шагу.</p>
+        </div>
+
+        <div class="grid-3 reveal">
+          <article class="card">
+            <div class="num">01 · СРАВНЕНИЕ</div>
+            <h3>Один вопрос — нескольким продавцам</h3>
+            <p>«Сколько стоит?» здесь редко означает готовность купить. Нужно распознать, что именно сравнивает человек, и не скатиться в безликий ответ.</p>
+          </article>
+          <article class="card blue">
+            <div class="num">02 · КОНТЕКСТ</div>
+            <h3>Каждый диалог начинается с объявления</h3>
+            <p>Фото, стиль, цена и обещание в объявлении уже сформировали ожидание. Помощник должен видеть этот вход, а не отвечать в пустоте.</p>
+          </article>
+          <article class="card orange">
+            <div class="num">03 · СЛЕДУЮЩИЙ ШАГ</div>
+            <h3>Сообщение само по себе ничего не продаёт</h3>
+            <p>Задача первого контакта — квалифицировать клиента и договориться о замере. Текст оценивается по движению воронки.</p>
+          </article>
+        </div>
+
+        <div class="insight reveal">
+          <div class="insight-mark">!</div>
+          <p>Первая проверка показала: средняя скорость ответа уже хорошая. Настоящая потеря возникает там, где обращение <strong>не подхвачено человеком или не доведено дальше</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <span class="eyebrow">Три входа</span>
+            <h2>Одна площадка. Три разные механики привлечения.</h2>
+          </div>
+          <p class="aside">В будущем система соединит их общей аналитикой. Но на первом этапе каждый поток решает свою задачу и не должен утяжелять MVP.</p>
+        </div>
+
+        <div class="source-switcher reveal">
+          <div class="source-tabs" role="tablist" aria-label="Источники трафика">
+            <button class="source-tab active" type="button" role="tab" aria-selected="true" data-source="classic">
+              <span class="tab-no">01</span><span><strong>Классические объявления</strong><small>10–20 объявлений + продвижение</small></span>
+            </button>
+            <button class="source-tab" type="button" role="tab" aria-selected="false" data-source="mass">
+              <span class="tab-no">02</span><span><strong>Массовая автозагрузка</strong><small>широкое покрытие спроса</small></span>
+            </button>
+            <button class="source-tab" type="button" role="tab" aria-selected="false" data-source="ads">
+              <span class="tab-no">03</span><span><strong>Авито Реклама</strong><small>внешняя посадочная страница</small></span>
+            </button>
+          </div>
+          <div class="source-content" aria-live="polite">
+            <div>
+              <span class="source-kicker" id="source-kicker">Первый полигон</span>
+              <h3 id="source-title">Максимум результата из каждого входящего диалога</h3>
+              <p id="source-copy">Здесь уже есть живые обращения, интеграция и история. Поэтому именно классические чаты — самый дешёвый и честный полигон для первого AI-помощника.</p>
+            </div>
+            <div class="source-metrics" id="source-metrics">
+              <span>контекст объявления</span><span>скорость подхвата</span><span>конверсия в замер</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="assets">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <span class="eyebrow">Стартовая позиция</span>
+            <h2>Мы начинаем не с идеи. Мы начинаем с работающих частей.</h2>
+          </div>
+          <p class="aside">Это меняет порядок разработки: не нужно строить ещё один приёмник сообщений. Нужно соединить методику, данные и результат.</p>
+        </div>
+
+        <div class="inventory reveal">
+          <article class="inventory-item">
+            <div class="inventory-top"><span class="inventory-icon">↗</span><span class="tag">работает</span></div>
+            <h3>Свой приёмник Авито</h3>
+            <p>Фиксирует входящее, отправляет утверждённый ответ по правилам и уведомляет оператора. Свободного текста от AI клиенту пока нет.</p>
+          </article>
+          <article class="inventory-item">
+            <div class="inventory-top"><span class="inventory-icon">◎</span><span class="tag">подключено</span></div>
+            <h3>Авито ↔ Битрикс24</h3>
+            <p>Обращения попадают в CRM. Следующий рубеж — надёжно фиксировать этап и исход каждого диалога.</p>
+          </article>
+          <article class="inventory-item">
+            <div class="inventory-top"><span class="inventory-icon">◫</span><span class="tag">есть сырьё</span></div>
+            <h3>Переписки и статистика</h3>
+            <p>Первая полная выборка — 785 диалогов и 9 508 сообщений. Это основа для проверки гипотез, а не повод обещать «самообучение» заранее.</p>
+          </article>
+          <article class="inventory-item">
+            <div class="inventory-top"><span class="inventory-icon">✦</span><span class="tag">наше преимущество</span></div>
+            <h3>Скрипты, тренер и опыт</h3>
+            <p>Методика продажи кухонь, знание продукта и понимание продвижения. Нейросеть здесь — упаковка опыта, а не его источник.</p>
+          </article>
+        </div>
+
+        <div class="reality reveal">
+          <div class="reality-number"><strong>4,3<br>мин</strong><span>медиана первого ответа</span></div>
+          <div class="reality-copy">
+            <h3>Первый факт изменил продуктовую гипотезу</h3>
+            <p>Проблема оказалась не в том, что компания всегда отвечает медленно. Главная дыра — обращения, которые не получают полноценного человеческого подхвата. Значит, ценность AI-помощника — не «отвечать за секунду», а удерживать методику и доводить разговор до результата.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="system">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <span class="eyebrow">Как устроена система</span>
+            <h2>Один замкнутый контур вместо набора AI-функций.</h2>
+          </div>
+          <p class="aside">Ценность рождается только тогда, когда можно пройти путь назад: какой источник привёл клиента, какой сценарий сработал и чем закончился диалог.</p>
+        </div>
+
+        <div class="system-map reveal">
+          <article class="system-node"><span class="node-no">01</span><h3>Источник</h3><p>Объявление, автозагрузка или реклама</p><span class="phase">частично работает</span></article>
+          <article class="system-node"><span class="node-no">02</span><h3>Приём</h3><p>Сообщение не теряется, оператор уведомлён</p><span class="phase">работает</span></article>
+          <article class="system-node next"><span class="node-no">03</span><h3>AI-подсказка</h3><p>Стадия, сценарий, следующий ответ и вопрос</p><span class="phase">следующий MVP</span></article>
+          <article class="system-node"><span class="node-no">04</span><h3>Человек</h3><p>Утверждает, редактирует и отвечает клиенту</p><span class="phase">обязательный гейт</span></article>
+          <article class="system-node next"><span class="node-no">05</span><h3>Исход</h3><p>Замер назначен, состоялся, отказ или пауза</p><span class="phase">нужно дособрать</span></article>
+          <article class="system-node future"><span class="node-no">06</span><h3>Улучшение</h3><p>Сравнение объявлений и сценариев по результату</p><span class="phase">после данных</span></article>
+        </div>
+        <div class="loop reveal"><span class="loop-line"></span><span>результат возвращается в методику — контролируемо, а не магически</span><span class="loop-line"></span></div>
+      </div>
+    </section>
+
+    <section class="section" id="mvp">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <span class="eyebrow">Первый рабочий продукт</span>
+            <h2>AI усиливает менеджера. Не подменяет его.</h2>
+          </div>
+          <p class="aside">На старте помощник ничего не обещает клиенту самостоятельно. Это позволяет учиться на живой работе без риска выдуманной цены, срока или гарантии.</p>
+        </div>
+
+        <div class="mvp-layout reveal">
+          <div class="mvp-manifest">
+            <div>
+              <p>Формула MVP</p>
+              <div class="big">Один канал.<br>Один менеджер.<br>Одна цель.</div>
+            </div>
+            <div class="rule">Классические чаты Авито → помощь в реальном диалоге → состоявшийся замер</div>
+          </div>
+          <div class="steps">
+            <div class="step"><span class="step-no">1</span><div><strong>Получить сообщение и объявление</strong><small>Не отделять вопрос клиента от обещания во входе</small></div><span class="who">система</span></div>
+            <div class="step highlight"><span class="step-no">2</span><div><strong>Определить стадию и нужную ветку</strong><small>Новый / знакомый / действующий · вопрос / сравнение / готовность</small></div><span class="who">AI</span></div>
+            <div class="step highlight"><span class="step-no">3</span><div><strong>Предложить следующий лучший ход</strong><small>Ответ, вопрос и основание из утверждённой методики</small></div><span class="who">AI</span></div>
+            <div class="step"><span class="step-no">4</span><div><strong>Отправить, поправить или отклонить</strong><small>Решение и ответственность остаются у менеджера</small></div><span class="who">человек</span></div>
+            <div class="step"><span class="step-no">5</span><div><strong>Зафиксировать исход</strong><small>Что произошло после рекомендации — вплоть до состоявшегося замера</small></div><span class="who">CRM</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <span class="eyebrow">Один диалог</span>
+            <h2>Помощник видит больше, чем последнюю фразу.</h2>
+          </div>
+          <p class="aside">Он соединяет контекст объявления, историю клиента, этап разговора и цель менеджера — затем предлагает ход, а не сочиняет продажу с нуля.</p>
+        </div>
+
+        <div class="dialog-demo reveal">
+          <div class="demo-panel">
+            <h3>Что видит менеджер</h3>
+            <div class="chat">
+              <div class="chat-meta"><span>Угловая кухня · современный стиль</span><span>сегодня, 10:18</span></div>
+              <div class="bubble client">Здравствуйте. А если кухня примерно 3 на 2 метра — сколько выйдет?</div>
+              <div class="bubble manager">Здравствуйте! Стоимость зависит от фасадов, столешницы и техники. Подскажите, ремонт уже закончен?</div>
+              <div class="bubble client">Почти. Хотим заехать через два месяца. Пока сравниваю варианты.</div>
+            </div>
+          </div>
+          <div class="demo-panel">
+            <h3>Что добавляет AI</h3>
+            <div class="copilot-card">
+              <div class="signal-list">
+                <div class="signal">Намерение<b>сравнивает</b></div>
+                <div class="signal">Срок<b>до 2 месяцев</b></div>
+                <div class="signal">Этап<b>квалификация</b></div>
+                <div class="signal">Цель<b>назначить замер</b></div>
+              </div>
+              <div class="recommendation">«Тогда замер можно сделать уже сейчас: снимем размеры, учтём розетки и коммуникации, подготовим проект и точный расчёт. Вам удобнее в будни вечером или в выходные?»<small>Основание: срок подтверждён · следующий этап — закрытие на замер</small></div>
+              <div class="decision-row"><span class="decision primary">Отправить</span><span class="decision">Изменить</span><span class="decision">Отклонить</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="metrics">
+      <div class="wrap">
+        <div class="north-star reveal">
+          <div class="north-star-grid">
+            <div>
+              <span class="eyebrow" style="color:#24301e">Главная метрика</span>
+              <h3>Не сообщения.<br>Состоявшиеся замеры.</h3>
+              <p>Подсказка имеет ценность только тогда, когда помогает клиенту пройти следующий реальный шаг.</p>
+            </div>
+            <div class="funnel">
+              <div class="funnel-row"><span>01</span><strong>Обращение</strong><span>вход</span></div>
+              <div class="funnel-row"><span>02</span><strong>Квалификация</strong><span>поняли ситуацию</span></div>
+              <div class="funnel-row"><span>03</span><strong>Замер назначен</strong><span>договорились</span></div>
+              <div class="funnel-row star"><span>★</span><strong>Замер состоялся</strong><span>ЦКП первого контакта</span></div>
+              <div class="funnel-row"><span>05</span><strong>Договор</strong><span>коммерческий итог</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="metric-grid reveal">
+          <article class="metric"><b>Бизнес</b><strong>Конверсия в состоявшийся замер</strong><p>Главный ответ на вопрос: стало ли больше результата при том же входящем потоке.</p></article>
+          <article class="metric"><b>Качество</b><strong>Ошибки и отклонения</strong><p>Где рекомендация оказалась неуместной, была исправлена человеком или нарушила методику.</p></article>
+          <article class="metric"><b>Принятие</b><strong>Отправлено / изменено / отклонено</strong><p>Вспомогательная метрика: удобно ли менеджеру пользоваться помощником в живом темпе.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roadmap">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <span class="eyebrow">Путь к рынку</span>
+            <h2>Сначала результат у себя. Потом продукт для других.</h2>
+          </div>
+          <p class="aside">Каждый следующий уровень открывается фактом предыдущего. Так внешнее предложение строится на доказательстве, а не на красивой упаковке AI.</p>
+        </div>
+
+        <div class="roadmap reveal">
+          <div class="road-step active">
+            <span class="road-dot">0</span>
+            <div class="road-label"><strong>Основание</strong>есть сегодня</div>
+            <div class="road-card"><p>Боевой приём сообщений, Битрикс, история диалогов, скрипты, тренер и статистика продвижения.</p></div>
+          </div>
+          <div class="road-step">
+            <span class="road-dot">1</span>
+            <div class="road-label"><strong>Пилот</strong>первый MVP</div>
+            <div class="road-card"><p>Классические чаты Авито, один менеджер, подсказка без автосендов, обязательная фиксация исхода.</p></div>
+          </div>
+          <div class="road-step">
+            <span class="road-dot">2</span>
+            <div class="road-label"><strong>Доказательство</strong>на своих данных</div>
+            <div class="road-card"><p>Сравниваем базовую точку и пилот: качество диалога, конверсия в назначенный и состоявшийся замер.</p></div>
+          </div>
+          <div class="road-step">
+            <span class="road-dot">3</span>
+            <div class="road-label"><strong>Расширение</strong>три контура</div>
+            <div class="road-card"><p>Подключаем массовую автозагрузку и Авито Рекламу только после того, как умеем видеть результат первого потока.</p></div>
+          </div>
+          <div class="road-step">
+            <span class="road-dot">4</span>
+            <div class="road-label"><strong>Упаковка</strong>партнёрам</div>
+            <div class="road-card"><p>Диагностика бизнеса, адаптация скриптов, настройка помощника и измеримый пилот вместо продажи универсального бота.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <span class="eyebrow">Долгосрочное преимущество</span>
+            <h2>Модель можно купить. Опыт — нельзя.</h2>
+          </div>
+          <p class="aside">Защитный ров создаёт не название нейросети, а накопленный цикл: кухня, объявление, разговор, замер, договор — и понятная связь между ними.</p>
+        </div>
+
+        <div class="moat reveal">
+          <div class="moat-main">
+            <div>
+              <h3>Ядро продукта — отраслевая методика, превращённая в измеримую систему.</h3>
+              <p>AI делает её доступной менеджеру в момент разговора и помогает увидеть, какие действия действительно дают результат.</p>
+            </div>
+            <div class="moat-ring">опыт<br>× данные<br>× результат</div>
+          </div>
+          <div class="moat-list">
+            <article class="moat-item"><span>01</span><h3>Свои сценарии</h3><p>Не универсальная база «для всех продаж», а логика кухонного диалога и закрытия на замер.</p></article>
+            <article class="moat-item"><span>02</span><h3>Свои данные</h3><p>Реальные переписки и исходы, а не вымышленные учебные диалоги.</p></article>
+            <article class="moat-item"><span>03</span><h3>Своя проверка</h3><p>Сначала Марко Поло доказывает эффект на себе и платит за ошибки собственного пилота.</p></article>
+            <article class="moat-item"><span>04</span><h3>Своя специализация</h3><p>Авито и кухни — узкая рамка, в которой можно стать лучше универсальных решений.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <span class="eyebrow">Честные границы</span>
+            <h2>Что мы пока не обещаем.</h2>
+          </div>
+          <p class="aside">Границы делают предложение сильнее: партнёр понимает, где уже есть доказательство, а где начинается следующий эксперимент.</p>
+        </div>
+        <div class="honesty reveal">
+          <article class="honest-card"><b>Не обещаем</b><h3>Полностью автономного продавца</h3><p>На первом MVP каждую содержательную реплику утверждает человек.</p></article>
+          <article class="honest-card"><b>Не обещаем</b><h3>Прибыль «из коробки»</h3><p>Сначала система должна связать диалог с замером и договором на собственных данных.</p></article>
+          <article class="honest-card"><b>Не делаем</b><h3>Универсальную CRM</h3><p>Продукт использует существующую CRM и усиливает конкретный участок продаж через Авито.</p></article>
+          <article class="honest-card"><b>Не начинаем</b><h3>Со слежки за конкурентами</h3><p>Главный актив уже внутри бизнеса: свои клиенты, переписки, скрипты и реальные исходы.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="finale">
+      <div class="wrap">
+        <div class="final-card reveal">
+          <div>
+            <span class="eyebrow">Первый запуск</span>
+            <h2>Не строить платформу.<br>Доказать один прирост.</h2>
+            <p class="lead">Берём классические чаты Авито, подключаем помощника одному менеджеру и проверяем: становится ли больше состоявшихся замеров при том же входящем потоке.</p>
+          </div>
+
+          <div>
+            <div class="launch-strip">
+              <div><small>Канал</small><strong>Чаты Авито</strong></div>
+              <div><small>Роль AI</small><strong>Подсказывает</strong></div>
+              <div><small>Роль человека</small><strong>Решает</strong></div>
+              <div><small>Результат</small><strong>Состоявшийся замер</strong></div>
+            </div>
+            <div class="footer"><span>Марко Поло · Кухни × Авито × AI</span><span>Продуктовая концепция · август 2026</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const sourceData = {
+      classic: {
+        kicker: "Первый полигон",
+        title: "Максимум результата из каждого входящего диалога",
+        copy: "Здесь уже есть живые обращения, интеграция и история. Поэтому именно классические чаты — самый дешёвый и честный полигон для первого AI-помощника.",
+        metrics: ["контекст объявления", "скорость подхвата", "конверсия в замер"]
+      },
+      mass: {
+        kicker: "Второй уровень",
+        title: "Не просто больше объявлений — понятнее, какие связки работают",
+        copy: "Массовая автозагрузка даёт широкое покрытие. AI сможет помогать с вариантами объявлений и группировкой спроса, когда исходы диалогов уже будут надёжно связаны с замерами.",
+        metrics: ["сегменты спроса", "варианты объявлений", "качество обращений"]
+      },
+      ads: {
+        kicker: "Отдельная воронка",
+        title: "Реклама ведёт на полезное действие, а не в пустую форму",
+        copy: "Внешняя посадка может дать расчёт, подборку проектов или квалификацию. Это самостоятельный контур, который подключается после доказательства механики первого контакта.",
+        metrics: ["стоимость квал-лида", "прохождение квиза", "замеры из рекламы"]
+      }
+    };
+
+    const tabs = document.querySelectorAll('.source-tab');
+    const title = document.getElementById('source-title');
+    const kicker = document.getElementById('source-kicker');
+    const copy = document.getElementById('source-copy');
+    const metrics = document.getElementById('source-metrics');
+
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(item => {
+        item.classList.remove('active');
+        item.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      const data = sourceData[tab.dataset.source];
+      kicker.textContent = data.kicker;
+      title.textContent = data.title;
+      copy.textContent = data.copy;
+      metrics.innerHTML = data.metrics.map(item => `<span>${item}</span>`).join('');
+    }));
+
+    const progress = document.querySelector('.progress');
+    const updateProgress = () => {
+      const doc = document.documentElement;
+      const range = doc.scrollHeight - doc.clientHeight;
+      const ratio = range > 0 ? doc.scrollTop / range : 0;
+      progress.style.width = `${Math.min(1, Math.max(0, ratio)) * 100}%`;
+    };
+    document.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .1 });
+      document.querySelectorAll('.reveal').forEach(node => observer.observe(node));
+    } else {
+      document.querySelectorAll('.reveal').forEach(node => node.classList.add('visible'));
+    }
+  </script>
+</body>
+</html>
