@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0e1420">
+<title>Тренировки</title>
+<style>
+  :root{
+    --bg:#0e1420; --bg2:#131b2b; --card:#1a2334; --card2:#212c40;
+    --ink:#eef2f8; --muted:#a3b1c6; --faint:#8d9cb2; --line:#2a374f;
+    --T:#2fa8e0; --P:#f2a03d;
+    --ok:#3ecf8e; --gold:#f2c14e;
+    --r:18px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(700px 380px at 50% -12%, rgba(47,168,224,.16), transparent 70%),
+      var(--bg);
+    color:var(--ink);
+    font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100svh;
+    padding:max(16px,env(safe-area-inset-top)) 14px calc(28px + env(safe-area-inset-bottom));
+  }
+  .wrap{max-width:520px;margin:0 auto}
+  .hidden{display:none!important}
+  h1,h2,h3{margin:0;line-height:1.15;letter-spacing:-.01em}
+  .num{font-variant-numeric:tabular-nums}
+
+  /* ── экран выбора игрока ── */
+  #gate{min-height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:center;gap:14px}
+  #gate .title{text-align:center;margin-bottom:10px}
+  #gate .title h1{font-size:30px}
+  #gate .title p{color:var(--muted);margin:8px 0 0;font-size:15px}
+  .who{
+    display:flex;align-items:center;gap:16px;width:100%;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    padding:20px;color:var(--ink);font:inherit;text-align:left;cursor:pointer;
+    transition:transform .12s ease,border-color .12s ease;
+  }
+  .who:active{transform:scale(.98)}
+  .who .av{
+    width:56px;height:56px;border-radius:50%;flex:none;
+    display:grid;place-items:center;font-size:24px;font-weight:800;color:#fff;
+  }
+  .who.t .av{background:linear-gradient(140deg,#2fa8e0,#1d6fa5)}
+  .who.p .av{background:linear-gradient(140deg,#f2a03d,#b06d1c)}
+  .who.t{border-color:rgba(255,255,255,.1)}
+  .who.p{border-color:rgba(255,255,255,.1)}
+  .who .nm{font-size:21px;font-weight:700;display:block}
+  .who .sub{color:#9fb0c4;font-size:13.5px;margin-top:4px;display:block}
+  .who .txt{display:flex;flex-direction:column;min-width:0}
+  .who:after{content:"›";margin-left:auto;color:var(--faint);font-size:24px;line-height:1}
+
+  /* ── шапка ── */
+  header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  header .av{width:42px;height:42px;border-radius:50%;flex:none;display:grid;place-items:center;
+    font-size:18px;font-weight:800;color:#fff}
+  header .nm{font-size:18px;font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  header .sw{margin-left:auto;flex:none;background:transparent;border:1px solid var(--line);color:var(--muted);
+    border-radius:999px;padding:7px 14px;font:inherit;font-size:13px;cursor:pointer}
+  header .sw:active{background:var(--card)}
+
+  /* ── карточка ранга ── */
+  .rank{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);
+    border-radius:var(--r);padding:18px;margin-bottom:14px;position:relative;overflow:hidden}
+  .rank:before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;
+    right:-110px;top:-130px;background:var(--rc,#a9713a);opacity:.18;filter:blur(6px)}
+  .rank .top{display:flex;align-items:flex-start;gap:12px;position:relative}
+  .rank .badge{width:52px;height:52px;border-radius:14px;flex:none;display:grid;place-items:center;
+    background:rgba(255,255,255,.06);border:1px solid var(--line);padding:12px}
+  .rank .badge svg{width:100%;height:100%;display:block}
+  .rank .txt{display:flex;flex-direction:column;min-width:0}
+  .rank .rn{font-size:23px;font-weight:800;color:var(--rc,#fff);display:block}
+  .rank .rr{color:#9fb0c4;font-size:13px;margin-top:3px;display:block}
+  .rank .pts{margin-left:auto;text-align:right}
+  .rank .pts b{font-size:26px;font-weight:800;display:block}
+  .rank .pts span{color:var(--faint);font-size:11.5px;text-transform:uppercase;letter-spacing:.08em}
+  .bar{height:9px;background:rgba(0,0,0,.35);border-radius:999px;margin-top:15px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.07)}
+  .bar i{display:block;height:100%;border-radius:999px;background:var(--rc,#a9713a);
+    transition:width .5s cubic-bezier(.2,.7,.3,1)}
+  .rank .left{display:flex;justify-content:space-between;margin-top:8px;font-size:13px;color:var(--muted)}
+  .rank .left b{color:var(--ink)}
+
+  /* ── кнопки активностей ── */
+  .sect{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--faint);margin:20px 2px 10px}
+  .pot{float:right;text-transform:none;letter-spacing:0;font-weight:600;color:var(--ok);font-size:12.5px}
+  .acts{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .act{
+    background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);
+    padding:17px 30px 17px 14px;color:var(--ink);font:inherit;cursor:pointer;text-align:left;
+    display:flex;align-items:center;gap:12px;position:relative;
+    transition:transform .1s ease,background .18s ease,border-color .18s ease;
+  }
+  .act:active{transform:scale(.96)}
+  .act .ic{width:26px;height:26px;flex:none;color:var(--muted)}
+  .act .ic svg{width:100%;height:100%;display:block}
+  .act.on .ic{color:var(--ok)}
+  .act .txt{display:flex;flex-direction:column;min-width:0}
+  .act .nm{font-weight:600;font-size:15.5px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .act .st{font-size:12px;color:#9fb0c4;margin-top:3px;display:block}
+  .act.on{background:rgba(62,207,142,.13);border-color:var(--ok)}
+  .act.on .st{color:var(--ok)}
+  /* Пустой кружок — знак «сюда можно нажать». Без него карточка читается
+     как строка статуса, а не как кнопка. */
+  .act .box{position:absolute;top:11px;right:11px;width:19px;height:19px;border-radius:50%;
+    border:2px solid var(--line);display:grid;place-items:center;transition:.18s}
+  .act.on .box{background:var(--ok);border-color:var(--ok)}
+  .act.on .box:after{content:"✓";color:#0e1420;font-size:12px;font-weight:900;line-height:1}
+  /* Первая карточка на пустом старте — чтобы взгляд знал, с чего начать */
+  .act.hint{border-color:rgba(47,168,224,.55)}
+  .act.hint .box{border-color:var(--T)}
+  .act[disabled]{opacity:.5;pointer-events:none}
+
+  /* ── полоски статистики ── */
+  .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:12px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 10px;text-align:center}
+  .stat b{display:block;font-size:21px;font-weight:800}
+  .stat span{color:var(--faint);font-size:11.5px;display:block;margin-top:3px}
+
+  /* ── матч недели ── */
+  .match{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:17px}
+  .match .sc{display:flex;align-items:flex-end;justify-content:center;gap:14px;margin:4px 0 12px}
+  .match .side{flex:1;text-align:center}
+  .match .side .n{font-size:13px;color:var(--muted);margin-bottom:5px}
+  /* Цветом выделяется ТОТ, КТО СМОТРИТ. Иначе цвет достижений (им покрашены
+     ранг и прогресс) достаётся счёту соперника, и ребёнок читает свой цвет
+     как «цвет проигравшего». */
+  .match .side .v{font-size:38px;font-weight:800;line-height:1;color:var(--ink)}
+  .match .side.me .v{color:var(--myc,var(--T))}
+  .match .vs{color:var(--faint);font-size:26px;font-weight:700;line-height:1;padding-bottom:4px}
+  .match .lead{text-align:center;font-size:14px;padding:9px;border-radius:11px;
+    background:rgba(255,255,255,.05);color:var(--muted)}
+  .match .lead b{color:var(--ink)}
+  .hist{margin-top:13px;border-top:1px solid var(--line);padding-top:11px}
+  .hist .h{display:flex;align-items:center;gap:10px;font-size:13.5px;padding:6px 0;color:var(--muted)}
+  .hist .h .d{flex:1}
+  .hist .h .s{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink)}
+  .hist .h .w{width:22px;text-align:center}
+  .tally{display:flex;gap:8px;justify-content:center;margin-top:11px;font-size:13px;color:var(--muted)}
+  .tally b{color:var(--ink)}
+
+  /* ── дорога рангов ── */
+  details{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+  summary{cursor:pointer;padding:14px 17px;font-size:14px;color:var(--muted);user-select:none;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary:after{content:"▾";float:right;color:var(--faint)}
+  details[open] summary:after{content:"▴"}
+  .road{padding:0 17px 15px}
+  .road .r{display:flex;align-items:center;gap:11px;padding:8px 0;border-top:1px solid var(--line);font-size:14px}
+  .road .r:first-child{border-top:none}
+  .road .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .road .rn{flex:1}
+  .road .at{color:var(--faint);font-variant-numeric:tabular-nums;font-size:13px}
+  .road .r.done .rn{color:var(--ink);font-weight:600}
+  .road .r.now{background:rgba(255,255,255,.05);margin:0 -8px;padding:8px;border-radius:9px}
+  .road .r.now .rn:after{content:" — сейчас";color:var(--faint);font-weight:400;font-size:12.5px}
+  .road .r.todo .rn,.road .r.todo .at{color:var(--faint)}
+
+  .msg{text-align:center;color:#8d9aad;font-size:13px;padding:16px 8px}
+  .err{background:rgba(224,87,74,.14);border:1px solid rgba(224,87,74,.4);color:#ffb4ab;
+    border-radius:12px;padding:11px 14px;font-size:13.5px;margin-bottom:12px}
+  /* Уведомление — отдельной полосой НАД содержимым, а не поверх него:
+     висящая плашка перекрывала имя в шапке. */
+  .toast{
+    max-height:0;opacity:0;overflow:hidden;
+    background:var(--card2);border:1px solid var(--line);color:var(--ink);
+    border-radius:14px;font-size:14.5px;font-weight:600;text-align:center;
+    transition:max-height .28s ease,opacity .28s ease,margin .28s ease;
+    margin:0;padding:0 16px;
+  }
+  .toast.show{max-height:70px;opacity:1;margin:0 0 12px;padding:12px 16px}
+  .toast.up{background:linear-gradient(140deg,#2b3d5c,#1e2a40);border-color:var(--gold);color:var(--gold)}
+  @media(max-width:340px){.acts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Экран входа: две кнопки, никаких паролей -->
+  <section id="gate">
+    <div class="title">
+      <h1>Тренировки</h1>
+      <p>Кто отмечается?</p>
+    </div>
+    <button class="who t" data-p="T"><span class="av">А</span><span class="txt"><span class="nm" id="gT">Игрок 1</span><span class="sub" id="gTs">—</span></span></button>
+    <button class="who p" data-p="P"><span class="av">П</span><span class="txt"><span class="nm" id="gP">Игрок 2</span><span class="sub" id="gPs">—</span></span></button>
+    <div class="msg" id="gateMsg">Соединяюсь…</div>
+  </section>
+
+  <!-- Основной экран -->
+  <section id="app" class="hidden">
+    <header>
+      <span class="av" id="hAv">А</span>
+      <span class="nm" id="hName">—</span>
+      <button class="sw" id="switch">сменить</button>
+    </header>
+
+    <div id="err" class="err hidden"></div>
+    <div class="toast" id="toast"></div>
+
+    <div class="rank" id="rankCard">
+      <div class="top">
+        <span class="badge" id="rBadge">🥉</span>
+        <span class="txt">
+          <span class="rn" id="rName">Бронза</span>
+          <span class="rr" id="rSub">ранг 1 из 8</span>
+        </span>
+        <span class="pts"><b class="num" id="rPts">0</b><span>рейтинг</span></span>
+      </div>
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="rBarBox"><i id="rBar" style="width:0"></i></div>
+      <div class="left"><span id="rLeft">—</span><span class="num" id="rNext"></span></div>
+    </div>
+
+    <div class="sect">Сегодня <span id="potential" class="pot"></span></div>
+    <div class="acts" id="acts"></div>
+
+    <div class="row3">
+      <div class="stat"><b class="num" id="sStreak">0</b><span id="sStreakL">дней подряд</span></div>
+      <div class="stat"><b class="num" id="sWeek">0</b><span>за неделю</span></div>
+      <div class="stat"><b class="num" id="sTotal">0</b><span>всего</span></div>
+    </div>
+
+    <div class="sect">Матч недели</div>
+    <div class="match">
+      <div class="sc">
+        <div class="side t" id="sideT"><div class="n" id="mTn">—</div><div class="v num" id="mT">0</div></div>
+        <div class="vs">:</div>
+        <div class="side p" id="sideP"><div class="n" id="mPn">—</div><div class="v num" id="mP">0</div></div>
+      </div>
+      <div class="lead" id="mLead">—</div>
+      <div class="hist" id="mHist"></div>
+      <div class="tally" id="mTally"></div>
+    </div>
+
+    <details id="roadBox">
+      <summary>Дорога рангов</summary>
+      <div class="road" id="road"></div>
+    </details>
+
+    <div class="msg">Отметка засчитывается один раз в день на активность. Нажать ещё раз — снять.</div>
+  </section>
+</div>
+
+<script>
+  window.SPORT_API = 'https://201-51-13-62.sslip.io';
+  window.SPORT_KEY = 'a1d9817188f42479';
+</script>
+
+<script>
+/* Адрес сервера отметок. Правится ОДНОЙ строкой при переезде на другой домен. */
+const API = window.SPORT_API || 'http://127.0.0.1:8791';
+const KEY = window.SPORT_KEY || 'testkey';
+
+const $ = id => document.getElementById(id);
+const AVA = {T:'А', P:'П'};
+
+/* Иконки нарисованы прямо здесь, а не эмодзи: на части телефонов и планшетов
+   нужного эмодзи в шрифте нет, и вместо картинки появляется пустой квадрат. */
+const ICONS = {
+  turnik:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 4v5M21 4v5M3 6h18"/><circle cx="12" cy="12.5" r="2.1"/><path d="M12 14.6v3.2M12 17.8l-2.4 3.2M12 17.8l2.4 3.2M9.7 10.9 12 6.2l2.3 4.7"/></svg>',
+  beg:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="15.2" cy="4.4" r="2"/><path d="M13.4 9.1 9.6 11l1.5 3.6 1.9 1.4.9 5M13.4 9.1l3.7-1.2 2.6 3.3 2.3.6M13.4 9.1l-2 6.1-3.6 2.3-3.1-.6M4 8.2h4.2"/></svg>',
+  plavanie: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="17.4" cy="6.6" r="1.9"/><path d="M5 10.6 9.4 8l3.9 2.6-2.6 2.1 3.4 2.3"/><path d="M2 18.4c1.5 0 1.5 1.4 3 1.4s1.5-1.4 3-1.4 1.5 1.4 3 1.4 1.5-1.4 3-1.4 1.5 1.4 3 1.4 1.5-1.4 3-1.4"/></svg>',
+  lestnica: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21v-3.6h4.5V13h4.5V8.4h4.5V4H21"/><path d="M3 17.4h4.5M7.5 13H12M12 8.4h4.5M16.5 4H21"/></svg>'
+};
+const RANK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v5a5 5 0 0 1-10 0z"/><path d="M7 4.5H4.2v1.8A3.6 3.6 0 0 0 7.4 9.8M17 4.5h2.8v1.8a3.6 3.6 0 0 1-3.2 3.5"/><path d="M12 13v3.6M9 21h6M9.8 16.6h4.4l.8 4.4H9z"/></svg>';
+
+let me = localStorage.getItem('sport_player') || null;
+let state = null;
+let lastRank = {};          // чтобы поймать момент повышения и показать его
+
+/* Русское склонение: 1 день, 2 дня, 5 дней. Без него на экране «1 дней». */
+function plural(n, one, few, many){
+  const a = Math.abs(n) % 100, b = a % 10;
+  if(a > 10 && a < 20) return many;
+  if(b > 1 && b < 5) return few;
+  if(b === 1) return one;
+  return many;
+}
+
+async function api(path, opts={}){
+  const r = await fetch(API + path, {
+    ...opts,
+    headers: {'Content-Type':'application/json', 'X-Sport-Key': KEY, ...(opts.headers||{})}
+  });
+  if(!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+
+function toast(text, up){
+  const t = $('toast');
+  t.textContent = text;
+  t.className = 'toast show' + (up ? ' up' : '');
+  clearTimeout(t._h);
+  t._h = setTimeout(()=>{ t.className = 'toast'; }, up ? 3400 : 1700);
+}
+
+function showErr(msg){
+  const e = $('err');
+  if(!msg){ e.classList.add('hidden'); return; }
+  e.textContent = msg;
+  e.classList.remove('hidden');
+}
+
+/* ── отрисовка ── */
+
+function renderGate(){
+  if(!state) return;
+  $('gT').textContent = state.players.T.name;
+  $('gP').textContent = state.players.P.name;
+  $('gTs').textContent = state.players.T.rank.name + ' · ' + state.players.T.rating;
+  $('gPs').textContent = state.players.P.rank.name + ' · ' + state.players.P.rating;
+  $('gateMsg').textContent = 'Счёт общий — оба видите одно и то же';
+}
+
+function renderRank(p){
+  const r = p.rank;
+  $('rankCard').style.setProperty('--rc', r.color);
+  $('rBadge').innerHTML = RANK_ICON;
+  $('rBadge').style.color = r.color;
+  $('rName').textContent = r.name;
+  // «ранг 1 из 8» на старте читается как «ты последний» — показываем цель, а не место
+  $('rSub').textContent = r.next ? 'следующий: ' + r.next : 'выше некуда';
+  $('rPts').textContent = p.rating.toLocaleString('ru-RU');
+  // При нуле показываем узкую засечку: иначе пустая полоса выглядит как полная
+  $('rBar').style.width = (r.progress > 0 ? r.progress : 1.5) + '%';
+  if(r.next){
+    $('rLeft').innerHTML = 'до ранга <b>' + r.next + '</b>';
+    // Ребёнку «осталось 500» — стена. «5 отметок» — понятная дистанция.
+    const marks = Math.ceil(r.left / state.points_per_mark);
+    $('rNext').textContent = marks + ' ' + plural(marks, 'отметка', 'отметки', 'отметок');
+    $('rBarBox').setAttribute('aria-valuenow', r.progress);
+    $('rBarBox').setAttribute('aria-label', 'до ранга ' + r.next + ' осталось ' + r.left);
+  } else {
+    $('rLeft').innerHTML = '<b>Максимальный ранг</b>';
+    $('rNext').textContent = '';
+    $('rBarBox').setAttribute('aria-valuenow', 100);
+    $('rBarBox').setAttribute('aria-label', 'максимальный ранг достигнут');
+  }
+}
+
+function renderActs(p){
+  const box = $('acts');
+  box.innerHTML = '';
+
+  /* Сколько ещё можно взять сегодня. Экран без этого показывает только то,
+     что уже позади, — а ребёнку нужна видимая возможность впереди. */
+  const left = state.activities.length - p.today.length;
+  $('potential').textContent = left
+      ? 'можно ещё +' + (left * state.points_per_mark).toLocaleString('ru-RU')
+      : 'всё сделано';
+
+  const fresh = p.today.length === 0;   // сегодня ещё ничего не отмечено
+  state.activities.forEach((a, i)=>{
+    const on = p.today.includes(a.id);
+    const b = document.createElement('button');
+    b.className = 'act' + (on ? ' on' : '') + (fresh && i === 0 ? ' hint' : '');
+    b.innerHTML = '<span class="ic">'+(ICONS[a.icon]||'')+'</span><span class="txt"><span class="nm">'+a.name+
+                  '</span><span class="st">'+(on ? 'сделано' : 'отметить · +'+state.points_per_mark)+
+                  '</span></span><span class="box"></span>';
+    b.onclick = ()=> mark(a.id, b);
+    box.appendChild(b);
+  });
+}
+
+function renderMatch(){
+  const T = state.players.T, P = state.players.P;
+  $('mTn').textContent = T.name; $('mPn').textContent = P.name;
+  $('mT').textContent = T.week;  $('mP').textContent = P.week;
+
+  // подсвечиваем сторону смотрящего его цветом
+  $('sideT').classList.toggle('me', me === 'T');
+  $('sideP').classList.toggle('me', me === 'P');
+  $('sideT').style.setProperty('--myc', 'var(--T)');
+  $('sideP').style.setProperty('--myc', 'var(--P)');
+
+  const d = T.week - P.week;
+  const dl = state.days_left;
+
+  /* Текст матча пишем от лица того, кто СМОТРИТ экран. Причина не в вежливости:
+     сухое «соперник впереди на 4» ребёнок читает как «ты проиграл» и бросает.
+     Отставание подаём как «есть время догнать», пока неделя не кончилась. */
+  const my = me === 'T' ? T : P;
+  const other = me === 'T' ? P : T;
+  const mine = my.week - other.week;
+  const tail = dl === 1 ? 'сегодня последний день недели' :
+               'ещё ' + dl + ' ' + plural(dl, 'день', 'дня', 'дней');
+
+  let lead;
+  if(mine === 0){
+    lead = 'Ровный счёт — ' + tail;
+  } else if(mine > 0){
+    lead = 'Ты впереди на <b>' + mine + '</b> — ' + tail;
+  } else if(dl === 1){
+    lead = other.name + ' впереди на <b>' + (-mine) + '</b> — последний рывок';
+  } else {
+    lead = 'Отстаёшь на <b>' + (-mine) + '</b>, ' + tail + ' — успеешь догнать';
+  }
+  $('mLead').innerHTML = lead;
+
+  const h = $('mHist');
+  if(!state.history.length){
+    h.innerHTML = '<div class="msg" style="padding:6px">Первая неделя идёт. Итоги — в воскресенье.</div>';
+  } else {
+    h.innerHTML = state.history.map(x=>{
+      const w = x.winner === 'draw' ? '=' : (x.winner === 'T' ? '◀' : '▶');
+      const c = x.winner === 'T' ? 'var(--T)' : (x.winner === 'P' ? 'var(--P)' : 'var(--faint)');
+      return '<div class="h"><span class="d">'+x.label+'</span><span class="s">'+x.T+' : '+x.P+
+             '</span><span class="w" style="color:'+c+'">'+w+'</span></div>';
+    }).join('');
+  }
+  const w = state.wins;
+  const total = w.T + w.P + w.draw;
+  $('mTally').innerHTML = total
+      ? 'Выиграно недель: <b>' + T.name + ' — ' + w.T + '</b> · <b>' + P.name + ' — ' + w.P + '</b>' +
+        (w.draw ? ' · ничьих ' + w.draw : '')
+      : '';
+  $('mTally').style.display = total ? '' : 'none';
+}
+
+function renderRoad(p){
+  /* На пустом счету дорога раскрыта: именно она показывает, ради чего всё.
+     Как только появились очки — сворачиваем, чтобы не занимала экран.
+     Открывал/закрывал вручную — не трогаем. */
+  const box = $('roadBox');
+  if(!box.dataset.touched) box.open = (p.rating === 0);
+
+  $('road').innerHTML = state.ranks.map((r,i)=>{
+    const cls = i < p.rank.index ? 'done' : (i === p.rank.index ? 'done now' : 'todo');
+    return '<div class="r '+cls+'"><span class="dot" style="background:'+
+           (i <= p.rank.index ? r.color : 'var(--line)')+'"></span><span class="rn">'+r.name+
+           '</span><span class="at">'+r.at.toLocaleString('ru-RU')+'</span></div>';
+  }).join('');
+}
+
+function render(){
+  if(!state) return;
+  renderGate();
+  if(!me){ $('gate').classList.remove('hidden'); $('app').classList.add('hidden'); return; }
+  const p = state.players[me];
+  $('gate').classList.add('hidden');
+  $('app').classList.remove('hidden');
+  $('hAv').textContent = AVA[me];
+  $('hAv').style.background = me === 'T'
+      ? 'linear-gradient(140deg,#2fa8e0,#1d6fa5)'
+      : 'linear-gradient(140deg,#f2a03d,#b06d1c)';
+  $('hName').textContent = p.name;
+  /* Ноль в серии не несёт информации, только давит. Вместо «0 дней подряд»
+     показываем приглашение начать. */
+  if(p.streak === 0){
+    $('sStreak').textContent = '—';
+    $('sStreakL').textContent = 'начни серию';
+  } else {
+    $('sStreak').textContent = p.streak;
+    $('sStreakL').textContent = plural(p.streak, 'день подряд', 'дня подряд', 'дней подряд');
+  }
+  $('sWeek').textContent = p.week;
+  $('sTotal').textContent = p.total_marks;
+  renderRank(p); renderActs(p); renderMatch(); renderRoad(p);
+}
+
+/* ── действия ── */
+
+async function load(silent){
+  try{
+    state = await api('/api/state');
+    Object.values(state.players).forEach(p => lastRank[p.id] = p.rank.index);
+    showErr('');
+    render();
+  }catch(e){
+    if(!silent) showErr('Нет связи с сервером. Отметки не сохранятся — попробуйте позже.');
+    $('gateMsg').textContent = 'Сервер недоступен';
+  }
+}
+
+async function mark(activity, btn){
+  if(!me) return;
+  const was = lastRank[me];
+  btn.disabled = true;
+  try{
+    const res = await api('/api/mark', {method:'POST', body: JSON.stringify({player: me, activity})});
+    state = res;
+    const p = state.players[me];
+    render();
+    if(p.rank.index > was){
+      toast('Новый ранг: ' + p.rank.name + '!', true);
+    } else if(res.marked){
+      toast('+' + state.points_per_mark + ' к рейтингу');
+    }
+    Object.values(state.players).forEach(x => lastRank[x.id] = x.rank.index);
+    showErr('');
+  }catch(e){
+    showErr('Не сохранилось — нет связи с сервером.');
+  }finally{
+    btn.disabled = false;
+  }
+}
+
+document.querySelectorAll('.who').forEach(b=>{
+  b.onclick = ()=>{
+    me = b.dataset.p;
+    localStorage.setItem('sport_player', me);
+    render();
+  };
+});
+$('switch').onclick = ()=>{
+  me = null;
+  localStorage.removeItem('sport_player');
+  render();
+};
+// запоминаем, что человек сам трогал дорогу рангов — дальше не переключаем за него
+$('roadBox').addEventListener('toggle', ()=>{ $('roadBox').dataset.touched = '1'; });
+
+/* Вернулись на вкладку — подтягиваем чужие отметки, чтобы счёт матча был свежим */
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) load(true); });
+setInterval(()=>{ if(!document.hidden) load(true); }, 60000);
+load();
+</script>
+</body>
+</html>
