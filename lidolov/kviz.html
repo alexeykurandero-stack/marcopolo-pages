@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#8a5a2b">
+<title>Кухня по вашим размерам</title>
+<style>
+  :root{
+    --bg:#f1f1f2; --card:#fff; --ink:#23262b; --muted:#6b7078;
+    --zone-top:#fff; --zone-split:#fff;
+    --line:#e6e7e9; --line2:#dcdee1; --soft:#f4f4f5;
+    --accent:#23262b; --accent-soft:#fdf0eb; --accent-ink:#fff; --pick:#e8552d;
+    --warn:#8a6d1f; --warn-bg:#fdf7e6; --ok:#3f7d52;
+    --r:14px; --shadow:0 2px 4px rgba(20,22,26,.05), 0 10px 22px rgba(20,22,26,.08), 0 24px 48px rgba(20,22,26,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#121316; --card:#1c1e22; --ink:#eceef1; --muted:#9aa0a8;
+      --zone-top:#1c1e22; --zone-split:#1c1e22;
+      --line:#2a2d33; --line2:#373b42; --soft:#23262b;
+      --accent:#eceef1; --accent-soft:#2c211d; --accent-ink:#16181b; --pick:#f2703f;
+      --warn:#e8cc80; --warn-bg:#2a2417; --ok:#7fb992;
+      --shadow:0 2px 4px rgba(0,0,0,.45), 0 12px 26px rgba(0,0,0,.4), 0 28px 56px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#121316; --card:#1c1e22; --ink:#eceef1; --muted:#9aa0a8;
+    --zone-top:#1c1e22; --zone-split:#1c1e22;
+    --line:#2a2d33; --line2:#373b42; --soft:#23262b; --accent:#eceef1; --accent-soft:#2c211d;
+    --accent-ink:#16181b; --pick:#f2703f; --warn:#e8cc80; --warn-bg:#2a2417; --ok:#7fb992;
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* Зоны фона тянутся во всю ширину окна, содержимое остаётся в колонке. */
+  .zone{width:100%}
+  .zone-white{background:var(--zone-top)}
+  .zone-split{background:var(--zone-split); height:18px}
+  .zone-grey{background:var(--bg)}
+  .zone > .inner{max-width:720px; margin:0 auto; padding:0 14px}
+  .zone-grey > .inner{padding-bottom:20px}
+
+  .wrap{max-width:720px; margin:0 auto; padding:0 14px 32px}
+
+  .zone-top{position:sticky; top:0; z-index:10; background:var(--zone-top)}
+  .top{
+    padding:clamp(10px,2vw,18px) 0 10px;
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+  }
+  .top .who{display:flex; flex-direction:column; gap:1px; min-width:0}
+  .brandline{font-size:12px; letter-spacing:.09em; text-transform:uppercase; color:var(--muted); font-weight:600}
+  .note{font-size:12.5px; color:var(--pick); font-weight:600; white-space:nowrap}
+
+  .title{font-size:16.5px; font-weight:700; line-height:1.2; letter-spacing:-.01em;
+          white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .sub{font-size:12px; color:var(--muted); line-height:1.25;
+       white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+  /* блок обращения: абзацы слева, место под фото справа */
+  .intro[hidden]{display:none}
+  .introWrap{padding:2px 0 clamp(12px,2vw,18px)}
+  .intro{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,32%); gap:12px; align-items:stretch;
+         background:var(--soft); border-radius:14px; padding:12px}
+  @media (max-width:520px){ .intro{grid-template-columns:1fr; gap:12px} }
+  .intro .blocks{display:flex; flex-direction:column; gap:8px; min-width:0}
+  .intro .b{background:var(--card); border-radius:11px; padding:11px 13px; font-size:14.5px; line-height:1.45}
+
+  /* маленькая акцентная метка над первым абзацем */
+  .quote{display:flex; gap:3px; margin:0 0 1px 3px}
+  .quote i{width:5px; height:13px; border-radius:3px 3px 5px 5px; background:var(--pick); display:block}
+  .intro .b b{font-weight:700}
+  .photo{align-self:stretch; min-height:150px; border:1px dashed var(--line2); border-radius:12px;
+         display:flex; align-items:flex-end; justify-content:center; text-align:center;
+         color:var(--muted); font-size:11.5px; padding:10px; background:transparent}
+  @media (max-width:520px){ .photo{min-height:96px; align-items:center} }
+
+  /* блок над карточкой вопроса: черта, заголовок с выделением, подзаголовок */
+  .promo[hidden]{display:none}
+  .promo{padding:clamp(12px,2vw,18px) 0 2px}
+  .promo .bar{width:48px; height:4px; border-radius:2px; background:var(--pick); margin-bottom:10px}
+  .promo h2{margin:0 0 8px; font-size:clamp(20px,4.6vw,27px); line-height:1.25; font-weight:750;
+            letter-spacing:-.015em; color:var(--pick)}
+  .promo h2 .hl{background:var(--pick); color:#fff; padding:1px 6px; border-radius:3px;
+                box-decoration-break:clone; -webkit-box-decoration-break:clone}
+  .promo p{margin:0; font-size:15px; line-height:1.45; color:var(--muted)}
+  .promo p b{color:var(--ink); font-weight:700}
+
+  .demo{background:var(--warn-bg); color:var(--warn); border:1px solid currentColor;
+        border-radius:8px; padding:5px 9px; font-size:11.5px; margin-bottom:8px; line-height:1.25}
+
+  /* полоса прогресса живёт внутри карточки, первой строкой */
+  .cardbar{margin:0 0 14px}
+  .cardbar .ptrack{width:100%}
+  .cardbar .pnum{display:block; text-align:right; margin-top:5px}
+  .pbar{display:flex; align-items:center; gap:10px; margin:14px 0 10px}
+  .ptrack{flex:1; height:5px; border-radius:99px; background:var(--line); overflow:hidden}
+  .pfill{height:100%; width:0; background:var(--pick); border-radius:99px;
+         transition:width .35s cubic-bezier(.4,0,.2,1)}
+  .pnum{font-size:12.5px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--r);
+        box-shadow:var(--shadow); padding:16px 14px; animation:in .26s cubic-bezier(.2,.7,.3,1)}
+  @keyframes in{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){.card{animation:none} .pfill{transition:none}}
+
+  .qt{font-size:clamp(19px,4.6vw,24px); font-weight:680; line-height:1.22; margin:0 0 5px; letter-spacing:-.015em}
+  .qh{color:var(--muted); font-size:14px; margin:0 0 12px; line-height:1.4}
+
+  /* варианты: две колонки, плашки одного размера */
+  .opts{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+  @media (max-width:340px){ .opts{grid-template-columns:1fr} }
+
+  .opt{
+    display:flex; align-items:center; justify-content:flex-start; gap:11px; text-align:left;
+    min-height:52px; padding:11px 14px; border:1px solid transparent; border-radius:10px;
+    background:var(--soft); color:var(--ink); font:inherit; font-size:16px; line-height:1.35;
+    cursor:pointer; transition:border-color .14s, background .14s, transform .07s;
+    overflow-wrap:break-word; word-break:normal; hyphens:auto;
+  }
+  .opt:hover{border-color:var(--pick); background:var(--accent-soft)}
+  .opt:active{transform:scale(.995)}
+  .opt.sel{border-color:var(--pick); background:var(--accent-soft)}
+
+  .opt .tick{
+    flex:0 0 18px; width:18px; height:18px; border-radius:50%;
+    border:2px solid var(--pick); position:relative; transition:background .14s;
+  }
+  .opt.sel .tick{background:var(--pick)}
+  .opt.sel .tick::after{content:''; position:absolute; inset:3.5px; border-radius:50%; background:var(--card)}
+  .opt .lb{flex:1 1 auto; min-width:0}
+
+  /* нечётный последний и длинная подпись занимают ряд целиком - без дыр в сетке */
+  .opt.wide{grid-column:1 / -1}
+
+  /* шесть и больше вариантов: ужимаем, иначе экран требует прокрутки */
+  .opts.many{gap:8px}
+
+  .reason{display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--line)}
+  .reason:last-of-type{border-bottom:0}
+  .reason .n{flex:0 0 24px; height:24px; border-radius:50%; background:var(--accent-soft); color:var(--pick);
+             display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:700; margin-top:2px}
+  .reason p{margin:0; font-size:15px; line-height:1.55}
+
+  .tier{border:1px solid var(--line2); border-radius:12px; padding:12px 13px; margin-top:8px}
+  .tier.mid{border-color:var(--pick); background:var(--accent-soft)}
+  .tier .tn{display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap}
+  .tier b{font-size:17px}
+  .tier .rg{color:var(--pick); font-weight:700; font-variant-numeric:tabular-nums}
+  .tier .ab{color:var(--muted); font-size:14.5px; margin-top:7px; line-height:1.5}
+
+    .rev .r{display:flex; align-items:center; justify-content:space-between; gap:10px;
+          padding:8px 0; border-bottom:1px solid var(--line)}
+  .rev .r:last-child{border-bottom:0}
+  .rev .k{color:var(--muted); font-size:13px; line-height:1.3}
+  .rev .v{font-weight:640; font-size:15.5px; margin-top:2px}
+  .rev .ed{flex:0 0 auto; background:transparent; border:1px solid var(--line2); border-radius:8px;
+           color:var(--pick); font:inherit; font-size:13px; padding:7px 12px; cursor:pointer}
+  .rev .ed:hover{border-color:var(--pick)}
+
+  /* экран контакта: акцентная полоса, крупное поле, широкая кнопка */
+  .card.contact{padding:0; overflow:hidden}
+  .contact .body{padding:16px 14px}
+  .contact .foot-act{border-top:1px solid var(--line); padding:12px 14px}
+  .contact .foot-act .btn{width:100%}
+  .consent-row{display:flex; align-items:center; gap:9px; margin-top:11px; font-size:13.5px; color:var(--muted)}
+  .consent-row input{width:17px; height:17px; accent-color:var(--pick); flex:0 0 17px; margin:0}
+  .consent-row a{color:var(--pick)}
+  .phone-big{font-size:17px !important; border-width:1.5px !important; border-color:var(--pick) !important; padding:15px 16px !important}
+
+  .chips{display:flex; gap:8px; flex-wrap:wrap}
+  .chip{padding:12px 17px; border-radius:99px; border:1px solid var(--line2); background:transparent;
+        color:var(--ink); font:inherit; font-size:15px; cursor:pointer; transition:.14s}
+  .chip:hover{border-color:var(--pick)}
+  .chip.sel{border-color:var(--pick); background:var(--accent-soft); box-shadow:inset 0 0 0 1px var(--pick)}
+  label.f{display:block; margin-top:18px; font-size:13.5px; color:var(--muted); font-weight:560}
+  input.f{width:100%; margin-top:8px; padding:15px 16px; font:inherit; font-size:17px; color:var(--ink);
+          background:transparent; border:1px solid var(--line2); border-radius:12px}
+  input.f:focus{outline:none; border-color:var(--pick); box-shadow:0 0 0 3px var(--accent-soft)}
+  .consent{color:var(--muted); font-size:12.5px; margin-top:15px; line-height:1.45}
+  .err{color:#b8442c; font-size:14.5px; margin-top:12px; font-weight:560}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .err{color:#ef8f76}}
+
+  .btn{padding:15px 24px; border-radius:12px; border:1px solid var(--pick); background:var(--pick);
+       color:var(--accent-ink); font:inherit; font-size:16px; font-weight:650; cursor:pointer; transition:transform .07s, opacity .14s}
+  .btn:active{transform:scale(.99)}
+  .btn.ghost{background:transparent; color:var(--ink); border-color:var(--line2)}
+  .btn.ghost:hover{border-color:var(--pick)}
+  .btn[disabled]{opacity:.45; cursor:not-allowed}
+
+  .sticky{position:fixed; left:0; right:0; bottom:0; z-index:5;
+          padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+          background:linear-gradient(to top, var(--bg) 60%, transparent)}
+  .sticky .inner{max-width:720px; margin:0 auto; display:flex; gap:10px}
+  .sticky .btn{flex:1}
+  .sticky .btn.ghost{flex:0 0 40%}
+
+  .done{text-align:center; padding:14px 0 4px}
+  .done .mark{width:62px; height:62px; margin:0 auto 16px; border-radius:50%; background:var(--accent-soft);
+              color:var(--ok); display:flex; align-items:center; justify-content:center; font-size:32px}
+  .foot{color:var(--muted); font-size:12px; margin-top:22px; text-align:center}
+</style>
+</head>
+<body>
+<div class="zone zone-white zone-top">
+  <div class="inner">
+    <header class="top">
+      <div class="who">
+        <div class="title" id="lead"></div>
+        <div class="sub" id="brand"></div>
+      </div>
+      <div class="note" id="note"></div>
+    </header>
+  </div>
+</div>
+
+<div class="zone zone-white" id="introZone" hidden>
+  <div class="inner">
+    <div class="introWrap">
+      <div class="intro" id="intro">
+        <div class="blocks" id="introBlocks"></div>
+        <div class="photo" id="photo"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="zone zone-split"></div>
+
+<div class="zone zone-grey">
+  <div class="inner">
+    <section class="promo" id="promo" hidden>
+      <div class="bar"></div>
+      <h2><span class="hl" id="promoHl"></span> <span id="promoRest"></span></h2>
+      <p><b id="promoBold"></b> <span id="promoText"></span></p>
+    </section>
+
+    <div id="demo" class="demo" hidden></div>
+
+    <main class="card" id="stage">Загружаем…</main>
+    <div class="foot" id="foot"></div>
+  </div>
+</div>
+
+<div class="sticky" id="sticky" hidden><div class="inner" id="stickyInner"></div></div>
+
+<script type="application/json" id="scenarioData">
+{
+ "_": "Сценарий опроса. Правится здесь, без кода. Все поля с \"demo\": true содержат ЧЕРНОВЫЕ числа - их заменяет владелец в сессии решений (plans/lidolov/resheniya-vladeltsa.md). Пока стоит demo, страница показывает плашку 'черновые числа'.",
+ "version": 1,
+ "demo": true,
+ "brand": {
+  "company": "Марко Поло",
+  "city": "Тверь и область",
+  "lead": "Кухни на заказ в Твери",
+  "promise": "Ответьте на 6 вопросов - подготовим расчёт в трёх вариантах и покажем похожие проекты",
+  "note": "Бесплатный выезд на замер",
+  "tagline": "Напрямую от фабрики, без посредников"
+ },
+ "steps": [
+  {
+   "id": "shape",
+   "title": "Какая форма кухни вам подходит?",
+   "hint": "Если не уверены - выбирайте ту, что ближе к вашему помещению",
+   "options": [
+    {
+     "value": "line",
+     "label": "Прямая"
+    },
+    {
+     "value": "corner",
+     "label": "Угловая"
+    },
+    {
+     "value": "u",
+     "label": "П-образная"
+    },
+    {
+     "value": "island",
+     "label": "С островом"
+    }
+   ],
+   "cols": 2
+  },
+  {
+   "id": "tone",
+   "title": "Светлая или тёмная?",
+   "options": [
+    {
+     "value": "light",
+     "label": "Светлая"
+    },
+    {
+     "value": "dark",
+     "label": "Тёмная"
+    },
+    {
+     "value": "mixed",
+     "label": "Сочетание"
+    },
+    {
+     "value": "unknown",
+     "label": "Пока не знаю"
+    }
+   ],
+   "cols": 2
+  },
+  {
+   "id": "area",
+   "title": "Площадь кухни",
+   "options": [
+    {
+     "value": "8_10",
+     "label": "8-10 м²"
+    },
+    {
+     "value": "10_15",
+     "label": "10-15 м²"
+    },
+    {
+     "value": "15_25",
+     "label": "15-25 м²"
+    },
+    {
+     "value": "25_up",
+     "label": "Больше 25 м²"
+    },
+    {
+     "value": "unknown",
+     "label": "Не знаю точно"
+    }
+   ],
+   "cols": 2
+  },
+  {
+   "id": "hardware",
+   "title": "Какую фурнитуру вы планируете поставить?",
+   "options": [
+    {
+     "value": "basic",
+     "label": "Эконом"
+    },
+    {
+     "value": "standard",
+     "label": "Стандарт"
+    },
+    {
+     "value": "premium",
+     "label": "Премиум"
+    },
+    {
+     "value": "unknown",
+     "label": "Пока не знаю"
+    }
+   ],
+   "cols": 2
+  },
+  {
+   "id": "term",
+   "title": "Когда кухня должна стоять у вас дома?",
+   "options": [
+    {
+     "value": "this_month",
+     "label": "Этот месяц"
+    },
+    {
+     "value": "1_2",
+     "label": "1-2 месяца"
+    },
+    {
+     "value": "2_3",
+     "label": "2-3 месяца"
+    },
+    {
+     "value": "3_6",
+     "label": "3-6 месяцев"
+    },
+    {
+     "value": "unknown",
+     "label": "Пока не знаю"
+    }
+   ],
+   "cols": 2
+  },
+  {
+   "id": "budget",
+   "title": "На какой бюджет рассчитываете?",
+   "hint": "Вопрос нужен, чтобы предложить реальный вариант, а не показать картинку не по деньгам",
+   "demo": true,
+   "options": [
+    {
+     "value": "lt_150",
+     "label": "До 150 000 ₽",
+     "branch": "below_floor"
+    },
+    {
+     "value": "150_200",
+     "label": "150 000 - 200 000 ₽"
+    },
+    {
+     "value": "200_250",
+     "label": "200 000 - 250 000 ₽"
+    },
+    {
+     "value": "250_300",
+     "label": "250 000 - 300 000 ₽"
+    },
+    {
+     "value": "300_up",
+     "label": "Больше 300 000 ₽"
+    },
+    {
+     "value": "unknown",
+     "label": "Не знаю, от чего зависит цена",
+     "branch": "explain_tiers"
+    }
+   ],
+   "cols": 2
+  }
+ ],
+ "screens": {
+  "below_floor": {
+   "kind": "info",
+   "demo": true,
+   "title": "Кухни дешевле 150 000 ₽ мы не делаем",
+   "lead": "Не потому что не хотим - за эти деньги получится вещь, которую придётся менять. Вот что в неё не поместится:",
+   "bullets": [
+    "Фурнитура начального уровня. Петли и направляющие - самая нагруженная часть кухни: их открывают десятки раз в день, и экономия видна уже на второй год.",
+    "Материал корпуса и кромка. На кухне всегда влажно и горячо; дешёвый корпус разбухает по нижним модулям, а тонкая кромка отходит у мойки и плиты.",
+    "Точность под ваше помещение. Стены в наших домах редко бывают ровными; подгонка по факту замера - это работа, и она либо оплачена, либо не сделана."
+   ],
+   "actions": [
+    {
+     "label": "Понятно, продолжим",
+     "go": "next"
+    },
+    {
+     "label": "Посмотреть, что входит в разные бюджеты",
+     "go": "explain_tiers"
+    }
+   ]
+  },
+  "explain_tiers": {
+   "kind": "tiers",
+   "demo": true,
+   "title": "Из чего складывается цена кухни",
+   "lead": "Три уровня, между которыми обычно выбирают. Числа черновые.",
+   "tiers": [
+    {
+     "name": "Базовый",
+     "range": "от 150 000 ₽",
+     "about": "Готовая линейка модулей. Быстро и предсказуемо."
+    },
+    {
+     "name": "Средний",
+     "range": "200 000 - 300 000 ₽",
+     "about": "Корпус и фасады под ваши размеры, фурнитура с доводчиками."
+    },
+    {
+     "name": "Премиальный",
+     "range": "от 300 000 ₽",
+     "about": "Нестандартные решения, премиальные механизмы и покрытия."
+    }
+   ],
+   "actions": [
+    {
+     "label": "Спасибо, дальше",
+     "go": "next"
+    }
+   ]
+  }
+ },
+ "review": {
+  "title": "Проверьте, всё ли верно",
+  "lead": "Это то, что мы передадим в расчёт. Любой пункт можно поменять.",
+  "edit_label": "Изменить"
+ },
+ "contact": {
+  "title": "Куда прислать расчёт?",
+  "lead": "Подготовим три варианта по вашим ответам и покажем похожие проекты.",
+  "channels": [
+   {
+    "value": "call",
+    "label": "Позвоните мне"
+   },
+   {
+    "value": "telegram",
+    "label": "Telegram"
+   },
+   {
+    "value": "whatsapp",
+    "label": "WhatsApp"
+   },
+   {
+    "value": "max",
+    "label": "MAX"
+   }
+  ],
+  "phone_label": "Телефон",
+  "name_label": "Как к вам обращаться",
+  "consent": "Отправляя заявку, вы соглашаетесь на обработку своих данных для подготовки расчёта.",
+  "submit": "Получить расчёт"
+ },
+ "thanks": {
+  "title": "Заявку получили",
+  "lead": "Свяжемся в течение рабочего дня, чтобы уточнить детали и подготовить расчёт.",
+  "note": "Если удобнее написать самим - контакты появятся здесь после настройки боевой версии."
+ },
+ "intro": {
+  "demo": true,
+  "photo_placeholder": "Здесь будет фото",
+  "blocks": [
+   "Меня зовут Алексей. Мы с командой делаем кухни от 150 000 ₽ без салонных накруток. Работаем в Твери и области.",
+   "Те же кухни, за которые в салонах просят 350+, у нас выходят в 150-250. Мы не берём деньги за витрину и проценты продавцов - только за материал и работу."
+  ]
+ },
+ "promo": {
+  "demo": true,
+  "highlight": "Не переплачивайте",
+  "rest": "посредникам",
+  "lead_bold": "Делаем кухни от 150 000 ₽.",
+  "lead_rest": "Посчитайте точную стоимость своей будущей кухни и сравните с ценами салонов 👇"
+ }
+}
+</script>
+<script>
+  window.LIDOLOV_SUBMIT_URL = "";
+  window.LIDOLOV_SCENARIO_INLINE = true;
+</script>
+<script>
+const SUBMIT_URL = window.LIDOLOV_SUBMIT_URL || '/api/act';
+
+const S = {
+  scenario:null, i:0, answers:{}, screen:null, afterScreen:null,
+  phase:'steps', editing:null, contact:{channel:null}
+};
+const $ = s => document.querySelector(s);
+const el = (t,c,txt) => { const e=document.createElement(t); if(c) e.className=c; if(txt!=null) e.textContent=txt; return e; };
+const steps = () => (S.scenario && S.scenario.steps) || [];
+
+async function boot(){
+  if (window.LIDOLOV_SCENARIO_INLINE){
+    try { S.scenario = JSON.parse(document.getElementById('scenarioData').textContent); }
+    catch(e){ }
+  }
+  const places = [window.LIDOLOV_SCENARIO_URL, 'scenario.json', '../scenario.json'].filter(Boolean);
+  let last=null;
+  for (const p of places){
+    try{ const r=await fetch(p,{cache:'no-store'}); if(!r.ok){ last='код '+r.status; continue; } S.scenario=await r.json(); break; }
+    catch(e){ last=e.message; }
+  }
+  if (!S.scenario){ $('#stage').textContent='Не удалось загрузить сценарий: '+(last||'файл не найден'); return; }
+
+  const b=S.scenario.brand||{};
+  // Подзаголовок шапки: строка из сценария, иначе компания и город.
+  $('#brand').textContent=b.tagline || [b.company,b.city].filter(Boolean).join(' · ');
+  $('#note').textContent=b.note||'';
+  $('#lead').textContent=b.lead||'';
+  const intro=S.scenario.intro;
+  if (intro && (intro.blocks||[]).length){
+    const box=$('#introBlocks');
+    const q=el('div','quote'); q.innerHTML='<i></i><i></i>'; box.appendChild(q);
+    intro.blocks.forEach(t=>{ const d=el('div','b'); d.textContent=t; box.appendChild(d); });
+    $('#photo').textContent = intro.photo_placeholder || 'Здесь будет фото';
+  }
+
+  const promo=S.scenario.promo;
+  if (promo && (promo.highlight || promo.lead_bold)){
+    $('#promoHl').textContent   = promo.highlight || '';
+    $('#promoRest').textContent = promo.rest || '';
+    $('#promoBold').textContent = promo.lead_bold || '';
+    $('#promoText').textContent = promo.lead_rest || '';
+    $('#promo').hidden = false;
+  }
+
+  if (S.scenario.demo){
+    const d=$('#demo'); d.hidden=false;
+    d.textContent='Стенд: ступени цен и акции черновые, их проставляет владелец. Клиентам эту версию не показываем.';
+  }
+  render();
+}
+
+function setProgress(){
+  const introZone=$('#introZone');
+  if (introZone) introZone.hidden = !(S.scenario && S.scenario.intro);   // виден на всех экранах
+  const total=steps().length;
+  const done=S.phase==='steps'?S.i:total;
+  const fill=$('#pfill'), num=$('#pnum');
+  if (!fill || !num) return;
+  fill.style.width=Math.round(done/total*100)+'%';
+  num.textContent = S.phase==='steps'
+    ? 'Шаг '+Math.min(S.i+1,total)+' из '+total
+    : 'Последний шаг';
+}
+
+function setSticky(buttons){
+  const s=$('#sticky'), inner=$('#stickyInner');
+  inner.innerHTML='';
+  if(!buttons||!buttons.length){ s.hidden=true; return; }
+  buttons.forEach(b=>{
+    const btn=el('button', b.ghost?'btn ghost':'btn', b.label);
+    btn.onclick=b.on; if(b.disabled) btn.disabled=true;
+    inner.appendChild(btn);
+  });
+  s.hidden=false;
+}
+
+function render(){
+  const st=$('#stage'); st.innerHTML=''; st.className='card';
+
+  // полоса прогресса - первая строка внутри карточки
+  if (S.phase!=='thanks'){
+    const bar=el('div','cardbar');
+    bar.innerHTML='<div class="ptrack"><div class="pfill" id="pfill"></div></div><div class="pnum" id="pnum"></div>';
+    st.appendChild(bar);
+  }
+  setProgress();
+  if (S.screen) return renderScreen(st);
+  if (S.phase==='steps') return renderStep(st);
+  if (S.phase==='review') return renderReview(st);
+  if (S.phase==='contact') return renderContact(st);
+  if (S.phase==='thanks') return renderThanks(st);
+}
+
+function renderStep(st){
+  const step=steps()[S.i];
+  if(!step){ S.phase='review'; return render(); }
+
+  st.appendChild(el('h2','qt', step.title));
+  if (step.hint) st.appendChild(el('p','qh', step.hint));
+
+  const opts=step.options||[];
+  const box=el('div', opts.length>=6 ? 'opts many' : 'opts');
+  const odd=opts.length % 2 === 1;          // нечётное число - последний займёт ряд
+  opts.forEach((o,idx)=>{
+    const b=el('button','opt');
+    b.appendChild(el('span','tick'));
+    b.appendChild(el('span','lb', o.label));
+    // Широким делаем длинную подпись и одинокий последний вариант: иначе
+    // в сетке остаётся пустая половина ряда и плашки выглядят неряшливо.
+    if (o.label.length > 22 || (odd && idx === opts.length-1)) b.classList.add('wide');
+    if (S.answers[step.id]===o.value) b.classList.add('sel');
+    // Переход сразу по нажатию: задержка «чтобы увидеть выбор» только тормозит.
+    b.onclick=()=>{ choose(step,o); };
+    box.appendChild(b);
+  });
+  st.appendChild(box);
+
+  setSticky([]);   // возврата на шагах нет: ответ выбирается в один тап
+}
+
+function choose(step,opt){
+  S.answers[step.id]=opt.value;
+  if (S.editing){ const back=S.editing; S.editing=null; S.phase=back; return render(); }
+  if (opt.branch && S.scenario.screens && S.scenario.screens[opt.branch]){
+    S.screen=opt.branch; S.afterScreen=S.i+1; return render();
+  }
+  S.i++;
+  if (S.i>=steps().length) S.phase='review';
+  render();
+}
+
+function renderScreen(st){
+  const sc=S.scenario.screens[S.screen];
+  st.appendChild(el('h2','qt', sc.title));
+  if (sc.lead) st.appendChild(el('p','qh', sc.lead));
+
+  if (sc.bullets){
+    sc.bullets.forEach((t,i)=>{
+      const row=el('div','reason');
+      row.appendChild(el('div','n', String(i+1)));
+      row.appendChild(el('p',null,t));
+      st.appendChild(row);
+    });
+  }
+  if (sc.tiers){
+    sc.tiers.forEach((t,i)=>{
+      const d=el('div', i===1?'tier mid':'tier');
+      const head=el('div','tn');
+      head.appendChild(el('b',null,t.name));
+      head.appendChild(el('span','rg',t.range));
+      d.appendChild(head);
+      d.appendChild(el('div','ab',t.about));
+      st.appendChild(d);
+    });
+  }
+
+  setSticky((sc.actions||[{label:'Дальше',go:'next'}]).map((a,idx)=>({
+    label:a.label, ghost:idx>0,
+    on:()=>{
+      if (a.go==='next'){
+        S.screen=null;
+        S.i=S.afterScreen!=null?S.afterScreen:S.i+1;
+        S.afterScreen=null;
+        if (S.i>=steps().length) S.phase='review';
+      } else { S.screen=a.go; }
+      render();
+    }
+  })));
+}
+
+function labelOf(id,v){
+  const s=steps().find(x=>x.id===id);
+  const o=s&&(s.options||[]).find(x=>x.value===v);
+  return o?o.label:'-';
+}
+
+function renderReview(st){
+  const r=S.scenario.review||{};
+  st.appendChild(el('h2','qt', r.title||'Проверьте ответы'));
+  if (r.lead) st.appendChild(el('p','qh', r.lead));
+
+  const box=el('div','rev');
+  steps().forEach((s,idx)=>{
+    const row=el('div','r');
+    const left=el('div');
+    left.appendChild(el('div','k', s.title));
+    left.appendChild(el('div','v', labelOf(s.id,S.answers[s.id])));
+    row.appendChild(left);
+    const ed=el('button','ed', r.edit_label||'Изменить');
+    ed.onclick=()=>{ S.i=idx; S.editing='review'; S.phase='steps'; render(); };
+    row.appendChild(ed);
+    box.appendChild(row);
+  });
+  st.appendChild(box);
+
+  setSticky([{label:'Всё верно, дальше', on:()=>{ S.phase='contact'; render(); }}]);
+}
+
+function maskPhone(v){
+  let d=(v.match(/\d/g)||[]).join('');
+  if (d.startsWith('8')) d='7'+d.slice(1);
+  if (!d.startsWith('7')) d='7'+d;
+  d=d.slice(0,11);
+  const p=['+7'];
+  if (d.length>1) p.push(' ('+d.slice(1,4));
+  if (d.length>=5) p.push(') '+d.slice(4,7));
+  if (d.length>=8) p.push('-'+d.slice(7,9));
+  if (d.length>=10) p.push('-'+d.slice(9,11));
+  return p.join('');
+}
+
+function renderContact(st){
+  const c=S.scenario.contact||{};
+  st.className='card contact';
+
+  const body=el('div','body');
+
+  const bar=st.querySelector('.cardbar');
+  if (bar) body.appendChild(bar);            // у этой карточки свои поля
+
+  body.appendChild(el('h2','qt', c.title||'Ваш номер телефона'));
+  if (c.lead) body.appendChild(el('p','qh', c.lead));
+
+  // куда прислать расчёт
+  const chips=el('div','chips');
+  (c.channels||[]).forEach(ch=>{
+    const b=el('button','chip', ch.label);
+    if (S.contact.channel===ch.value) b.classList.add('sel');
+    b.onclick=()=>{
+      S.contact.channel=ch.value;
+      [...chips.children].forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel'); refresh();
+    };
+    chips.appendChild(b);
+  });
+  body.appendChild(chips);
+
+  const pi=el('input','f phone-big');
+  pi.type='tel'; pi.inputMode='tel'; pi.placeholder='+7 (___) ___-__-__';
+  pi.autocomplete='tel'; pi.value=S.contact.phone||'';
+  pi.style.marginTop='12px';
+  pi.oninput=()=>{ pi.value=maskPhone(pi.value); S.contact.phone=pi.value; refresh(); };
+  body.appendChild(pi);
+
+  // согласие на обработку данных - обязательное условие приёма заявки
+  const row=el('div','consent-row');
+  const cb=el('input'); cb.type='checkbox'; cb.checked=S.contact.consent!==false;
+  cb.onchange=()=>{ S.contact.consent=cb.checked; refresh(); };
+  const lab=el('label'); lab.style.cursor='pointer';
+  lab.appendChild(document.createTextNode((c.consent_label||'Согласен на')+' '));
+  const a=el('a', null, c.consent_link_text||'обработку персональных данных');
+  a.href='#'; a.onclick=(e)=>{ e.preventDefault(); alert(c.consent_full||'Текст согласия добавим перед публикацией.'); };
+  lab.appendChild(a);
+  lab.onclick=(e)=>{ if(e.target.tagName!=='A'){ cb.checked=!cb.checked; S.contact.consent=cb.checked; refresh(); } };
+  row.appendChild(cb); row.appendChild(lab);
+  body.appendChild(row);
+
+  const err=el('div','err'); err.hidden=true; body.appendChild(err);
+  st.appendChild(body);
+
+  // кнопка живёт в карточке, а не в липкой панели
+  const foot=el('div','foot-act');
+  const send=el('button','btn', c.submit||'Отправить');
+  foot.appendChild(send);
+  st.appendChild(foot);
+  setSticky([]);
+
+  const ready=()=>((S.contact.phone||'').match(/\d/g)||[]).length>=11
+                  && !!S.contact.channel && S.contact.consent!==false;
+  function refresh(){ send.disabled=!ready(); }
+
+  send.onclick=async ()=>{
+    if (!ready()) return;
+    err.hidden=true; send.disabled=true; send.textContent='Отправляем…';
+    try{
+      await submit({name:(S.contact.name||'').trim(), phone:S.contact.phone, channel:S.contact.channel});
+      S.phase='thanks'; render();
+    }catch(e){
+      send.disabled=false; send.textContent=c.submit||'Отправить';
+      err.hidden=false; err.textContent='Не удалось отправить: '+e.message+'. Попробуйте ещё раз.';
+    }
+  };
+  refresh();
+}
+
+function renderThanks(st){
+  const t=S.scenario.thanks||{};
+  const d=el('div','done');
+  d.appendChild(el('div','mark','✓'));
+  d.appendChild(el('h2','qt', t.title||'Заявку получили'));
+  if (t.lead) d.appendChild(el('p','qh', t.lead));
+  if (t.note) d.appendChild(el('p','consent', t.note));
+  if (S.viewOnly){
+    const w=el('p','consent','Это версия для просмотра: заявка никуда не отправлена.');
+    w.style.color='var(--pick)';
+    d.appendChild(w);
+  }
+  st.appendChild(d);
+  setSticky([]);
+}
+
+async function submit(contact){
+  // Витрина без сервера: приёмника нет, заявку отправлять некуда.
+  // Показываем экран «спасибо», чтобы можно было пройти квиз целиком и
+  // посмотреть вёрстку, но честно помечаем это на последнем экране.
+  if (!SUBMIT_URL){ S.viewOnly = true; return {ok:true, demo:true}; }
+
+  const q=new URLSearchParams(location.search); const utm={};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','avito_id'].forEach(k=>{ if(q.get(k)) utm[k]=q.get(k); });
+  const r=await fetch(SUBMIT_URL,{
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({op:'lead', answers:S.answers, contact, utm, page:location.pathname})
+  });
+  if(!r.ok){
+    let m='код '+r.status;
+    try{ const j=await r.json(); if(j.error) m=j.error; }catch(_){}
+    throw new Error(m);
+  }
+  return r.json();
+}
+
+boot();
+</script>
+</body>
+</html>
